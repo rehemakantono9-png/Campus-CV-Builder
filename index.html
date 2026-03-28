@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CampusCV</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>CampusCV</h1>
+    <p>Build your CV, pay, and download as PDF</p>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>Personal Information</h2>
+
+      <label>Full Name</label>
+      <input id="fullName" type="text" />
+
+      <label>Email</label>
+      <input id="email" type="email" />
+
+      <label>Phone</label>
+      <input id="phone" type="text" />
+
+      <label>Location</label>
+      <input id="location" type="text" />
+
+      <label>Professional Summary</label>
+      <textarea id="summary"></textarea>
+
+      <label>Technical Skills (comma separated)</label>
+      <input id="techSkills" type="text" />
+
+      <label>Soft Skills (comma separated)</label>
+      <input id="softSkills" type="text" />
+
+      <label>Languages (one per line)</label>
+      <textarea id="languages"></textarea>
+
+      <label>Passport Photo (optional)</label>
+      <input id="photoInput" type="file" accept="image/*" />
+
+      <div class="btns">
+        <button id="addEduBtn" type="button">Add Education</button>
+        <button id="addExpBtn" type="button">Add Experience</button>
+        <button id="addRefBtn" type="button">Add Reference</button>
+      </div>
+
+      <div id="eduList"></div>
+      <div id="expList"></div>
+      <div id="refList"></div>
+
+      <label>Price (UGX)</label>
+      <input id="price" type="number" value="3000" />
+
+      <div class="btns">
+        <button id="updatePreviewBtn" type="button">Update Preview</button>
+        <button id="payDownloadBtn" type="button">Pay & Download</button>
+        <button id="resetBtn" type="button">Reset</button>
+      </div>
+    </section>
+
+    <section class="panel" id="previewShell">
+      <h2>Preview</h2>
+
+      <div id="cvPreview" class="cv">
+        <div class="cv-head">
+          <div>
+            <h1 id="p_name">Your Name</h1>
+            <p id="p_contacts"></p>
+          </div>
+          <div class="photo-box">
+            <img id="p_photo" alt="Photo" style="display:none;">
+            <span id="p_photoHint">No photo</span>
+          </div>
+        </div>
+
+        <hr>
+
+        <h3>Professional Summary</h3>
+        <p id="p_summary"></p>
+
+        <h3>Education</h3>
+        <ul id="p_education"></ul>
+
+        <h3>Experience</h3>
+        <div id="p_experiences"></div>
+
+        <h3>Skills</h3>
+        <div id="p_skills"></div>
+
+        <h3>Languages</h3>
+        <ul id="p_languages"></ul>
+
+        <h3>References</h3>
+        <ul id="p_references"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

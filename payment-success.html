@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Payment Status</title>
+</head>
+<body style="font-family: Arial; text-align:center; padding:40px;">
+
+  <h2>Processing Payment...</h2>
+  <p id="msg">Please wait while we confirm your payment.</p>
+
+  <button id="downloadBtn" style="display:none; padding:10px 20px; font-size:16px;">
+    Download Your CV
+  </button>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const orderTrackingId = params.get("OrderTrackingId") || params.get("orderTrackingId");
+
+    const msg = document.getElementById("msg");
+    const btn = document.getElementById("downloadBtn");
+
+    async function checkStatus() {
+      if (!orderTrackingId) {
+        msg.textContent = "Missing payment reference.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/.netlify/functions/pesapal-status?orderTrackingId=${encodeURIComponent(orderTrackingId)}`);
+        const data = await res.json();
+
+        const status =
+          data?.data?.payment_status_description ||
+          data?.data?.status ||
+          "UNKNOWN";
+
+        msg.textContent = "Payment status: " + status;
+
+        if (
+          String(status).toLowerCase().includes("completed") ||
+          String(status).toLowerCase().includes("paid")
+        ) {
+          msg.textContent = "Payment successful! You can now download your CV.";
+
+          btn.style.display = "inline-block";
+
+          btn.onclick = () => {
+            window.location.href = "/";
+          };
+        }
+
+      } catch (err) {
+        msg.textContent = "Error checking payment. Try again.";
+      }
+    }
+
+    checkStatus();
+  </script>
+
+</body>
+</html>
