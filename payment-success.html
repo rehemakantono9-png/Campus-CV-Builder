@@ -1,62 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Payment Status</title>
+    <title>Download Success</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
-<body style="font-family: Arial; text-align:center; padding:40px;">
+<body style="text-align:center; padding:50px; background:#f4f7f6;">
+    <div class="panel" style="max-width:500px; margin:auto; padding:40px;">
+        <h1 style="color:green;">✔ Payment Successful</h1>
+        <p id="status">Generating your professional CV now...</p>
+        <div id="loader" class="loader"></div>
+        
+        <div id="cvPreview" class="cv" style="display:none; text-align:left;"></div>
+        
+        <div id="final-actions" style="display:none; margin-top:20px;">
+            <button onclick="downloadPDF()" class="primary-btn">Download Again</button>
+            <button onclick="location.href='index.html'" class="secondary-btn">New CV</button>
+        </div>
+    </div>
 
-  <h2>Processing Payment...</h2>
-  <p id="msg">Please wait while we confirm your payment.</p>
-
-  <button id="downloadBtn" style="display:none; padding:10px 20px; font-size:16px;">
-    Download Your CV
-  </button>
-
-  <script>
-    const params = new URLSearchParams(location.search);
-    const orderTrackingId = params.get("OrderTrackingId") || params.get("orderTrackingId");
-
-    const msg = document.getElementById("msg");
-    const btn = document.getElementById("downloadBtn");
-
-    async function checkStatus() {
-      if (!orderTrackingId) {
-        msg.textContent = "Missing payment reference.";
-        return;
-      }
-
-      try {
-        const res = await fetch(`/.netlify/functions/pesapal-status?orderTrackingId=${encodeURIComponent(orderTrackingId)}`);
-        const data = await res.json();
-
-        const status =
-          data?.data?.payment_status_description ||
-          data?.data?.status ||
-          "UNKNOWN";
-
-        msg.textContent = "Payment status: " + status;
-
-        if (
-          String(status).toLowerCase().includes("completed") ||
-          String(status).toLowerCase().includes("paid")
-        ) {
-          msg.textContent = "Payment successful! You can now download your CV.";
-
-          btn.style.display = "inline-block";
-
-          btn.onclick = () => {
-            window.location.href = "/";
-          };
+    <script>
+        function downloadPDF() {
+            const el = document.getElementById('cvPreview');
+            html2pdf().from(el).set({
+                margin: 0.5,
+                filename: 'My_CampusCV.pdf',
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            }).save().then(() => {
+                document.getElementById('status').innerText = "Download Complete!";
+                document.getElementById('final-actions').style.display = "block";
+            });
         }
 
-      } catch (err) {
-        msg.textContent = "Error checking payment. Try again.";
-      }
-    }
-
-    checkStatus();
-  </script>
-
+        window.onload = function() {
+            const data = JSON.parse(localStorage.getItem('campusCV_Data'));
+            if (data && data.html) {
+                document.getElementById('cvPreview').innerHTML = data.html;
+                downloadPDF();
+            } else {
+                document.getElementById('status').innerText = "Data error. Please go back.";
+            }
+        };
+    </script>
 </body>
 </html>

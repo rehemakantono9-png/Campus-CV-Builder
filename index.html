@@ -1,107 +1,102 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CampusCV</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusCV | Professional Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-  <header class="topbar">
-    <h1>CampusCV</h1>
-    <p>Build your CV, pay, and download as PDF</p>
-  </header>
+    <div class="topbar">
+        <h1>CampusCV Builder</h1>
+        <p>Smart Suggestions • Instant PDF • Secure Payment</p>
+    </div>
 
-  <main class="layout">
-    <section class="panel">
-      <h2>Personal Information</h2>
+    <div class="layout">
+        <section class="panel">
+            <h2>Personal Details</h2>
+            <label>Full Name</label>
+            <input id="fullName" placeholder="e.g. John Doe">
+            
+            <label>Email & Phone</label>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <input id="email" placeholder="email@example.com">
+                <input id="phone" placeholder="07XXXXXXXX">
+            </div>
 
-      <label>Full Name</label>
-      <input id="fullName" type="text" />
+            <label>Location</label>
+            <input id="location" placeholder="e.g. Mbale, Uganda">
 
-      <label>Email</label>
-      <input id="email" type="email" />
+            <hr>
 
-      <label>Phone</label>
-      <input id="phone" type="text" />
+            <h2>Skills & Summary</h2>
+            <label>Technical Skills (Auto-Suggest)</label>
+            <input id="techSkills" list="techSuggestions" placeholder="Start typing skills...">
+            <datalist id="techSuggestions">
+                <option value="Microsoft Office (Excel, Word, PPT)">
+                <option value="Data Research & Analysis">
+                <option value="Digital Marketing & Social Media">
+                <option value="Web Development (HTML/CSS)">
+                <option value="Accounting & Quickbooks">
+                <option value="Graphic Design (Canva)">
+            </datalist>
 
-      <label>Location</label>
-      <input id="location" type="text" />
+            <label>Soft Skills</label>
+            <input id="softSkills" list="softSuggestions" placeholder="e.g. Leadership">
+            <datalist id="softSuggestions">
+                <option value="Effective Communication">
+                <option value="Time Management">
+                <option value="Critical Thinking">
+                <option value="Team Leadership">
+            </datalist>
 
-      <label>Professional Summary</label>
-      <textarea id="summary"></textarea>
+            <button id="suggestSummaryBtn" type="button" class="magic-btn">✨ Auto-Generate Professional Summary</button>
+            <textarea id="summary" rows="4" placeholder="Your bio will appear here..."></textarea>
 
-      <label>Technical Skills (comma separated)</label>
-      <input id="techSkills" type="text" />
+            <hr>
 
-      <label>Soft Skills (comma separated)</label>
-      <input id="softSkills" type="text" />
+            <h2>Experience & Education</h2>
+            <div class="btns">
+                <button id="addEduBtn" type="button">+ Add Education</button>
+                <button id="addExpBtn" type="button">+ Add Experience</button>
+            </div>
+            <div id="eduList"></div>
+            <div id="expList"></div>
 
-      <label>Languages (one per line)</label>
-      <textarea id="languages"></textarea>
+            <hr>
 
-      <label>Passport Photo (optional)</label>
-      <input id="photoInput" type="file" accept="image/*" />
+            <div class="action-zone">
+                <label>Price (UGX)</label>
+                <input id="price" type="number" value="3000" readonly>
+                <div class="btns">
+                    <button id="updatePreviewBtn" class="secondary-btn">Update Preview</button>
+                    <button id="payDownloadBtn" class="primary-btn">Pay & Download PDF</button>
+                </div>
+            </div>
+        </section>
 
-      <div class="btns">
-        <button id="addEduBtn" type="button">Add Education</button>
-        <button id="addExpBtn" type="button">Add Experience</button>
-        <button id="addRefBtn" type="button">Add Reference</button>
-      </div>
+        <section class="panel" id="previewShell">
+            <div id="cvPreview" class="cv">
+                <div class="cv-header">
+                    <h1 id="p_name">YOUR NAME</h1>
+                    <p id="p_contacts">Email | Phone | Location</p>
+                </div>
+                <h3>Professional Summary</h3>
+                <p id="p_summary">Your generated summary will show here.</p>
+                
+                <h3>Skills</h3>
+                <p id="p_skills"></p>
+                
+                <h3>Education</h3>
+                <ul id="p_education"></ul>
 
-      <div id="eduList"></div>
-      <div id="expList"></div>
-      <div id="refList"></div>
+                <h3>Experience</h3>
+                <ul id="p_experiences"></ul>
+            </div>
+        </section>
+    </div>
 
-      <label>Price (UGX)</label>
-      <input id="price" type="number" value="3000" />
-
-      <div class="btns">
-        <button id="updatePreviewBtn" type="button">Update Preview</button>
-        <button id="payDownloadBtn" type="button">Pay & Download</button>
-        <button id="resetBtn" type="button">Reset</button>
-      </div>
-    </section>
-
-    <section class="panel" id="previewShell">
-      <h2>Preview</h2>
-
-      <div id="cvPreview" class="cv">
-        <div class="cv-head">
-          <div>
-            <h1 id="p_name">Your Name</h1>
-            <p id="p_contacts"></p>
-          </div>
-          <div class="photo-box">
-            <img id="p_photo" alt="Photo" style="display:none;">
-            <span id="p_photoHint">No photo</span>
-          </div>
-        </div>
-
-        <hr>
-
-        <h3>Professional Summary</h3>
-        <p id="p_summary"></p>
-
-        <h3>Education</h3>
-        <ul id="p_education"></ul>
-
-        <h3>Experience</h3>
-        <div id="p_experiences"></div>
-
-        <h3>Skills</h3>
-        <div id="p_skills"></div>
-
-        <h3>Languages</h3>
-        <ul id="p_languages"></ul>
-
-        <h3>References</h3>
-        <ul id="p_references"></ul>
-      </div>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
