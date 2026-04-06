@@ -1,0 +1,286 @@
+{
+  "Mass Communication": {
+    "target_roles": [
+      "Journalism Intern",
+      "Communications Intern",
+      "Radio Intern",
+      "Content Creator",
+      "Media Assistant",
+      "Public Relations Assistant",
+      "Social Media Coordinator"
+    ],
+    "skills": {
+      "Communication": ["News writing", "Interviewing", "Script writing", "Public speaking", "Reporting"],
+      "Digital": ["Audio recording", "Video editing", "Social media content creation", "Photography", "Canva"],
+      "Professional": ["Media monitoring", "Research", "Team collaboration", "Deadline management"],
+      "Research": ["Media analysis", "Audience research", "Content analysis"]
+    },
+    "relevant_courses": [
+      "News Writing and Reporting",
+      "Broadcast Journalism",
+      "Public Relations",
+      "Communication Theory",
+      "Media Ethics and Law",
+      "Digital Media Production",
+      "Feature Writing"
+    ],
+    "experience_suggestions": {
+      "campus_media": [
+        "Assisted in planning and producing media content for campus activities.",
+        "Conducted interviews and gathered information for reports and updates.",
+        "Supported photography, recording, or social media coverage for events.",
+        "Built practical communication skills through campus media participation."
+      ],
+      "volunteering": [
+        "Supported communication activities for community programmes and public events.",
+        "Helped prepare announcements, messages, or public information materials."
+      ]
+    }
+  },
+  "Education": {
+    "target_roles": [
+      "Teaching Assistant",
+      "School Intern",
+      "Education Volunteer",
+      "Tutor",
+      "Classroom Support Assistant",
+      "Curriculum Assistant"
+    ],
+    "skills": {
+      "Communication": ["Lesson explanation", "Student communication", "Parent communication", "Public speaking"],
+      "Digital": ["Microsoft Office", "Educational software", "Online teaching tools", "Record keeping"],
+      "Professional": ["Lesson planning", "Classroom management", "Student assessment", "Patience", "Organization"],
+      "Research": ["Educational research", "Student progress tracking", "Learning outcome analysis"]
+    },
+    "relevant_courses": [
+      "Curriculum Studies",
+      "Educational Psychology",
+      "Classroom Management",
+      "Assessment and Evaluation",
+      "Teaching Methods",
+      "Special Needs Education",
+      "Educational Technology"
+    ],
+    "experience_suggestions": {
+      "teaching_practice": [
+        "Supported classroom instruction and learner participation during teaching practice.",
+        "Prepared lesson materials and assisted with classroom activities under supervision.",
+        "Observed learner progress and contributed to feedback and record keeping."
+      ],
+      "tutoring": [
+        "Provided academic support to learners through guided explanation and practice.",
+        "Built instructional and communication skills while helping learners understand course content."
+      ]
+    }
+  },
+  "Business Administration": {
+    "target_roles": [
+      "Administrative Assistant",
+      "Business Intern",
+      "Operations Intern",
+      "Customer Care Assistant",
+      "Office Assistant",
+      "Sales Assistant",
+      "Marketing Intern"
+    ],
+    "skills": {
+      "Communication": ["Business writing", "Customer service", "Presentation skills", "Email etiquette"],
+      "Digital": ["Microsoft Excel", "Word", "PowerPoint", "Google Workspace", "CRM basics"],
+      "Professional": ["Time management", "Team coordination", "Problem solving", "Organization", "Data entry"],
+      "Research": ["Market research", "Data analysis", "Report writing"]
+    },
+    "relevant_courses": [
+      "Principles of Management",
+      "Business Communication",
+      "Marketing Management",
+      "Organizational Behaviour",
+      "Entrepreneurship",
+      "Business Statistics",
+      "Human Resource Management"
+    ],
+    "experience_suggestions": {
+      "office_support": [
+        "Assisted with office administration, filing, and day-to-day coordination tasks.",
+        "Prepared records and supported accurate documentation of activities.",
+        "Handled communication and helped maintain organized workflow."
+      ],
+      "small_business": [
+        "Supported small business operations through customer communication and record handling.",
+        "Built practical experience in basic sales, organization, and business support."
+      ]
+    }
+  },
+  "Accounting": {
+    "target_roles": [
+      "Accounts Assistant",
+      "Finance Intern",
+      "Bookkeeping Assistant",
+      "Audit Intern",
+      "Tax Assistant",
+      "Payroll Assistant"
+    ],
+    "skills": {
+      "Communication": ["Financial reporting", "Client communication", "Documentation"],
+      "Digital": ["Excel (Advanced)", "QuickBooks", "Accounting software", "Spreadsheet formulas"],
+      "Professional": ["Attention to detail", "Numerical accuracy", "Record keeping", "Confidentiality", "Organization"],
+      "Research": ["Financial analysis", "Audit procedures", "Tax research"]
+    },
+    "relevant_courses": [
+      "Financial Accounting",
+      "Cost Accounting",
+      "Management Accounting",
+      "Auditing Principles",
+      "Taxation",
+      "Business Mathematics",
+      "Accounting Information Systems"
+    ],
+    "experience_suggestions": {
+      "office_support": [
+        "Assisted in maintaining financial records and organizing accounting documents.",
+        "Supported data entry and basic reconciliation tasks with attention to accuracy.",
+        "Prepared and arranged records for review and reporting purposes."
+      ]
+    }
+  },
+  "Information Technology": {
+    "target_roles": [
+      "IT Support Intern",
+      "Data Entry Assistant",
+      "Junior Web Assistant",
+      "Systems Support Intern",
+      "Software Tester Intern",
+      "Network Assistant"
+    ],
+    "skills": {
+      "Communication": ["Technical writing", "User support", "Team collaboration", "Documentation"],
+      "Digital": ["HTML/CSS", "JavaScript basics", "Database queries", "Troubleshooting", "Network basics"],
+      "Professional": ["Problem solving", "Logical thinking", "Time management", "Attention to detail"],
+      "Research": ["Technical research", "Software testing", "System analysis"]
+    },
+    "relevant_courses": [
+      "Programming Fundamentals",
+      "Database Systems",
+      "Web Development",
+      "Computer Networks",
+      "Systems Analysis and Design",
+      "IT Security Basics",
+      "Operating Systems"
+    ],
+    "experience_suggestions": {
+      "project_work": [
+        "Built or supported simple digital solutions as part of academic or personal projects.",
+        "Used software tools to organize, process, and present information effectively."
+      ],
+      "it_support": [
+        "Assisted with basic troubleshooting and digital support tasks.",
+        "Helped maintain efficient use of digital tools and systems in a practical setting."
+      ]
+    }
+  },
+  "Public Administration": {
+    "target_roles": [
+      "Administrative Intern",
+      "Program Assistant",
+      "Community Development Intern",
+      "Office Support Assistant",
+      "Policy Research Intern",
+      "Government Relations Assistant"
+    ],
+    "skills": {
+      "Communication": ["Public communication", "Report writing", "Official correspondence", "Presentation"],
+      "Digital": ["Microsoft Office", "Database management", "Record keeping systems"],
+      "Professional": ["Policy understanding", "Community engagement", "Organization", "Teamwork", "Ethics"],
+      "Research": ["Policy analysis", "Program evaluation", "Data collection", "Community needs assessment"]
+    },
+    "relevant_courses": [
+      "Public Policy Analysis",
+      "Local Government Administration",
+      "Public Sector Management",
+      "Development Administration",
+      "Research Methods",
+      "Ethics in Public Service",
+      "Community Development"
+    ],
+    "experience_suggestions": {
+      "community_work": [
+        "Supported community-based activities through coordination, communication, and documentation.",
+        "Contributed to administrative and public service tasks in organized settings."
+      ],
+      "student_leadership": [
+        "Represented group interests and supported communication between members and leadership.",
+        "Helped organize meetings, updates, and administrative follow-up."
+      ]
+    }
+  },
+  "Agriculture": {
+    "target_roles": [
+      "Agriculture Intern",
+      "Farm Assistant",
+      "Field Officer Intern",
+      "Agribusiness Trainee",
+      "Extension Worker Intern",
+      "Research Assistant"
+    ],
+    "skills": {
+      "Communication": ["Farm reporting", "Community extension", "Team coordination", "Training delivery"],
+      "Digital": ["Data collection apps", "Spreadsheet analysis", "GPS basics", "Record keeping"],
+      "Professional": ["Field work", "Observation skills", "Physical stamina", "Problem solving", "Planning"],
+      "Research": ["Field data collection", "Crop monitoring", "Soil sampling", "Statistical analysis"]
+    },
+    "relevant_courses": [
+      "Crop Science",
+      "Animal Production",
+      "Soil Science",
+      "Agribusiness Management",
+      "Extension Education",
+      "Farm Machinery",
+      "Agricultural Economics"
+    ],
+    "experience_suggestions": {
+      "fieldwork": [
+        "Supported field activities related to crop or livestock management.",
+        "Assisted in maintaining farm records and monitoring day-to-day operations.",
+        "Participated in practical agricultural tasks and observation-based reporting."
+      ],
+      "community_work": [
+        "Supported agricultural outreach or training activities in community settings.",
+        "Contributed to awareness, mobilization, or demonstration work linked to farming activities."
+      ]
+    }
+  },
+  "Islamic Studies": {
+    "target_roles": [
+      "Teaching Assistant",
+      "Community Program Assistant",
+      "Research Assistant",
+      "Religious Education Volunteer",
+      "Islamic School Assistant",
+      "Da'wah Intern"
+    ],
+    "skills": {
+      "Communication": ["Public speaking", "Teaching", "Counseling", "Community engagement", "Arabic recitation"],
+      "Digital": ["Microsoft Office", "Online research", "Content creation", "Social media management"],
+      "Professional": ["Patience", "Empathy", "Organization", "Event coordination", "Cultural sensitivity"],
+      "Research": ["Islamic texts research", "Hadith study", "Qur'anic analysis", "Historical research"]
+    },
+    "relevant_courses": [
+      "Qur'anic Studies",
+      "Hadith Studies",
+      "Islamic Jurisprudence (Fiqh)",
+      "Da'wah Methods",
+      "Islamic History",
+      "Arabic Language",
+      "Comparative Religion"
+    ],
+    "experience_suggestions": {
+      "faith_based_service": [
+        "Supported faith-based programmes through coordination, communication, and volunteer service.",
+        "Assisted with educational or community activities in organized religious settings."
+      ],
+      "teaching_support": [
+        "Helped guide learners in religious education activities and structured learning sessions.",
+        "Strengthened communication and instructional support skills through community engagement."
+      ]
+    }
+  }
+}
