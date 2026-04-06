@@ -3,96 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CampusCV | Professional Builder</title>
+    <title>CampusCV | Professional Student CV Builder</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <div class="topbar">
-        <h1>CampusCV Builder</h1>
-        <p>Smart Suggestions • Instant PDF • Secure Payment</p>
+        <h1>🎓 CampusCV Builder</h1>
+        <p>Smart Suggestions • Student-Focused • ATS-Ready</p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+        <span class="step-indicator" id="stepIndicator">Step 1 of 12</span>
     </div>
 
     <div class="layout">
-        <section class="panel">
-            <h2>Personal Details</h2>
-            <label>Full Name</label>
-            <input id="fullName" placeholder="e.g. John Doe">
-            
-            <label>Email & Phone</label>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <input id="email" placeholder="email@example.com">
-                <input id="phone" placeholder="07XXXXXXXX">
+        <!-- Left: Form Panel -->
+        <section class="panel form-panel" id="formPanel">
+            <!-- Step 1: Goal Selection -->
+            <div id="step1" class="step active">
+                <h2>🎯 Choose Your CV Goal</h2>
+                <label>What are you preparing this CV for?</label>
+                <select id="cvGoal" class="full-width">
+                    <option value="internship">Internship</option>
+                    <option value="field_attachment">Field Attachment</option>
+                    <option value="scholarship">Scholarship</option>
+                    <option value="graduate_trainee">Graduate Trainee</option>
+                    <option value="first_job">First Job</option>
+                    <option value="part_time_job">Part-Time Job</option>
+                    <option value="academic_opportunity">Academic Opportunity</option>
+                </select>
+
+                <label>What best describes you?</label>
+                <select id="profileStage" class="full-width">
+                    <option value="current_student">Current Student</option>
+                    <option value="final_year_student">Final Year Student</option>
+                    <option value="fresh_graduate">Fresh Graduate</option>
+                </select>
+
+                <label>Select Your Programme</label>
+                <select id="programmeSelect" class="full-width">
+                    <option value="Mass Communication">Mass Communication</option>
+                    <option value="Education">Education</option>
+                    <option value="Business Administration">Business Administration</option>
+                    <option value="Accounting">Accounting</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Public Administration">Public Administration</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Islamic Studies">Islamic Studies</option>
+                </select>
+
+                <div class="button-group">
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
             </div>
 
-            <label>Location</label>
-            <input id="location" placeholder="e.g. Mbale, Uganda">
+            <!-- Step 2: Personal Details -->
+            <div id="step2" class="step">
+                <h2>👤 Personal Details</h2>
+                <label>Full Name</label>
+                <input type="text" id="fullName" placeholder="e.g., Amina Nakato">
 
-            <hr>
+                <label>Email</label>
+                <input type="email" id="email" placeholder="amina@example.com">
 
-            <h2>Skills & Summary</h2>
-            <label>Technical Skills (Auto-Suggest)</label>
-            <input id="techSkills" list="techSuggestions" placeholder="Start typing skills...">
-            <datalist id="techSuggestions">
-                <option value="Microsoft Office (Excel, Word, PPT)">
-                <option value="Data Research & Analysis">
-                <option value="Digital Marketing & Social Media">
-                <option value="Web Development (HTML/CSS)">
-                <option value="Accounting & Quickbooks">
-                <option value="Graphic Design (Canva)">
-            </datalist>
+                <label>Phone Number</label>
+                <input type="tel" id="phone" placeholder="+256 700 000 000">
 
-            <label>Soft Skills</label>
-            <input id="softSkills" list="softSuggestions" placeholder="e.g. Leadership">
-            <datalist id="softSuggestions">
-                <option value="Effective Communication">
-                <option value="Time Management">
-                <option value="Critical Thinking">
-                <option value="Team Leadership">
-            </datalist>
+                <label>Location</label>
+                <input type="text" id="location" placeholder="e.g., Kampala, Uganda">
 
-            <button id="suggestSummaryBtn" type="button" class="magic-btn">✨ Auto-Generate Professional Summary</button>
-            <textarea id="summary" rows="4" placeholder="Your bio will appear here..."></textarea>
+                <label>LinkedIn (Optional)</label>
+                <input type="text" id="linkedin" placeholder="linkedin.com/in/username">
 
-            <hr>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="photoEnabled">
+                    <label>Include Photo (Not recommended for ATS)</label>
+                </div>
 
-            <h2>Experience & Education</h2>
-            <div class="btns">
-                <button id="addEduBtn" type="button">+ Add Education</button>
-                <button id="addExpBtn" type="button">+ Add Experience</button>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
             </div>
-            <div id="eduList"></div>
-            <div id="expList"></div>
 
-            <hr>
+            <!-- Step 3: Career Target -->
+            <div id="step3" class="step">
+                <h2>💼 Career Target</h2>
+                <label>Target Job Title</label>
+                <input type="text" id="targetJobTitle" placeholder="e.g., Communications Intern">
 
-            <div class="action-zone">
-                <label>Price (UGX)</label>
-                <input id="price" type="number" value="3000" readonly>
-                <div class="btns">
-                    <button id="updatePreviewBtn" class="secondary-btn">Update Preview</button>
-                    <button id="payDownloadBtn" class="primary-btn">Pay & Download PDF</button>
+                <label>Preferred Sector/Industry</label>
+                <input type="text" id="preferredSector" placeholder="e.g., Media, Education, Finance">
+
+                <label>Target Keywords (comma separated)</label>
+                <input type="text" id="targetKeywords" placeholder="e.g., writing, social media, research">
+
+                <label>Career Interests</label>
+                <input type="text" id="careerInterests" placeholder="e.g., journalism, content creation">
+
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Education -->
+            <div id="step4" class="step">
+                <h2>📚 Education</h2>
+                <div id="educationList">
+                    <div class="education-entry entry-card">
+                        <input type="text" placeholder="Institution" class="edu-institution">
+                        <input type="text" placeholder="Programme/Degree" class="edu-programme">
+                        <div class="date-row">
+                            <input type="text" placeholder="Start Date (MM/YYYY)" class="edu-start">
+                            <input type="text" placeholder="End Date (MM/YYYY)" class="edu-end">
+                        </div>
+                        <input type="text" placeholder="GPA/Classification (Optional)" class="edu-gpa">
+                        <textarea placeholder="Relevant Courses (one per line)" class="edu-courses" rows="2"></textarea>
+                        <textarea placeholder="Final Project/Thesis (Optional)" class="edu-project" rows="2"></textarea>
+                        <button class="remove-btn" onclick="this.closest('.education-entry').remove()">Remove</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addEducation()">+ Add Another Education</button>
+
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 5: Experience Discovery -->
+            <div id="step5" class="step">
+                <h2>🔍 Select Your Experiences</h2>
+                <p class="helper-text">Don't worry if you've never had a formal job. Select anything you've done:</p>
+                <div id="experienceCards" class="cards-grid">
+                    <!-- Dynamically populated from JS -->
+                </div>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 6: Experience Builder -->
+            <div id="step6" class="step">
+                <h2>✏️ Build Your Experience</h2>
+                <div id="experienceBuilderList"></div>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 7: Skills Selection -->
+            <div id="step7" class="step">
+                <h2>🎯 Select Your Skills</h2>
+                <p class="helper-text">Choose only skills you can support with real evidence. Max 12 total.</p>
+                <div id="skillsContainer" class="skills-container"></div>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 8: Projects & Leadership -->
+            <div id="step8" class="step">
+                <h2>🚀 Projects & Leadership</h2>
+                <div id="projectsList"></div>
+                <button class="add-btn" onclick="addProject()">+ Add Project/Leadership Role</button>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 9: Professional Summary -->
+            <div id="step9" class="step">
+                <h2>📝 Professional Summary</h2>
+                <div id="summaryOptions" class="summary-options"></div>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 10: Live Preview (shown in right panel) -->
+            <div id="step10" class="step">
+                <h2>👁️ Preview Your CV</h2>
+                <p>Your CV is being built on the right panel. Review it carefully.</p>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 11: Quality Checker -->
+            <div id="step11" class="step">
+                <h2>✅ Quality Check</h2>
+                <div id="qualityReport" class="quality-report"></div>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 12: Export & Payment -->
+            <div id="step12" class="step">
+                <h2>💳 Export Your CV</h2>
+                <p>Your CV is ready! Choose your template and complete payment to download.</p>
+                
+                <label>Select Template</label>
+                <select id="templateSelect" class="full-width">
+                    <option value="clean">Clean Student (ATS-Friendly)</option>
+                    <option value="modern">Modern Premium (Creative Fields)</option>
+                    <option value="academic">Academic Student (Scholarships/Research)</option>
+                </select>
+
+                <div class="payment-info">
+                    <p>Price: <strong>UGX 3,000</strong></p>
+                    <button id="payDownloadBtn" class="primary-btn">💳 Pay & Download PDF</button>
+                </div>
+
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
                 </div>
             </div>
         </section>
 
-        <section class="panel" id="previewShell">
-            <div id="cvPreview" class="cv">
+        <!-- Right: Live CV Preview -->
+        <section class="panel preview-panel" id="previewShell">
+            <div id="cvPreview" class="cv clean-template">
                 <div class="cv-header">
                     <h1 id="p_name">YOUR NAME</h1>
-                    <p id="p_contacts">Email | Phone | Location</p>
+                    <p id="p_contacts">email@example.com | +123456789 | Location</p>
                 </div>
-                <h3>Professional Summary</h3>
-                <p id="p_summary">Your generated summary will show here.</p>
-                
-                <h3>Skills</h3>
-                <p id="p_skills"></p>
-                
-                <h3>Education</h3>
-                <ul id="p_education"></ul>
-
-                <h3>Experience</h3>
-                <ul id="p_experiences"></ul>
+                <div id="p_summary_section">
+                    <h3>Professional Summary</h3>
+                    <p id="p_summary">Complete the steps to generate your professional summary.</p>
+                </div>
+                <div id="p_education_section">
+                    <h3>Education</h3>
+                    <ul id="p_education"></ul>
+                </div>
+                <div id="p_skills_section">
+                    <h3>Skills</h3>
+                    <div id="p_skills"></div>
+                </div>
+                <div id="p_experience_section">
+                    <h3>Experience</h3>
+                    <ul id="p_experiences"></ul>
+                </div>
+                <div id="p_projects_section">
+                    <h3>Projects & Leadership</h3>
+                    <ul id="p_projects"></ul>
+                </div>
             </div>
         </section>
     </div>
