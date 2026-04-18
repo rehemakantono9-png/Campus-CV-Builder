@@ -1,171 +1,799 @@
 {
-  "Mass Communication": {
-    "target_roles": [
-      "Journalism Intern",
-      "Communications Intern",
-      "Radio Intern",
-      "Content Creator",
-      "Media Assistant",
-      "Public Relations Assistant",
-      "Social Media Coordinator"
-    ],
+  "Arabic Diploma Programme": {
+    "level": "Diploma",
+    "faculty": "Islamic Studies and Arabic Language",
+    "duration_years": null,
+    "target_roles": ["Arabic Teaching Assistant", "Community Education Assistant", "Translator Assistant"],
+    "skills": {
+      "Communication": ["Arabic communication", "Reading comprehension", "Writing", "Public speaking"],
+      "Digital": ["Microsoft Word", "Online research", "Document preparation"],
+      "Professional": ["Organization", "Teaching support", "Teamwork"],
+      "Research": ["Text interpretation", "Language analysis"]
+    },
+    "relevant_courses": ["Arabic Language", "Grammar", "Reading and Writing", "Translation Basics"],
+    "experience_suggestions": {
+      "teaching_support": [
+        "Supported language learning activities and guided learners during structured sessions.",
+        "Helped prepare learning materials and classroom support tasks."
+      ]
+    },
+    "summary_keywords": ["Arabic", "language support", "education", "communication"],
+    "project_ideas": ["Arabic reading support project", "Language tutoring activity"]
+  },
+
+  "Diploma in Quranic Guidance": {
+    "level": "Diploma",
+    "faculty": "Islamic Studies and Arabic Language",
+    "duration_years": null,
+    "target_roles": ["Religious Education Assistant", "Community Program Assistant", "Da'wah Support Assistant"],
+    "skills": {
+      "Communication": ["Teaching", "Public speaking", "Community engagement", "Guidance"],
+      "Digital": ["Microsoft Word", "Presentation support", "Online research"],
+      "Professional": ["Patience", "Organization", "Counseling support"],
+      "Research": ["Islamic text study", "Qur'anic interpretation"]
+    },
+    "relevant_courses": ["Qur'anic Studies", "Guidance", "Islamic Education", "Da'wah"],
+    "experience_suggestions": {
+      "faith_based_service": [
+        "Supported faith-based programmes through coordination, communication, and participant guidance.",
+        "Assisted with educational activities in organized religious settings."
+      ]
+    },
+    "summary_keywords": ["Qur'anic guidance", "community service", "religious education"],
+    "project_ideas": ["Community Qur'an study support", "Religious education outreach"]
+  },
+
+  "Diploma in Social Work and Community Development": {
+    "level": "Diploma",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Community Development Assistant", "Social Work Intern", "NGO Field Assistant"],
+    "skills": {
+      "Communication": ["Community communication", "Report writing", "Interviewing"],
+      "Digital": ["Microsoft Word", "Excel", "Data collection tools"],
+      "Professional": ["Empathy", "Documentation", "Community mobilization", "Teamwork"],
+      "Research": ["Field data collection", "Needs assessment", "Case documentation"]
+    },
+    "relevant_courses": ["Community Development", "Social Work Practice", "Research Methods"],
+    "experience_suggestions": {
+      "community_work": [
+        "Supported community-based activities through coordination, communication, and documentation.",
+        "Assisted with outreach, mobilization, and participant follow-up."
+      ]
+    },
+    "summary_keywords": ["social work", "community development", "field support"],
+    "project_ideas": ["Community outreach activity", "Needs assessment mini-project"]
+  },
+
+  "Concurrent Diploma in Education": {
+    "level": "Diploma",
+    "faculty": "Education",
+    "duration_years": null,
+    "target_roles": ["Teaching Assistant", "School Intern", "Education Volunteer"],
+    "skills": {
+      "Communication": ["Lesson explanation", "Student communication", "Presentation skills"],
+      "Digital": ["Microsoft Office", "Educational tools", "Record keeping"],
+      "Professional": ["Lesson planning", "Classroom management", "Patience"],
+      "Research": ["Learner observation", "Student progress tracking"]
+    },
+    "relevant_courses": ["Teaching Methods", "Classroom Management", "Educational Psychology"],
+    "experience_suggestions": {
+      "teaching_practice": [
+        "Supported classroom instruction and learner participation during teaching practice.",
+        "Prepared lesson materials and assisted with classroom activities under supervision."
+      ]
+    },
+    "summary_keywords": ["education", "teaching support", "classroom"],
+    "project_ideas": ["Lesson planning exercise", "Teaching practice reflection"]
+  },
+
+  "Diploma in Guidance and Counselling": {
+    "level": "Diploma",
+    "faculty": "Education",
+    "duration_years": null,
+    "target_roles": ["Counselling Assistant", "Student Support Assistant", "School Welfare Assistant"],
+    "skills": {
+      "Communication": ["Active listening", "Guidance communication", "Interpersonal communication"],
+      "Digital": ["Microsoft Word", "Record keeping", "Report preparation"],
+      "Professional": ["Empathy", "Confidentiality", "Organization", "Patience"],
+      "Research": ["Case documentation", "Student needs analysis"]
+    },
+    "relevant_courses": ["Guidance and Counselling", "Educational Psychology", "Communication Skills"],
+    "experience_suggestions": {
+      "student_support": [
+        "Supported student guidance activities through listening, communication, and organized follow-up.",
+        "Assisted with documentation and learner support in educational settings."
+      ]
+    },
+    "summary_keywords": ["guidance", "counselling", "student support"],
+    "project_ideas": ["Peer support activity", "Student wellbeing awareness project"]
+  },
+
+  "Diploma in Primary Education": {
+    "level": "Diploma",
+    "faculty": "Education",
+    "duration_years": null,
+    "target_roles": ["Primary Teaching Assistant", "School Intern", "Education Volunteer"],
+    "skills": {
+      "Communication": ["Lesson delivery", "Student communication", "Reading support"],
+      "Digital": ["Microsoft Office", "Teaching aids preparation", "Record keeping"],
+      "Professional": ["Lesson planning", "Classroom management", "Patience", "Organization"],
+      "Research": ["Learner assessment", "Progress monitoring"]
+    },
+    "relevant_courses": ["Primary Education Methods", "Curriculum Studies", "Assessment"],
+    "experience_suggestions": {
+      "teaching_practice": [
+        "Supported classroom activities and learner participation in primary education settings.",
+        "Prepared learning materials and assisted with guided instruction."
+      ]
+    },
+    "summary_keywords": ["primary education", "teaching", "classroom support"],
+    "project_ideas": ["Reading support project", "Primary lesson preparation activity"]
+  },
+
+  "Diploma in Primary Education (External)": {
+    "level": "Diploma",
+    "faculty": "Education",
+    "duration_years": null,
+    "target_roles": ["Primary Teaching Assistant", "School Support Assistant", "Education Volunteer"],
+    "skills": {
+      "Communication": ["Lesson explanation", "Student communication", "Parent communication"],
+      "Digital": ["Microsoft Office", "Educational tools", "Record keeping"],
+      "Professional": ["Lesson planning", "Time management", "Organization"],
+      "Research": ["Learner tracking", "Assessment support"]
+    },
+    "relevant_courses": ["Primary Education", "Teaching Methods", "Assessment"],
+    "experience_suggestions": {
+      "teaching_practice": [
+        "Supported learner engagement and classroom activities in structured school settings.",
+        "Helped prepare lesson materials and education records."
+      ]
+    },
+    "summary_keywords": ["primary teaching", "education support"],
+    "project_ideas": ["Homework support activity", "Literacy support project"]
+  },
+
+  "Diploma in Laws": {
+    "level": "Diploma",
+    "faculty": "Law",
+    "duration_years": null,
+    "target_roles": ["Legal Clerk Assistant", "Court Intern", "Compliance Assistant"],
+    "skills": {
+      "Communication": ["Legal writing", "Documentation", "Client communication"],
+      "Digital": ["Microsoft Word", "Document management", "Online legal research"],
+      "Professional": ["Attention to detail", "Confidentiality", "Organization"],
+      "Research": ["Legal research", "Case review", "Statute reading"]
+    },
+    "relevant_courses": ["Introduction to Law", "Legal Research", "Constitutional Law"],
+    "experience_suggestions": {
+      "office_support": [
+        "Supported legal documentation, filing, and basic case preparation tasks.",
+        "Assisted with organized record handling and document review."
+      ]
+    },
+    "summary_keywords": ["law", "legal support", "research"],
+    "project_ideas": ["Legal aid observation", "Case summary assignment"]
+  },
+
+  "Diploma in Computer Science and Information Technology": {
+    "level": "Diploma",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["IT Support Intern", "Data Entry Assistant", "Junior Developer Assistant"],
+    "skills": {
+      "Communication": ["Technical documentation", "User support", "Team communication"],
+      "Digital": ["Programming basics", "Database basics", "Troubleshooting", "Office tools"],
+      "Professional": ["Problem solving", "Attention to detail", "Time management"],
+      "Research": ["Technical research", "System testing"]
+    },
+    "relevant_courses": ["Programming Fundamentals", "Database Systems", "Networking Basics"],
+    "experience_suggestions": {
+      "project_work": [
+        "Built or supported simple digital solutions as part of academic or personal projects.",
+        "Used digital tools to organize, process, and present information effectively."
+      ],
+      "it_support": [
+        "Assisted with basic troubleshooting and digital support tasks.",
+        "Helped maintain efficient use of digital tools and systems in a practical setting."
+      ]
+    },
+    "summary_keywords": ["IT", "technical support", "digital systems"],
+    "project_ideas": ["Simple website build", "Database mini-project"]
+  },
+
+  "Diploma in Library and Information Science": {
+    "level": "Diploma",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["Library Assistant", "Records Assistant", "Information Desk Assistant"],
+    "skills": {
+      "Communication": ["Information support", "User assistance", "Documentation"],
+      "Digital": ["Cataloguing systems", "Microsoft Office", "Database use"],
+      "Professional": ["Organization", "Attention to detail", "Record keeping"],
+      "Research": ["Information retrieval", "Reference support"]
+    },
+    "relevant_courses": ["Library Science", "Information Management", "Cataloguing"],
+    "experience_suggestions": {
+      "office_support": [
+        "Supported document organization, record handling, and user information support.",
+        "Assisted with filing, indexing, and maintaining organized information systems."
+      ]
+    },
+    "summary_keywords": ["library", "information management", "records"],
+    "project_ideas": ["Cataloguing exercise", "Information access support activity"]
+  },
+
+  "Diploma in Records Management": {
+    "level": "Diploma",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["Records Assistant", "Registry Intern", "Documentation Assistant"],
+    "skills": {
+      "Communication": ["Documentation", "Official correspondence", "Record handling"],
+      "Digital": ["Microsoft Office", "Record systems", "Database basics"],
+      "Professional": ["Organization", "Confidentiality", "Accuracy"],
+      "Research": ["File retrieval", "Records analysis"]
+    },
+    "relevant_courses": ["Records Management", "Information Systems", "Office Administration"],
+    "experience_suggestions": {
+      "office_support": [
+        "Assisted in organizing records, files, and documentation for efficient retrieval.",
+        "Supported accurate filing and maintenance of administrative records."
+      ]
+    },
+    "summary_keywords": ["records", "documentation", "registry support"],
+    "project_ideas": ["Records organization task", "Filing system improvement activity"]
+  },
+
+  "Advanced Diploma in Health Services Management": {
+    "level": "Diploma",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Health Administration Assistant", "Hospital Office Assistant", "Program Support Assistant"],
+    "skills": {
+      "Communication": ["Administrative communication", "Report writing", "Client handling"],
+      "Digital": ["Microsoft Office", "Health records systems", "Spreadsheet use"],
+      "Professional": ["Organization", "Planning", "Team coordination"],
+      "Research": ["Service evaluation", "Data reporting"]
+    },
+    "relevant_courses": ["Health Services Management", "Administration", "Planning and Evaluation"],
+    "experience_suggestions": {
+      "office_support": [
+        "Supported health-related administrative tasks through documentation, coordination, and record handling.",
+        "Assisted with communication and reporting in structured service settings."
+      ]
+    },
+    "summary_keywords": ["health administration", "service management", "documentation"],
+    "project_ideas": ["Service delivery review", "Health office records support"]
+  },
+
+  "Diploma in Business Studies": {
+    "level": "Diploma",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Business Intern", "Office Assistant", "Sales Assistant", "Customer Care Assistant"],
+    "skills": {
+      "Communication": ["Business communication", "Customer service", "Presentation skills"],
+      "Digital": ["Microsoft Excel", "Word", "PowerPoint"],
+      "Professional": ["Organization", "Time management", "Teamwork", "Problem solving"],
+      "Research": ["Market research", "Basic data analysis"]
+    },
+    "relevant_courses": ["Business Communication", "Marketing", "Management", "Entrepreneurship"],
+    "experience_suggestions": {
+      "office_support": [
+        "Assisted with office administration, filing, and day-to-day coordination tasks.",
+        "Prepared records and supported accurate documentation of activities."
+      ],
+      "small_business": [
+        "Supported small business operations through customer communication and record handling.",
+        "Built practical experience in sales, organization, and business support."
+      ]
+    },
+    "summary_keywords": ["business", "office support", "customer service"],
+    "project_ideas": ["Business plan project", "Customer service improvement task"]
+  },
+
+  "Diploma in Public Administration and Management": {
+    "level": "Diploma",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Administrative Intern", "Office Support Assistant", "Program Assistant"],
+    "skills": {
+      "Communication": ["Official correspondence", "Report writing", "Public communication"],
+      "Digital": ["Microsoft Office", "Record keeping systems", "Spreadsheet use"],
+      "Professional": ["Organization", "Teamwork", "Administrative coordination"],
+      "Research": ["Policy support", "Community data collection"]
+    },
+    "relevant_courses": ["Public Administration", "Management", "Local Government", "Research Methods"],
+    "experience_suggestions": {
+      "community_work": [
+        "Supported community-based activities through coordination, communication, and documentation.",
+        "Contributed to administrative and public service tasks in organized settings."
+      ]
+    },
+    "summary_keywords": ["public administration", "office support", "community service"],
+    "project_ideas": ["Community administration task", "Public service documentation activity"]
+  },
+
+  "Diploma in General Nursing": {
+    "level": "Diploma",
+    "faculty": "Health Sciences",
+    "duration_years": null,
+    "target_roles": ["Nursing Intern", "Clinical Support Assistant", "Patient Care Assistant"],
+    "skills": {
+      "Communication": ["Patient communication", "Clinical reporting", "Team communication"],
+      "Digital": ["Health records use", "Microsoft Office", "Basic data entry"],
+      "Professional": ["Patient care", "Empathy", "Attention to detail", "Time management"],
+      "Research": ["Observation", "Case documentation", "Health data recording"]
+    },
+    "relevant_courses": ["General Nursing", "Clinical Practice", "Anatomy", "Patient Care"],
+    "experience_suggestions": {
+      "clinical_support": [
+        "Supported patient care activities under supervision in structured health settings.",
+        "Assisted with observation, documentation, and routine clinical support tasks."
+      ]
+    },
+    "summary_keywords": ["nursing", "patient care", "clinical support"],
+    "project_ideas": ["Clinical observation log", "Patient care support reflection"]
+  },
+
+  "Diploma in General Nursing (Extension)": {
+    "level": "Diploma",
+    "faculty": "Health Sciences",
+    "duration_years": null,
+    "target_roles": ["Nursing Intern", "Patient Care Assistant", "Clinical Support Assistant"],
+    "skills": {
+      "Communication": ["Patient communication", "Clinical reporting", "Team communication"],
+      "Digital": ["Health records use", "Microsoft Office"],
+      "Professional": ["Patient care", "Empathy", "Attention to detail"],
+      "Research": ["Case notes", "Observation", "Clinical recording"]
+    },
+    "relevant_courses": ["General Nursing", "Clinical Practice", "Patient Care"],
+    "experience_suggestions": {
+      "clinical_support": [
+        "Supported clinical and patient care activities through organized assistance and documentation.",
+        "Helped maintain routine care support under professional supervision."
+      ]
+    },
+    "summary_keywords": ["nursing", "clinical care", "health support"],
+    "project_ideas": ["Clinical care support activity", "Ward observation record"]
+  },
+
+  "Diploma in Midwifery (Extension)": {
+    "level": "Diploma",
+    "faculty": "Health Sciences",
+    "duration_years": null,
+    "target_roles": ["Midwifery Intern", "Maternal Care Assistant", "Clinical Support Assistant"],
+    "skills": {
+      "Communication": ["Patient communication", "Counselling support", "Clinical reporting"],
+      "Digital": ["Health records use", "Basic data entry"],
+      "Professional": ["Maternal care support", "Empathy", "Attention to detail"],
+      "Research": ["Observation", "Case documentation"]
+    },
+    "relevant_courses": ["Midwifery", "Maternal Health", "Clinical Practice"],
+    "experience_suggestions": {
+      "clinical_support": [
+        "Supported maternal and reproductive health care activities under supervision.",
+        "Assisted with observation, patient support, and clinical documentation."
+      ]
+    },
+    "summary_keywords": ["midwifery", "maternal health", "clinical support"],
+    "project_ideas": ["Maternal health observation log", "Clinical support reflection"]
+  },
+
+  "Bachelor of Arts (Islamic Studies and Arabic Language)": {
+    "level": "Bachelor",
+    "faculty": "Islamic Studies and Arabic Language",
+    "duration_years": null,
+    "target_roles": ["Teaching Assistant", "Community Program Assistant", "Research Assistant"],
+    "skills": {
+      "Communication": ["Arabic communication", "Teaching", "Public speaking", "Writing"],
+      "Digital": ["Microsoft Office", "Online research", "Presentation support"],
+      "Professional": ["Organization", "Community engagement", "Cultural sensitivity"],
+      "Research": ["Islamic text research", "Arabic analysis", "Historical study"]
+    },
+    "relevant_courses": ["Islamic Studies", "Arabic Language", "Qur'anic Studies", "Hadith Studies"],
+    "experience_suggestions": {
+      "teaching_support": [
+        "Helped guide learners in religious and language education activities.",
+        "Supported structured learning sessions through communication and preparation."
+      ]
+    },
+    "summary_keywords": ["Islamic studies", "Arabic", "teaching", "community service"],
+    "project_ideas": ["Arabic teaching support", "Islamic education outreach"]
+  },
+
+  "Bachelor of Arts (Sharia)": {
+    "level": "Bachelor",
+    "faculty": "Islamic Studies and Arabic Language",
+    "duration_years": null,
+    "target_roles": ["Research Assistant", "Community Education Assistant", "Islamic Studies Assistant"],
+    "skills": {
+      "Communication": ["Teaching", "Public speaking", "Writing", "Counselling support"],
+      "Digital": ["Microsoft Office", "Research tools", "Document preparation"],
+      "Professional": ["Ethical awareness", "Organization", "Community engagement"],
+      "Research": ["Sharia research", "Text interpretation", "Comparative analysis"]
+    },
+    "relevant_courses": ["Sharia", "Fiqh", "Usul al-Fiqh", "Islamic Law"],
+    "experience_suggestions": {
+      "faith_based_service": [
+        "Supported educational and community programmes in organized religious settings.",
+        "Assisted with communication, coordination, and guidance-related activities."
+      ]
+    },
+    "summary_keywords": ["Sharia", "Islamic law", "community education"],
+    "project_ideas": ["Islamic law discussion project", "Community guidance support"]
+  },
+
+  "Bachelor of Dawah & Sociology": {
+    "level": "Bachelor",
+    "faculty": "Islamic Studies and Arabic Language",
+    "duration_years": null,
+    "target_roles": ["Community Program Assistant", "Da'wah Intern", "Research Assistant"],
+    "skills": {
+      "Communication": ["Public speaking", "Community mobilization", "Counselling", "Writing"],
+      "Digital": ["Microsoft Office", "Content creation", "Online research"],
+      "Professional": ["Empathy", "Organization", "Event coordination"],
+      "Research": ["Social analysis", "Community assessment", "Islamic texts research"]
+    },
+    "relevant_courses": ["Dawah", "Sociology", "Community Development", "Islamic Studies"],
+    "experience_suggestions": {
+      "community_work": [
+        "Supported community activities through communication, guidance, and organized participation.",
+        "Assisted with programme coordination and participant engagement."
+      ]
+    },
+    "summary_keywords": ["dawah", "sociology", "community engagement"],
+    "project_ideas": ["Community awareness project", "Religious outreach activity"]
+  },
+
+  "Bachelor of Arts in Social Sciences": {
+    "level": "Bachelor",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Research Assistant", "Program Assistant", "Community Development Intern"],
+    "skills": {
+      "Communication": ["Report writing", "Interviewing", "Presentation", "Community communication"],
+      "Digital": ["Microsoft Office", "Data entry", "Online research"],
+      "Professional": ["Teamwork", "Critical thinking", "Organization"],
+      "Research": ["Data collection", "Fieldwork", "Social analysis"]
+    },
+    "relevant_courses": ["Sociology", "Political Science", "Development Studies", "Research Methods"],
+    "experience_suggestions": {
+      "project_work": [
+        "Supported data collection, documentation, and reporting in academic or community-based work.",
+        "Built practical social research and communication skills through structured participation."
+      ]
+    },
+    "summary_keywords": ["social sciences", "research", "community work"],
+    "project_ideas": ["Social survey project", "Community assessment activity"]
+  },
+
+  "Bachelor of Arts in Economics": {
+    "level": "Bachelor",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Economics Intern", "Research Assistant", "Data Assistant"],
+    "skills": {
+      "Communication": ["Report writing", "Presentation", "Professional communication"],
+      "Digital": ["Excel", "Data analysis tools", "Spreadsheet modeling"],
+      "Professional": ["Numerical reasoning", "Problem solving", "Attention to detail"],
+      "Research": ["Economic analysis", "Data interpretation", "Survey analysis"]
+    },
+    "relevant_courses": ["Microeconomics", "Macroeconomics", "Statistics", "Development Economics"],
+    "experience_suggestions": {
+      "project_work": [
+        "Supported data analysis and reporting tasks in academic or applied economics contexts.",
+        "Used structured information to interpret trends and prepare findings."
+      ]
+    },
+    "summary_keywords": ["economics", "data analysis", "research"],
+    "project_ideas": ["Market survey project", "Economic trend analysis"]
+  },
+
+  "Bachelor of Arts in International Relations and Diplomacy": {
+    "level": "Bachelor",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Program Intern", "Policy Research Intern", "International Relations Assistant"],
+    "skills": {
+      "Communication": ["Policy writing", "Presentation", "Diplomatic communication", "Public speaking"],
+      "Digital": ["Microsoft Office", "Online research", "Documentation"],
+      "Professional": ["Critical thinking", "Organization", "Cross-cultural communication"],
+      "Research": ["Policy analysis", "International affairs research", "Report writing"]
+    },
+    "relevant_courses": ["International Relations", "Diplomacy", "Political Science", "Research Methods"],
+    "experience_suggestions": {
+      "project_work": [
+        "Supported analysis, documentation, and communication tasks related to governance or public affairs topics.",
+        "Built strong research and writing skills through structured academic and project work."
+      ]
+    },
+    "summary_keywords": ["international relations", "policy", "diplomacy"],
+    "project_ideas": ["Policy brief assignment", "International affairs presentation"]
+  },
+
+  "Bachelor of Arts in Social Sciences and Community Development": {
+    "level": "Bachelor",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Community Development Intern", "NGO Field Assistant", "Program Assistant"],
+    "skills": {
+      "Communication": ["Community mobilization", "Report writing", "Presentation", "Interviewing"],
+      "Digital": ["Microsoft Office", "Data collection tools", "Reporting tools"],
+      "Professional": ["Empathy", "Organization", "Teamwork", "Field coordination"],
+      "Research": ["Needs assessment", "Field data collection", "Community analysis"]
+    },
+    "relevant_courses": ["Community Development", "Social Sciences", "Development Practice", "Research Methods"],
+    "experience_suggestions": {
+      "community_work": [
+        "Supported community-based activities through coordination, communication, and documentation.",
+        "Assisted in outreach, mobilization, and participant engagement."
+      ]
+    },
+    "summary_keywords": ["community development", "social research", "field support"],
+    "project_ideas": ["Community outreach project", "Needs assessment exercise"]
+  },
+
+  "Bachelor of Cultural Heritage Studies": {
+    "level": "Bachelor",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Research Assistant", "Museum Assistant", "Heritage Documentation Intern"],
+    "skills": {
+      "Communication": ["Documentation", "Public communication", "Presentation"],
+      "Digital": ["Microsoft Office", "Photography basics", "Database use"],
+      "Professional": ["Attention to detail", "Organization", "Record keeping"],
+      "Research": ["Historical research", "Cultural documentation", "Field observation"]
+    },
+    "relevant_courses": ["Cultural Heritage", "History", "Documentation", "Research Methods"],
+    "experience_suggestions": {
+      "project_work": [
+        "Supported cultural documentation, reporting, and field observation activities.",
+        "Built research and documentation skills through heritage-related academic work."
+      ]
+    },
+    "summary_keywords": ["heritage", "documentation", "research"],
+    "project_ideas": ["Heritage documentation project", "Cultural site study"]
+  },
+
+  "Bachelor of Development Studies": {
+    "level": "Bachelor",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Program Assistant", "Development Intern", "Community Outreach Assistant"],
+    "skills": {
+      "Communication": ["Report writing", "Community engagement", "Presentation"],
+      "Digital": ["Microsoft Office", "Data collection", "Spreadsheet use"],
+      "Professional": ["Planning", "Teamwork", "Problem solving", "Organization"],
+      "Research": ["Development analysis", "Field data collection", "Program assessment"]
+    },
+    "relevant_courses": ["Development Studies", "Project Planning", "Community Development", "Research Methods"],
+    "experience_suggestions": {
+      "community_work": [
+        "Supported outreach and development-related activities through communication, coordination, and documentation.",
+        "Contributed to organized field and community support tasks."
+      ]
+    },
+    "summary_keywords": ["development studies", "community work", "program support"],
+    "project_ideas": ["Development intervention case study", "Community mobilization activity"]
+  },
+
+  "Bachelor of Science in Mass Communication": {
+    "level": "Bachelor",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Journalism Intern", "Communications Intern", "Radio Intern", "Content Creator", "Media Assistant"],
     "skills": {
       "Communication": ["News writing", "Interviewing", "Script writing", "Public speaking", "Reporting"],
       "Digital": ["Audio recording", "Video editing", "Social media content creation", "Photography", "Canva"],
       "Professional": ["Media monitoring", "Research", "Team collaboration", "Deadline management"],
       "Research": ["Media analysis", "Audience research", "Content analysis"]
     },
-    "relevant_courses": [
-      "News Writing and Reporting",
-      "Broadcast Journalism",
-      "Public Relations",
-      "Communication Theory",
-      "Media Ethics and Law",
-      "Digital Media Production",
-      "Feature Writing"
-    ],
+    "relevant_courses": ["News Writing and Reporting", "Broadcast Journalism", "Public Relations", "Communication Theory", "Media Ethics and Law", "Digital Media Production"],
     "experience_suggestions": {
       "campus_media": [
         "Assisted in planning and producing media content for campus activities.",
         "Conducted interviews and gathered information for reports and updates.",
-        "Supported photography, recording, or social media coverage for events.",
-        "Built practical communication skills through campus media participation."
+        "Supported photography, recording, or social media coverage for events."
       ],
       "volunteering": [
         "Supported communication activities for community programmes and public events.",
         "Helped prepare announcements, messages, or public information materials."
       ]
-    }
-  },
-  "Education": {
-    "target_roles": [
-      "Teaching Assistant",
-      "School Intern",
-      "Education Volunteer",
-      "Tutor",
-      "Classroom Support Assistant",
-      "Curriculum Assistant"
-    ],
-    "skills": {
-      "Communication": ["Lesson explanation", "Student communication", "Parent communication", "Public speaking"],
-      "Digital": ["Microsoft Office", "Educational software", "Online teaching tools", "Record keeping"],
-      "Professional": ["Lesson planning", "Classroom management", "Student assessment", "Patience", "Organization"],
-      "Research": ["Educational research", "Student progress tracking", "Learning outcome analysis"]
     },
-    "relevant_courses": [
-      "Curriculum Studies",
-      "Educational Psychology",
-      "Classroom Management",
-      "Assessment and Evaluation",
-      "Teaching Methods",
-      "Special Needs Education",
-      "Educational Technology"
-    ],
+    "summary_keywords": ["media", "communication", "journalism", "broadcasting"],
+    "project_ideas": ["Campus media coverage", "Radio production project", "PR campaign assignment"]
+  },
+
+  "Bachelor of Science in Political Science": {
+    "level": "Bachelor",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Policy Research Intern", "Program Assistant", "Governance Intern"],
+    "skills": {
+      "Communication": ["Policy writing", "Presentation", "Public communication"],
+      "Digital": ["Microsoft Office", "Online research", "Documentation"],
+      "Professional": ["Critical thinking", "Organization", "Teamwork"],
+      "Research": ["Policy analysis", "Political research", "Survey interpretation"]
+    },
+    "relevant_courses": ["Political Science", "Governance", "Public Policy", "Research Methods"],
+    "experience_suggestions": {
+      "project_work": [
+        "Supported policy-related analysis, documentation, and reporting tasks.",
+        "Built research and communication skills through structured political science work."
+      ]
+    },
+    "summary_keywords": ["political science", "policy", "governance"],
+    "project_ideas": ["Policy analysis assignment", "Governance awareness project"]
+  },
+
+  "Bachelor of Social Work and Social Administration": {
+    "level": "Bachelor",
+    "faculty": "Arts and Social Sciences",
+    "duration_years": null,
+    "target_roles": ["Social Work Intern", "Community Program Assistant", "NGO Field Assistant"],
+    "skills": {
+      "Communication": ["Interviewing", "Case communication", "Community engagement"],
+      "Digital": ["Microsoft Office", "Data collection tools", "Documentation"],
+      "Professional": ["Empathy", "Case handling support", "Organization", "Teamwork"],
+      "Research": ["Needs assessment", "Case documentation", "Field data collection"]
+    },
+    "relevant_courses": ["Social Work", "Social Administration", "Community Development", "Research Methods"],
+    "experience_suggestions": {
+      "community_work": [
+        "Supported social and community-based activities through communication, coordination, and documentation.",
+        "Assisted with field support and participant engagement in organized settings."
+      ]
+    },
+    "summary_keywords": ["social work", "community support", "field practice"],
+    "project_ideas": ["Case support exercise", "Community outreach project"]
+  },
+
+  "Bachelor of Arts Education": {
+    "level": "Bachelor",
+    "faculty": "Education",
+    "duration_years": null,
+    "target_roles": ["Teaching Assistant", "School Intern", "Education Volunteer"],
+    "skills": {
+      "Communication": ["Lesson explanation", "Student communication", "Presentation skills"],
+      "Digital": ["Microsoft Office", "Educational tools", "Record keeping"],
+      "Professional": ["Lesson planning", "Classroom management", "Organization"],
+      "Research": ["Learner assessment", "Progress tracking", "Educational reflection"]
+    },
+    "relevant_courses": ["Teaching Methods", "Curriculum Studies", "Assessment", "Educational Psychology"],
     "experience_suggestions": {
       "teaching_practice": [
         "Supported classroom instruction and learner participation during teaching practice.",
-        "Prepared lesson materials and assisted with classroom activities under supervision.",
-        "Observed learner progress and contributed to feedback and record keeping."
-      ],
-      "tutoring": [
-        "Provided academic support to learners through guided explanation and practice.",
-        "Built instructional and communication skills while helping learners understand course content."
+        "Prepared lesson materials and assisted with classroom activities under supervision."
       ]
-    }
-  },
-  "Business Administration": {
-    "target_roles": [
-      "Administrative Assistant",
-      "Business Intern",
-      "Operations Intern",
-      "Customer Care Assistant",
-      "Office Assistant",
-      "Sales Assistant",
-      "Marketing Intern"
-    ],
-    "skills": {
-      "Communication": ["Business writing", "Customer service", "Presentation skills", "Email etiquette"],
-      "Digital": ["Microsoft Excel", "Word", "PowerPoint", "Google Workspace", "CRM basics"],
-      "Professional": ["Time management", "Team coordination", "Problem solving", "Organization", "Data entry"],
-      "Research": ["Market research", "Data analysis", "Report writing"]
     },
-    "relevant_courses": [
-      "Principles of Management",
-      "Business Communication",
-      "Marketing Management",
-      "Organizational Behaviour",
-      "Entrepreneurship",
-      "Business Statistics",
-      "Human Resource Management"
-    ],
+    "summary_keywords": ["education", "teaching", "classroom support"],
+    "project_ideas": ["Lesson planning portfolio", "Teaching practice reflection"]
+  },
+
+  "Bachelor of Early Childhood Education": {
+    "level": "Bachelor",
+    "faculty": "Education",
+    "duration_years": null,
+    "target_roles": ["Teaching Assistant", "Early Childhood Intern", "School Support Assistant"],
+    "skills": {
+      "Communication": ["Child-friendly communication", "Parent communication", "Storytelling"],
+      "Digital": ["Microsoft Office", "Learning material preparation", "Record keeping"],
+      "Professional": ["Patience", "Creativity", "Classroom support", "Organization"],
+      "Research": ["Child observation", "Development tracking"]
+    },
+    "relevant_courses": ["Early Childhood Education", "Child Development", "Teaching Methods"],
+    "experience_suggestions": {
+      "teaching_practice": [
+        "Supported early learning activities and learner participation in structured classroom settings.",
+        "Prepared simple teaching aids and assisted with guided learning support."
+      ]
+    },
+    "summary_keywords": ["early childhood", "teaching", "learner support"],
+    "project_ideas": ["Child learning activity plan", "Early childhood teaching aid project"]
+  },
+
+  "Bachelor of Education (External)": {
+    "level": "Bachelor",
+    "faculty": "Education",
+    "duration_years": null,
+    "target_roles": ["Teaching Assistant", "School Intern", "Education Support Assistant"],
+    "skills": {
+      "Communication": ["Lesson explanation", "Learner communication", "Presentation"],
+      "Digital": ["Microsoft Office", "Educational tools", "Record keeping"],
+      "Professional": ["Lesson planning", "Time management", "Organization"],
+      "Research": ["Assessment support", "Learner tracking"]
+    },
+    "relevant_courses": ["Education", "Teaching Methods", "Assessment", "Curriculum Studies"],
+    "experience_suggestions": {
+      "teaching_practice": [
+        "Supported classroom activities and learner participation in structured educational settings.",
+        "Helped prepare lessons and maintain learning records under supervision."
+      ]
+    },
+    "summary_keywords": ["education", "teaching support"],
+    "project_ideas": ["Teaching portfolio", "Learner assessment activity"]
+  },
+
+  "Bachelor of Education Primary": {
+    "level": "Bachelor",
+    "faculty": "Education",
+    "duration_years": null,
+    "target_roles": ["Primary School Teacher Intern", "Teaching Assistant", "School Support Assistant"],
+    "skills": {
+      "Communication": ["Lesson delivery", "Reading support", "Learner communication"],
+      "Digital": ["Microsoft Office", "Learning aids preparation", "Record keeping"],
+      "Professional": ["Classroom management", "Patience", "Lesson planning"],
+      "Research": ["Progress monitoring", "Assessment support"]
+    },
+    "relevant_courses": ["Primary Education", "Curriculum Studies", "Assessment", "Teaching Practice"],
+    "experience_suggestions": {
+      "teaching_practice": [
+        "Supported primary classroom instruction, learner participation, and guided assessment tasks.",
+        "Prepared teaching materials and assisted with routine classroom activities."
+      ]
+    },
+    "summary_keywords": ["primary education", "classroom support", "teaching"],
+    "project_ideas": ["Reading lesson support", "Classroom activity plan"]
+  },
+
+  "Bachelor of Science Education": {
+    "level": "Bachelor",
+    "faculty": "Education",
+    "duration_years": null,
+    "target_roles": ["Science Teaching Assistant", "School Intern", "Education Volunteer"],
+    "skills": {
+      "Communication": ["Lesson explanation", "Science communication", "Presentation"],
+      "Digital": ["Microsoft Office", "Educational tools", "Simple data handling"],
+      "Professional": ["Classroom support", "Lesson planning", "Organization"],
+      "Research": ["Science project support", "Assessment", "Observation"]
+    },
+    "relevant_courses": ["Science Education", "Teaching Methods", "Assessment", "Curriculum Studies"],
+    "experience_suggestions": {
+      "teaching_practice": [
+        "Supported science learning activities and learner participation during teaching practice.",
+        "Prepared simple instructional materials and assisted in classroom guidance."
+      ]
+    },
+    "summary_keywords": ["science education", "teaching", "classroom support"],
+    "project_ideas": ["Science teaching demonstration", "Classroom experiment support"]
+  },
+
+  "Bachelor of Laws": {
+    "level": "Bachelor",
+    "faculty": "Law",
+    "duration_years": null,
+    "target_roles": ["Legal Intern", "Research Assistant", "Compliance Assistant"],
+    "skills": {
+      "Communication": ["Legal writing", "Professional communication", "Documentation"],
+      "Digital": ["Microsoft Word", "Research databases", "Document management"],
+      "Professional": ["Attention to detail", "Confidentiality", "Organization", "Analytical thinking"],
+      "Research": ["Legal research", "Case analysis", "Statutory interpretation"]
+    },
+    "relevant_courses": ["Constitutional Law", "Criminal Law", "Legal Research", "Contract Law"],
     "experience_suggestions": {
       "office_support": [
-        "Assisted with office administration, filing, and day-to-day coordination tasks.",
-        "Prepared records and supported accurate documentation of activities.",
-        "Handled communication and helped maintain organized workflow."
-      ],
-      "small_business": [
-        "Supported small business operations through customer communication and record handling.",
-        "Built practical experience in basic sales, organization, and business support."
+        "Supported legal documentation, filing, and research preparation tasks.",
+        "Assisted with organized review of legal materials and professional records."
       ]
-    }
-  },
-  "Accounting": {
-    "target_roles": [
-      "Accounts Assistant",
-      "Finance Intern",
-      "Bookkeeping Assistant",
-      "Audit Intern",
-      "Tax Assistant",
-      "Payroll Assistant"
-    ],
-    "skills": {
-      "Communication": ["Financial reporting", "Client communication", "Documentation"],
-      "Digital": ["Excel (Advanced)", "QuickBooks", "Accounting software", "Spreadsheet formulas"],
-      "Professional": ["Attention to detail", "Numerical accuracy", "Record keeping", "Confidentiality", "Organization"],
-      "Research": ["Financial analysis", "Audit procedures", "Tax research"]
     },
-    "relevant_courses": [
-      "Financial Accounting",
-      "Cost Accounting",
-      "Management Accounting",
-      "Auditing Principles",
-      "Taxation",
-      "Business Mathematics",
-      "Accounting Information Systems"
-    ],
-    "experience_suggestions": {
-      "office_support": [
-        "Assisted in maintaining financial records and organizing accounting documents.",
-        "Supported data entry and basic reconciliation tasks with attention to accuracy.",
-        "Prepared and arranged records for review and reporting purposes."
-      ]
-    }
+    "summary_keywords": ["law", "legal research", "documentation"],
+    "project_ideas": ["Case brief assignment", "Legal aid observation"]
   },
-  "Information Technology": {
-    "target_roles": [
-      "IT Support Intern",
-      "Data Entry Assistant",
-      "Junior Web Assistant",
-      "Systems Support Intern",
-      "Software Tester Intern",
-      "Network Assistant"
-    ],
+
+  "Bachelor of Information Technology": {
+    "level": "Bachelor",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["IT Support Intern", "Systems Support Intern", "Junior Web Assistant"],
     "skills": {
-      "Communication": ["Technical writing", "User support", "Team collaboration", "Documentation"],
-      "Digital": ["HTML/CSS", "JavaScript basics", "Database queries", "Troubleshooting", "Network basics"],
-      "Professional": ["Problem solving", "Logical thinking", "Time management", "Attention to detail"],
-      "Research": ["Technical research", "Software testing", "System analysis"]
+      "Communication": ["Technical communication", "User support", "Documentation"],
+      "Digital": ["HTML/CSS", "JavaScript basics", "Troubleshooting", "Database basics"],
+      "Professional": ["Problem solving", "Attention to detail", "Teamwork"],
+      "Research": ["System analysis", "Technical research", "Software testing"]
     },
-    "relevant_courses": [
-      "Programming Fundamentals",
-      "Database Systems",
-      "Web Development",
-      "Computer Networks",
-      "Systems Analysis and Design",
-      "IT Security Basics",
-      "Operating Systems"
-    ],
+    "relevant_courses": ["Web Development", "Database Systems", "Computer Networks", "Systems Analysis"],
     "experience_suggestions": {
       "project_work": [
         "Built or supported simple digital solutions as part of academic or personal projects.",
@@ -175,67 +803,511 @@
         "Assisted with basic troubleshooting and digital support tasks.",
         "Helped maintain efficient use of digital tools and systems in a practical setting."
       ]
-    }
-  },
-  "Public Administration": {
-    "target_roles": [
-      "Administrative Intern",
-      "Program Assistant",
-      "Community Development Intern",
-      "Office Support Assistant",
-      "Policy Research Intern",
-      "Government Relations Assistant"
-    ],
-    "skills": {
-      "Communication": ["Public communication", "Report writing", "Official correspondence", "Presentation"],
-      "Digital": ["Microsoft Office", "Database management", "Record keeping systems"],
-      "Professional": ["Policy understanding", "Community engagement", "Organization", "Teamwork", "Ethics"],
-      "Research": ["Policy analysis", "Program evaluation", "Data collection", "Community needs assessment"]
     },
-    "relevant_courses": [
-      "Public Policy Analysis",
-      "Local Government Administration",
-      "Public Sector Management",
-      "Development Administration",
-      "Research Methods",
-      "Ethics in Public Service",
-      "Community Development"
-    ],
+    "summary_keywords": ["IT", "technical support", "web", "systems"],
+    "project_ideas": ["Simple web app", "Database project", "IT support log"]
+  },
+
+  "Bachelor of Records and Information Management": {
+    "level": "Bachelor",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["Records Assistant", "Documentation Intern", "Registry Assistant"],
+    "skills": {
+      "Communication": ["Documentation", "Official correspondence", "Information support"],
+      "Digital": ["Record systems", "Microsoft Office", "Database use"],
+      "Professional": ["Organization", "Accuracy", "Confidentiality"],
+      "Research": ["Information retrieval", "Records analysis"]
+    },
+    "relevant_courses": ["Records Management", "Information Systems", "Documentation"],
+    "experience_suggestions": {
+      "office_support": [
+        "Supported records organization, documentation, and accurate filing processes.",
+        "Assisted in maintaining information for efficient access and retrieval."
+      ]
+    },
+    "summary_keywords": ["records", "information management", "documentation"],
+    "project_ideas": ["Registry organization project", "Records retrieval exercise"]
+  },
+
+  "Bachelor of Science (Hons)": {
+    "level": "Bachelor",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["Research Assistant", "Lab Assistant", "Data Assistant"],
+    "skills": {
+      "Communication": ["Report writing", "Presentation", "Scientific communication"],
+      "Digital": ["Data analysis tools", "Microsoft Office", "Spreadsheet use"],
+      "Professional": ["Observation", "Accuracy", "Problem solving"],
+      "Research": ["Scientific inquiry", "Data collection", "Analysis"]
+    },
+    "relevant_courses": ["Science Methods", "Laboratory Practice", "Research Methods"],
+    "experience_suggestions": {
+      "project_work": [
+        "Supported laboratory, data collection, or science-related project tasks through organized participation.",
+        "Built research and reporting skills through structured scientific work."
+      ]
+    },
+    "summary_keywords": ["science", "research", "analysis"],
+    "project_ideas": ["Science project", "Laboratory report task"]
+  },
+
+  "Bachelor of Science in Computer Science": {
+    "level": "Bachelor",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["Software Intern", "Junior Developer Intern", "Systems Assistant"],
+    "skills": {
+      "Communication": ["Technical documentation", "Team communication", "User explanation"],
+      "Digital": ["Programming", "Database design", "Algorithms", "Web development"],
+      "Professional": ["Problem solving", "Logical thinking", "Attention to detail"],
+      "Research": ["System design", "Software testing", "Technical analysis"]
+    },
+    "relevant_courses": ["Programming", "Algorithms", "Database Systems", "Software Engineering"],
+    "experience_suggestions": {
+      "project_work": [
+        "Built or supported software-related tasks as part of academic or personal projects.",
+        "Used structured logic and digital tools to solve practical technical problems."
+      ]
+    },
+    "summary_keywords": ["computer science", "software", "programming"],
+    "project_ideas": ["App development project", "Algorithm assignment", "Database system"]
+  },
+
+  "Bachelor of Science in Environmental Science": {
+    "level": "Bachelor",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["Environmental Intern", "Field Assistant", "Research Assistant"],
+    "skills": {
+      "Communication": ["Report writing", "Presentation", "Community awareness"],
+      "Digital": ["Data collection tools", "Spreadsheet use", "Mapping basics"],
+      "Professional": ["Field observation", "Planning", "Problem solving"],
+      "Research": ["Environmental analysis", "Sampling", "Data interpretation"]
+    },
+    "relevant_courses": ["Environmental Science", "Ecology", "Research Methods", "Field Techniques"],
+    "experience_suggestions": {
+      "fieldwork": [
+        "Supported field-based environmental activities through observation, data collection, and reporting.",
+        "Assisted with organized practical work related to environmental monitoring."
+      ]
+    },
+    "summary_keywords": ["environment", "fieldwork", "research"],
+    "project_ideas": ["Environmental awareness project", "Field sampling exercise"]
+  },
+
+  "Bachelor of Science in Records and Library Management": {
+    "level": "Bachelor",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["Library Intern", "Records Assistant", "Information Management Assistant"],
+    "skills": {
+      "Communication": ["User support", "Documentation", "Information assistance"],
+      "Digital": ["Cataloguing systems", "Database use", "Microsoft Office"],
+      "Professional": ["Organization", "Attention to detail", "Record keeping"],
+      "Research": ["Information retrieval", "Reference support", "Data organization"]
+    },
+    "relevant_courses": ["Library Management", "Records Management", "Information Retrieval"],
+    "experience_suggestions": {
+      "office_support": [
+        "Supported organized handling of records, catalogues, and user information requests.",
+        "Assisted in maintaining accurate and accessible information systems."
+      ]
+    },
+    "summary_keywords": ["library", "records", "information systems"],
+    "project_ideas": ["Library support task", "Records system review"]
+  },
+
+  "Bachelor of Statistics": {
+    "level": "Bachelor",
+    "faculty": "Science",
+    "duration_years": null,
+    "target_roles": ["Data Assistant", "Statistics Intern", "Research Assistant"],
+    "skills": {
+      "Communication": ["Report writing", "Presentation of findings", "Professional communication"],
+      "Digital": ["Excel", "Statistical software", "Data cleaning", "Spreadsheet analysis"],
+      "Professional": ["Numerical reasoning", "Accuracy", "Problem solving"],
+      "Research": ["Data analysis", "Survey design", "Statistical interpretation"]
+    },
+    "relevant_courses": ["Statistics", "Probability", "Data Analysis", "Research Methods"],
+    "experience_suggestions": {
+      "project_work": [
+        "Supported collection, cleaning, and analysis of data for academic or practical tasks.",
+        "Prepared structured findings and contributed to evidence-based reporting."
+      ]
+    },
+    "summary_keywords": ["statistics", "data analysis", "research"],
+    "project_ideas": ["Survey analysis project", "Data visualization task"]
+  },
+
+  "Bachelor of Administrative and Secretarial Science": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Administrative Assistant", "Executive Assistant Intern", "Office Assistant"],
+    "skills": {
+      "Communication": ["Business writing", "Email etiquette", "Official correspondence"],
+      "Digital": ["Microsoft Office", "Typing", "Spreadsheet use", "Document formatting"],
+      "Professional": ["Organization", "Time management", "Confidentiality", "Coordination"],
+      "Research": ["Documentation review", "Information organization"]
+    },
+    "relevant_courses": ["Office Practice", "Business Communication", "Administrative Management"],
+    "experience_suggestions": {
+      "office_support": [
+        "Assisted with scheduling, documentation, filing, and day-to-day office coordination tasks.",
+        "Supported professional communication and organized administrative workflow."
+      ]
+    },
+    "summary_keywords": ["administration", "office support", "documentation"],
+    "project_ideas": ["Office workflow task", "Document formatting project"]
+  },
+
+  "Bachelor of Business Computing": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Business Systems Intern", "Data Assistant", "IT Support Intern"],
+    "skills": {
+      "Communication": ["Business communication", "Technical documentation", "User support"],
+      "Digital": ["Excel", "Database systems", "Business software", "Web basics"],
+      "Professional": ["Problem solving", "Organization", "Teamwork"],
+      "Research": ["Systems analysis", "Business data analysis"]
+    },
+    "relevant_courses": ["Business Computing", "Database Systems", "Information Systems", "Management"],
+    "experience_suggestions": {
+      "project_work": [
+        "Supported business-related digital tasks through structured use of software and information systems.",
+        "Built practical experience in combining administrative and technical skills."
+      ]
+    },
+    "summary_keywords": ["business computing", "systems", "data support"],
+    "project_ideas": ["Business systems project", "Database support task"]
+  },
+
+  "Bachelor of Business Studies": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Business Intern", "Office Assistant", "Customer Care Assistant", "Sales Intern"],
+    "skills": {
+      "Communication": ["Business writing", "Customer service", "Presentation"],
+      "Digital": ["Excel", "Word", "PowerPoint", "Google Workspace"],
+      "Professional": ["Organization", "Teamwork", "Time management", "Problem solving"],
+      "Research": ["Market research", "Basic business analysis"]
+    },
+    "relevant_courses": ["Business Communication", "Marketing", "Management", "Entrepreneurship"],
+    "experience_suggestions": {
+      "office_support": [
+        "Assisted with office administration, filing, and day-to-day coordination tasks.",
+        "Handled communication and helped maintain organized workflow."
+      ],
+      "small_business": [
+        "Supported small business operations through customer communication and record handling.",
+        "Built practical experience in basic sales, organization, and business support."
+      ]
+    },
+    "summary_keywords": ["business", "office administration", "customer service"],
+    "project_ideas": ["Business plan", "Customer relations activity"]
+  },
+
+  "Bachelor of Human Resources Management": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["HR Intern", "Administrative Assistant", "Recruitment Support Assistant"],
+    "skills": {
+      "Communication": ["Professional communication", "Interview support", "Documentation"],
+      "Digital": ["Microsoft Office", "Spreadsheet use", "Record systems"],
+      "Professional": ["Organization", "Confidentiality", "Teamwork", "Interpersonal skills"],
+      "Research": ["Staff data handling", "Workplace analysis"]
+    },
+    "relevant_courses": ["Human Resource Management", "Organizational Behaviour", "Business Communication"],
+    "experience_suggestions": {
+      "office_support": [
+        "Supported staff-related administration through documentation, filing, and coordination tasks.",
+        "Assisted with organized handling of records and routine office communication."
+      ]
+    },
+    "summary_keywords": ["HR", "administration", "people support"],
+    "project_ideas": ["Recruitment process review", "Staff records task"]
+  },
+
+  "Bachelor of Islamic Banking and Finance": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Finance Intern", "Banking Assistant", "Accounts Support Assistant"],
+    "skills": {
+      "Communication": ["Client communication", "Financial reporting", "Documentation"],
+      "Digital": ["Excel", "Accounting tools", "Microsoft Office"],
+      "Professional": ["Numerical accuracy", "Confidentiality", "Attention to detail"],
+      "Research": ["Financial analysis", "Banking research", "Compliance review"]
+    },
+    "relevant_courses": ["Islamic Banking", "Finance", "Accounting", "Business Ethics"],
+    "experience_suggestions": {
+      "office_support": [
+        "Supported finance and documentation tasks in organized office settings.",
+        "Assisted with accurate record handling and routine administrative follow-up."
+      ]
+    },
+    "summary_keywords": ["banking", "finance", "Islamic finance"],
+    "project_ideas": ["Financial review task", "Islamic banking case study"]
+  },
+
+  "Bachelor of Procurement and Logistics Management": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Procurement Intern", "Logistics Assistant", "Supply Chain Support Assistant"],
+    "skills": {
+      "Communication": ["Vendor communication", "Documentation", "Report writing"],
+      "Digital": ["Excel", "Inventory tools", "Microsoft Office"],
+      "Professional": ["Organization", "Planning", "Attention to detail", "Coordination"],
+      "Research": ["Supplier analysis", "Inventory review", "Process assessment"]
+    },
+    "relevant_courses": ["Procurement", "Logistics", "Supply Chain", "Business Communication"],
+    "experience_suggestions": {
+      "office_support": [
+        "Supported documentation, coordination, and routine follow-up in procurement or logistics-related tasks.",
+        "Assisted with organized record handling and supply-related administration."
+      ]
+    },
+    "summary_keywords": ["procurement", "logistics", "supply chain"],
+    "project_ideas": ["Inventory tracking task", "Supplier documentation project"]
+  },
+
+  "Bachelor of Public Administration": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Administrative Intern", "Program Assistant", "Office Support Assistant"],
+    "skills": {
+      "Communication": ["Official communication", "Report writing", "Public correspondence"],
+      "Digital": ["Microsoft Office", "Record systems", "Spreadsheet use"],
+      "Professional": ["Organization", "Administrative coordination", "Teamwork"],
+      "Research": ["Public service analysis", "Program evaluation", "Community data collection"]
+    },
+    "relevant_courses": ["Public Administration", "Management", "Public Policy", "Research Methods"],
     "experience_suggestions": {
       "community_work": [
-        "Supported community-based activities through coordination, communication, and documentation.",
-        "Contributed to administrative and public service tasks in organized settings."
-      ],
-      "student_leadership": [
-        "Represented group interests and supported communication between members and leadership.",
-        "Helped organize meetings, updates, and administrative follow-up."
+        "Supported administrative and community-oriented activities through communication, coordination, and documentation.",
+        "Contributed to organized public service support tasks."
       ]
-    }
-  },
-  "Agriculture": {
-    "target_roles": [
-      "Agriculture Intern",
-      "Farm Assistant",
-      "Field Officer Intern",
-      "Agribusiness Trainee",
-      "Extension Worker Intern",
-      "Research Assistant"
-    ],
-    "skills": {
-      "Communication": ["Farm reporting", "Community extension", "Team coordination", "Training delivery"],
-      "Digital": ["Data collection apps", "Spreadsheet analysis", "GPS basics", "Record keeping"],
-      "Professional": ["Field work", "Observation skills", "Physical stamina", "Problem solving", "Planning"],
-      "Research": ["Field data collection", "Crop monitoring", "Soil sampling", "Statistical analysis"]
     },
-    "relevant_courses": [
-      "Crop Science",
-      "Animal Production",
-      "Soil Science",
-      "Agribusiness Management",
-      "Extension Education",
-      "Farm Machinery",
-      "Agricultural Economics"
-    ],
+    "summary_keywords": ["public administration", "office support", "programs"],
+    "project_ideas": ["Administrative workflow review", "Community support documentation"]
+  },
+
+  "Bachelor of Public Administration and Management": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Administrative Intern", "Program Assistant", "Community Development Assistant"],
+    "skills": {
+      "Communication": ["Official correspondence", "Report writing", "Presentation"],
+      "Digital": ["Microsoft Office", "Database use", "Record keeping"],
+      "Professional": ["Organization", "Teamwork", "Administrative coordination"],
+      "Research": ["Policy support", "Program evaluation", "Field data collection"]
+    },
+    "relevant_courses": ["Public Administration", "Management", "Governance", "Research Methods"],
+    "experience_suggestions": {
+      "community_work": [
+        "Supported administrative and community-focused tasks through organized communication and documentation.",
+        "Assisted with meetings, reports, and structured program follow-up."
+      ]
+    },
+    "summary_keywords": ["public administration", "management", "coordination"],
+    "project_ideas": ["Program support task", "Administrative case study"]
+  },
+
+  "Bachelor of Science in Health Services Management": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Health Administration Intern", "Hospital Office Assistant", "Program Support Assistant"],
+    "skills": {
+      "Communication": ["Administrative communication", "Reporting", "Client support"],
+      "Digital": ["Microsoft Office", "Health records systems", "Spreadsheet use"],
+      "Professional": ["Planning", "Organization", "Team coordination"],
+      "Research": ["Service review", "Data reporting", "Evaluation"]
+    },
+    "relevant_courses": ["Health Services Management", "Administration", "Planning", "Evaluation"],
+    "experience_suggestions": {
+      "office_support": [
+        "Supported documentation, coordination, and routine office tasks in health-related service settings.",
+        "Assisted with organized reporting and communication support."
+      ]
+    },
+    "summary_keywords": ["health services", "administration", "coordination"],
+    "project_ideas": ["Service delivery review", "Hospital administration support task"]
+  },
+
+  "Bachelor of Science in Tourism and Hospitality Management": {
+    "level": "Bachelor",
+    "faculty": "Management Studies",
+    "duration_years": null,
+    "target_roles": ["Hospitality Intern", "Front Desk Assistant", "Tour Operations Assistant"],
+    "skills": {
+      "Communication": ["Customer service", "Front desk communication", "Presentation"],
+      "Digital": ["Reservation tools basics", "Microsoft Office", "Email communication"],
+      "Professional": ["Organization", "Time management", "Teamwork", "Service orientation"],
+      "Research": ["Tourism analysis", "Customer feedback review"]
+    },
+    "relevant_courses": ["Tourism", "Hospitality Management", "Customer Service", "Operations"],
+    "experience_suggestions": {
+      "customer_service": [
+        "Supported customer-facing tasks through professional communication, coordination, and service assistance.",
+        "Built practical experience in organized hospitality and service delivery settings."
+      ]
+    },
+    "summary_keywords": ["tourism", "hospitality", "customer service"],
+    "project_ideas": ["Hospitality operations task", "Customer service improvement activity"]
+  },
+
+  "Bachelor of Biomedical Laboratory Technology": {
+    "level": "Bachelor",
+    "faculty": "Health Sciences",
+    "duration_years": 3,
+    "target_roles": ["Laboratory Intern", "Clinical Lab Assistant", "Research Support Assistant"],
+    "skills": {
+      "Communication": ["Clinical reporting", "Documentation", "Team communication"],
+      "Digital": ["Lab records systems", "Microsoft Office", "Basic data entry"],
+      "Professional": ["Attention to detail", "Accuracy", "Laboratory support", "Time management"],
+      "Research": ["Sample handling", "Observation", "Laboratory data recording"]
+    },
+    "relevant_courses": ["Laboratory Technology", "Clinical Practice", "Biomedical Techniques", "Data Recording"],
+    "experience_suggestions": {
+      "clinical_support": [
+        "Supported laboratory-related activities through organized assistance, observation, and documentation.",
+        "Assisted with sample handling support and routine record maintenance under supervision."
+      ]
+    },
+    "summary_keywords": ["biomedical lab", "laboratory", "clinical support"],
+    "project_ideas": ["Laboratory procedures log", "Clinical lab support reflection"]
+  },
+
+  "Bachelor of Biomedical Sciences": {
+    "level": "Bachelor",
+    "faculty": "Health Sciences",
+    "duration_years": null,
+    "target_roles": ["Research Assistant", "Laboratory Intern", "Clinical Support Intern"],
+    "skills": {
+      "Communication": ["Scientific reporting", "Documentation", "Team communication"],
+      "Digital": ["Data recording", "Microsoft Office", "Lab records basics"],
+      "Professional": ["Observation", "Accuracy", "Attention to detail"],
+      "Research": ["Scientific inquiry", "Laboratory support", "Data collection"]
+    },
+    "relevant_courses": ["Biomedical Sciences", "Laboratory Practice", "Research Methods", "Anatomy"],
+    "experience_suggestions": {
+      "clinical_support": [
+        "Supported scientific and laboratory-related tasks through organized observation and documentation.",
+        "Assisted with structured practical activities in biomedical settings."
+      ]
+    },
+    "summary_keywords": ["biomedical sciences", "research", "laboratory"],
+    "project_ideas": ["Lab report project", "Biomedical research task"]
+  },
+
+  "Bachelor of Environmental Health Sciences": {
+    "level": "Bachelor",
+    "faculty": "Health Sciences",
+    "duration_years": null,
+    "target_roles": ["Environmental Health Intern", "Field Assistant", "Public Health Support Assistant"],
+    "skills": {
+      "Communication": ["Public awareness communication", "Reporting", "Community engagement"],
+      "Digital": ["Data collection tools", "Microsoft Office", "Record keeping"],
+      "Professional": ["Field observation", "Planning", "Problem solving"],
+      "Research": ["Environmental assessment", "Field data collection", "Health reporting"]
+    },
+    "relevant_courses": ["Environmental Health", "Public Health", "Field Methods", "Research Methods"],
+    "experience_suggestions": {
+      "fieldwork": [
+        "Supported field-based environmental health activities through observation, data collection, and reporting.",
+        "Assisted with organized practical work related to public and environmental health."
+      ]
+    },
+    "summary_keywords": ["environmental health", "public health", "fieldwork"],
+    "project_ideas": ["Community sanitation review", "Health field assessment"]
+  },
+
+  "Bachelor of Medicine and Surgery": {
+    "level": "Bachelor",
+    "faculty": "Health Sciences",
+    "duration_years": null,
+    "target_roles": ["Clinical Intern", "Medical Support Intern", "Research Assistant"],
+    "skills": {
+      "Communication": ["Patient communication", "Clinical reporting", "Team communication"],
+      "Digital": ["Health records use", "Microsoft Office", "Basic data handling"],
+      "Professional": ["Attention to detail", "Clinical observation", "Time management", "Empathy"],
+      "Research": ["Case review", "Clinical observation", "Medical documentation"]
+    },
+    "relevant_courses": ["Medicine", "Surgery", "Anatomy", "Clinical Practice"],
+    "experience_suggestions": {
+      "clinical_support": [
+        "Supported clinical activities through observation, documentation, and organized assistance under supervision.",
+        "Built practical exposure to structured patient care and medical support tasks."
+      ]
+    },
+    "summary_keywords": ["medicine", "clinical support", "patient care"],
+    "project_ideas": ["Clinical rotation reflection", "Case study summary"]
+  },
+
+  "Bachelor of Public Health": {
+    "level": "Bachelor",
+    "faculty": "Health Sciences",
+    "duration_years": null,
+    "target_roles": ["Public Health Intern", "Field Assistant", "Program Support Assistant"],
+    "skills": {
+      "Communication": ["Health communication", "Community awareness", "Reporting"],
+      "Digital": ["Data collection tools", "Microsoft Office", "Spreadsheet use"],
+      "Professional": ["Organization", "Field coordination", "Teamwork"],
+      "Research": ["Survey support", "Community health assessment", "Program evaluation"]
+    },
+    "relevant_courses": ["Public Health", "Epidemiology", "Community Health", "Research Methods"],
+    "experience_suggestions": {
+      "community_work": [
+        "Supported public health and community outreach activities through communication, coordination, and documentation.",
+        "Assisted with data collection, awareness, and follow-up tasks in organized settings."
+      ]
+    },
+    "summary_keywords": ["public health", "community outreach", "health programs"],
+    "project_ideas": ["Health awareness project", "Community survey activity"]
+  },
+
+  "Bachelor of Science in Food Science and Nutrition": {
+    "level": "Bachelor",
+    "faculty": "Agribusiness and Natural Resource Science",
+    "duration_years": null,
+    "target_roles": ["Food Science Intern", "Nutrition Assistant", "Quality Control Intern"],
+    "skills": {
+      "Communication": ["Report writing", "Presentation", "Technical communication"],
+      "Digital": ["Spreadsheet analysis", "Microsoft Office", "Basic lab records"],
+      "Professional": ["Attention to detail", "Observation", "Organization"],
+      "Research": ["Food analysis", "Nutrition assessment", "Quality review"]
+    },
+    "relevant_courses": ["Food Science", "Nutrition", "Food Quality", "Laboratory Practice"],
+    "experience_suggestions": {
+      "project_work": [
+        "Supported food, nutrition, or quality-related practical tasks through organized participation and documentation.",
+        "Built analytical and reporting skills through structured academic or applied work."
+      ]
+    },
+    "summary_keywords": ["food science", "nutrition", "quality control"],
+    "project_ideas": ["Food quality project", "Nutrition analysis assignment"]
+  },
+
+  "Bachelor of Science in Innovative Agricultural Systems": {
+    "level": "Bachelor",
+    "faculty": "Agribusiness and Natural Resource Science",
+    "duration_years": null,
+    "target_roles": ["Agriculture Intern", "Field Officer Intern", "Agribusiness Trainee"],
+    "skills": {
+      "Communication": ["Farm reporting", "Community extension", "Training support"],
+      "Digital": ["Data collection apps", "Spreadsheet use", "Record keeping"],
+      "Professional": ["Field work", "Problem solving", "Planning", "Observation"],
+      "Research": ["Crop monitoring", "Field data collection", "Agricultural analysis"]
+    },
+    "relevant_courses": ["Agricultural Systems", "Agribusiness", "Extension Education", "Crop Science"],
     "experience_suggestions": {
       "fieldwork": [
         "Supported field activities related to crop or livestock management.",
@@ -246,41 +1318,8 @@
         "Supported agricultural outreach or training activities in community settings.",
         "Contributed to awareness, mobilization, or demonstration work linked to farming activities."
       ]
-    }
-  },
-  "Islamic Studies": {
-    "target_roles": [
-      "Teaching Assistant",
-      "Community Program Assistant",
-      "Research Assistant",
-      "Religious Education Volunteer",
-      "Islamic School Assistant",
-      "Da'wah Intern"
-    ],
-    "skills": {
-      "Communication": ["Public speaking", "Teaching", "Counseling", "Community engagement", "Arabic recitation"],
-      "Digital": ["Microsoft Office", "Online research", "Content creation", "Social media management"],
-      "Professional": ["Patience", "Empathy", "Organization", "Event coordination", "Cultural sensitivity"],
-      "Research": ["Islamic texts research", "Hadith study", "Qur'anic analysis", "Historical research"]
     },
-    "relevant_courses": [
-      "Qur'anic Studies",
-      "Hadith Studies",
-      "Islamic Jurisprudence (Fiqh)",
-      "Da'wah Methods",
-      "Islamic History",
-      "Arabic Language",
-      "Comparative Religion"
-    ],
-    "experience_suggestions": {
-      "faith_based_service": [
-        "Supported faith-based programmes through coordination, communication, and volunteer service.",
-        "Assisted with educational or community activities in organized religious settings."
-      ],
-      "teaching_support": [
-        "Helped guide learners in religious education activities and structured learning sessions.",
-        "Strengthened communication and instructional support skills through community engagement."
-      ]
-    }
+    "summary_keywords": ["agriculture", "fieldwork", "agribusiness"],
+    "project_ideas": ["Farm management activity", "Agricultural outreach project"]
   }
 }
