@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Report Builder | Professional Academic Reports</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="topbar">
+        <h1>📊 Internship Report Builder</h1>
+        <p>AI-Powered • Grammar Fix • University Approved</p>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="step-indicator" id="stepIndicator">Step 1 of 10</div>
+    </div>
+
+    <div class="layout">
+        <!-- Left Panel: Form -->
+        <section class="panel form-panel">
+            
+            <!-- Step 1: Student Details -->
+            <div id="step1" class="step active">
+                <h2>👨‍🎓 Student Information</h2>
+                
+                <label>Full Name</label>
+                <input type="text" id="studentName" placeholder="e.g., Kantono Rehema">
+                
+                <label>Registration Number</label>
+                <input type="text" id="studentId" placeholder="e.g., 123-345587-374686">
+                
+                <label>University/Institution</label>
+                <select id="university" class="full-width">
+                    <option value="Islamic University in Uganda">Islamic University in Uganda (IUIU)</option>
+                    <option value="Makerere University">Makerere University</option>
+                    <option value="Kyambogo University">Kyambogo University</option>
+                    <option value="Uganda Christian University">Uganda Christian University</option>
+                    <option value="Kampala International University">Kampala International University</option>
+                    <option value="Gulu University">Gulu University</option>
+                    <option value="Mbarara University">Mbarara University of Science & Technology</option>
+                    <option value="Other">Other</option>
+                </select>
+                
+                <label>Faculty/School</label>
+                <input type="text" id="faculty" placeholder="e.g., Faculty of Arts and Social Sciences">
+                
+                <label>Programme of Study</label>
+                <input type="text" id="programme" placeholder="e.g., Bachelor of Mass Communication">
+                
+                <label>Year of Study</label>
+                <select id="yearOfStudy">
+                    <option>Year 1</option>
+                    <option>Year 2</option>
+                    <option selected>Year 3</option>
+                    <option>Year 4</option>
+                </select>
+                
+                <label>Academic Supervisor Name</label>
+                <input type="text" id="academicSupervisor" placeholder="e.g., Dr. Sarah Mukasa">
+                
+                <div class="button-group">
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Organization Details -->
+            <div id="step2" class="step">
+                <h2>🏢 Organization Information</h2>
+                
+                <label>Organization Name</label>
+                <input type="text" id="orgName" placeholder="e.g., Daily Monitor">
+                
+                <label>Department/Division</label>
+                <input type="text" id="department" placeholder="e.g., News Department">
+                
+                <label>Organization Address</label>
+                <input type="text" id="orgAddress" placeholder="e.g., Mbale, Uganda">
+                
+                <label>Internship Start Date</label>
+                <input type="month" id="startDate">
+                
+                <label>Internship End Date</label>
+                <input type="month" id="endDate">
+                
+                <label>Workplace Supervisor Name</label>
+                <input type="text" id="workSupervisor" placeholder="e.g., Mr. John Okello">
+                
+                <label>Supervisor Position</label>
+                <input type="text" id="supervisorPosition" placeholder="e.g., News Editor">
+                
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Daily Activity Log -->
+            <div id="step3" class="step">
+                <h2>📋 Daily Activity Log</h2>
+                <p class="helper-text">Enter your activities day by day. Be specific about dates, tasks, skills, and challenges.</p>
+                
+                <div id="dailyLogs">
+                    <div class="daily-log entry-card">
+                        <div class="date-row">
+                            <input type="date" class="activity-date" placeholder="Date">
+                        </div>
+                        <textarea placeholder="What activity did you engage in? (e.g., Editorial meeting, story writing, library research)" rows="2" class="activity-title"></textarea>
+                        <textarea placeholder="Describe what you did in detail..." rows="3" class="activity-description"></textarea>
+                        <textarea placeholder="What skills did you develop? (e.g., listening, writing, critical thinking)" rows="2" class="activity-skills"></textarea>
+                        <textarea placeholder="What challenges did you face? How did you overcome them?" rows="2" class="activity-challenges"></textarea>
+                        <button class="remove-btn" onclick="this.closest('.daily-log').remove()">Remove Day</button>
+                    </div>
+                </div>
+                
+                <button class="add-btn" onclick="addDailyLog()">+ Add Another Day</button>
+                
+                <button type="button" class="magic-btn" onclick="enhanceAllEntries()">✨ Fix Grammar & Enhance Language</button>
+                
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Key Achievements -->
+            <div id="step4" class="step">
+                <h2>🏆 Key Achievements</h2>
+                <p class="helper-text">List your main accomplishments during the internship.</p>
+                
+                <div id="achievementsList">
+                    <div class="achievement-entry entry-card">
+                        <input type="text" placeholder="Achievement title" class="achievement-title">
+                        <textarea placeholder="Describe this achievement..." rows="2" class="achievement-desc"></textarea>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addAchievement()">+ Add Achievement</button>
+                
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Step 5: Skills Summary -->
+            <div id="step5" class="step">
+                <h2>💪 Skills Summary</h2>
+                
+                <label>Technical/Professional Skills</label>
+                <input type="text" id="techSkills" placeholder="e.g., Writing, Interviewing, Editing, Proofreading">
+                
+                <label>Soft Skills</label>
+                <input type="text" id="softSkills" placeholder="e.g., Communication, Teamwork, Time Management">
+                
+                <label>Overall Learning Outcomes</label>
+                <textarea id="learningOutcomes" rows="3" placeholder="What did you gain from this internship experience?"></textarea>
+                
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Step 6: Challenges & Recommendations -->
+            <div id="step6" class="step">
+                <h2>⚠️ Challenges & Recommendations</h2>
+                
+                <label>Challenges Faced</label>
+                <textarea id="challenges" rows="3" placeholder="What difficulties did you encounter?"></textarea>
+                
+                <label>How Did You Overcome Them?</label>
+                <textarea id="solutions" rows="3" placeholder="Describe your solutions and coping strategies."></textarea>
+                
+                <label>Recommendations for Future Interns</label>
+                <textarea id="recommendations" rows="2" placeholder="What advice would you give to future interns?"></textarea>
+                
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Step 7: Generate Report -->
+            <div id="step7" class="step">
+                <h2>🤖 Generate Your Report</h2>
+                <p class="helper-text">Click the button below to generate a complete professional internship report.</p>
+                
+                <button class="magic-btn" id="generateReportBtn" onclick="generateFullReport()">✨ Generate Complete Report</button>
+                
+                <div id="generationStatus" class="generation-status"></div>
+                
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Step 8: Preview -->
+            <div id="step8" class="step">
+                <h2>👁️ Preview Report</h2>
+                <p>Your report is ready. View the preview on the right panel.</p>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Step 9: Quality Check -->
+            <div id="step9" class="step">
+                <h2>✅ Quality Check</h2>
+                <div id="qualityReport" class="quality-report"></div>
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                    <button class="next-btn" onclick="nextStep()">Next →</button>
+                </div>
+            </div>
+            
+            <!-- Step 10: Export -->
+            <div id="step10" class="step">
+                <h2>💳 Download Your Report</h2>
+                
+                <label>Select Export Format</label>
+                <select id="exportFormat" class="full-width">
+                    <option value="pdf">PDF (Print Ready)</option>
+                </select>
+                
+                <div class="payment-info">
+                    <p>Report Price: <strong>UGX 25,000</strong> ($6.70)</p>
+                    <p class="small-text">Includes: Complete professional report + Grammar fixed + University format</p>
+                </div>
+                
+                <button id="payDownloadBtn" class="primary-btn">💳 Pay & Download Report</button>
+                
+                <div class="button-group">
+                    <button class="prev-btn" onclick="prevStep()">← Back</button>
+                </div>
+            </div>
+            
+        </section>
+        
+        <!-- Right Panel: Live Preview -->
+        <section class="panel preview-panel" id="previewShell">
+            <div id="reportPreview" class="report-preview">
+                <div class="report-header">
+                    <h1>INTERNSHIP REPORT</h1>
+                    <p>Complete the steps to generate your professional report</p>
+                </div>
+                <div id="reportContent">
+                    <p class="placeholder-text">Fill in your details and click "Generate Report" to see your professional internship report here.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
