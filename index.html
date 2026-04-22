@@ -20,10 +20,12 @@
     <div class="layout">
         <!-- Left: Form Panel -->
         <section class="panel form-panel" id="formPanel">
+
             <!-- Step 1: Goal Selection -->
             <div id="step1" class="step active">
                 <h2>🎯 Choose Your CV Goal</h2>
-                <label>What are you preparing this CV for?</label>
+
+                <label for="cvGoal">What are you preparing this CV for?</label>
                 <select id="cvGoal" class="full-width">
                     <option value="internship">Internship</option>
                     <option value="field_attachment">Field Attachment</option>
@@ -34,23 +36,16 @@
                     <option value="academic_opportunity">Academic Opportunity</option>
                 </select>
 
-                <label>What best describes you?</label>
+                <label for="profileStage">What best describes you?</label>
                 <select id="profileStage" class="full-width">
                     <option value="current_student">Current Student</option>
                     <option value="final_year_student">Final Year Student</option>
                     <option value="fresh_graduate">Fresh Graduate</option>
                 </select>
 
-                <label>Select Your Programme</label>
+                <label for="programmeSelect">Select Your Programme</label>
                 <select id="programmeSelect" class="full-width">
-                    <option value="Mass Communication">Mass Communication</option>
-                    <option value="Education">Education</option>
-                    <option value="Business Administration">Business Administration</option>
-                    <option value="Accounting">Accounting</option>
-                    <option value="Information Technology">Information Technology</option>
-                    <option value="Public Administration">Public Administration</option>
-                    <option value="Agriculture">Agriculture</option>
-                    <option value="Islamic Studies">Islamic Studies</option>
+                    <option value="">Select your programme</option>
                 </select>
 
                 <button class="next-btn" onclick="nextStep()">Next →</button>
@@ -59,24 +54,25 @@
             <!-- Step 2: Personal Details -->
             <div id="step2" class="step">
                 <h2>👤 Personal Details</h2>
-                <label>Full Name</label>
+
+                <label for="fullName">Full Name</label>
                 <input type="text" id="fullName" placeholder="e.g., Nantabo Najuwa">
 
-                <label>Email</label>
+                <label for="email">Email</label>
                 <input type="email" id="email" placeholder="youremail@example.com">
 
-                <label>Phone Number</label>
+                <label for="phone">Phone Number</label>
                 <input type="tel" id="phone" placeholder="+256 700 000 000">
 
-                <label>Location</label>
+                <label for="location">Location</label>
                 <input type="text" id="location" placeholder="e.g., Mbale, Uganda">
 
-                <label>LinkedIn (Optional)</label>
+                <label for="linkedin">LinkedIn (Optional)</label>
                 <input type="text" id="linkedin" placeholder="linkedin.com/in/username">
 
                 <div class="checkbox-group">
                     <input type="checkbox" id="photoEnabled">
-                    <label>Include Photo (Not recommended for ATS)</label>
+                    <label for="photoEnabled">Include Photo (Not recommended for ATS)</label>
                 </div>
 
                 <div class="button-group">
@@ -85,21 +81,22 @@
                 </div>
             </div>
 
-            <!-- Step 3: Career Target with AI Auto-Generation -->
+            <!-- Step 3: Career Target -->
             <div id="step3" class="step">
                 <h2>💼 Career Target</h2>
-                <label>Target Job Title</label>
+
+                <label for="targetJobTitle">Target Job Title</label>
                 <input type="text" id="targetJobTitle" placeholder="e.g., Communications Intern, Administrative Assistant">
-                
+
                 <button type="button" class="magic-btn" id="aiSuggestKeywordsBtn" onclick="aiSuggestKeywords()">✨ AI Suggest Keywords & Interests</button>
-                
-                <label>Target Keywords (comma separated)</label>
+
+                <label for="targetKeywords">Target Keywords (comma separated)</label>
                 <input type="text" id="targetKeywords" placeholder="e.g., writing, social media, research">
-                
-                <label>Career Interests (comma separated)</label>
+
+                <label for="careerInterests">Career Interests (comma separated)</label>
                 <input type="text" id="careerInterests" placeholder="e.g., journalism, content creation, public relations">
 
-                <label>Preferred Sector/Industry</label>
+                <label for="preferredSector">Preferred Sector/Industry</label>
                 <input type="text" id="preferredSector" placeholder="e.g., Media, Education, Finance">
 
                 <div class="button-group">
@@ -108,24 +105,29 @@
                 </div>
             </div>
 
-            <!-- Step 4: Education with Table Layout -->
+            <!-- Step 4: Education -->
             <div id="step4" class="step">
                 <h2>📚 Education</h2>
-                <p class="helper-text">Add your academic background (latest first)</p>
+                <p class="helper-text">Add your academic background, latest first.</p>
+
                 <div id="educationList">
                     <div class="education-entry entry-card">
                         <input type="text" placeholder="Institution" class="edu-institution">
-                        <input type="text" placeholder="Programme/Degree/Certificate" class="edu-programme">
+                        <input type="text" placeholder="Programme / Degree / Diploma" class="edu-programme">
+
                         <div class="date-row">
                             <input type="text" placeholder="Start Date (MM/YYYY)" class="edu-start">
                             <input type="text" placeholder="End Date (MM/YYYY)" class="edu-end">
                         </div>
-                        <input type="text" placeholder="GPA/Classification (Optional)" class="edu-gpa">
+
+                        <input type="text" placeholder="GPA / Classification (Optional)" class="edu-gpa">
                         <textarea placeholder="Relevant Courses (comma separated)" class="edu-courses" rows="2"></textarea>
-                        <textarea placeholder="Final Project/Thesis (Optional)" class="edu-project" rows="2"></textarea>
+                        <textarea placeholder="Final Project / Thesis (Optional)" class="edu-project" rows="2"></textarea>
+
                         <button class="remove-btn" onclick="this.closest('.education-entry').remove(); updatePreview();">Remove</button>
                     </div>
                 </div>
+
                 <button class="add-btn" onclick="addEducation()">+ Add Another Education</button>
 
                 <div class="button-group">
@@ -137,18 +139,59 @@
             <!-- Step 5: Experience Discovery -->
             <div id="step5" class="step">
                 <h2>🔍 Select Your Experiences</h2>
-                <p class="helper-text">Don't worry if you've never had a formal job. Select anything you've done:</p>
+                <p class="helper-text">Do not worry if you have never had a formal job. Select anything real you have done.</p>
+
                 <div id="experienceCards" class="cards-grid"></div>
+
                 <div class="button-group">
                     <button class="prev-btn" onclick="prevStep()">← Back</button>
                     <button class="next-btn" onclick="nextStep()">Next →</button>
                 </div>
             </div>
 
-            <!-- Step 6: Experience Builder -->
+            <!-- Step 6: Experience Builder + AI -->
             <div id="step6" class="step">
                 <h2>✏️ Build Your Experience</h2>
+                <p class="helper-text">Add real experience details, then use AI to turn them into strong CV bullet points.</p>
+
                 <div id="experienceBuilderList"></div>
+
+                <div class="ai-experience-panel entry-card">
+                    <h3>✨ AI Experience Bullet Generator</h3>
+
+                    <label for="aiProgramme">Programme</label>
+                    <select id="aiProgramme" class="full-width">
+                        <option value="">Select programme</option>
+                    </select>
+
+                    <label for="aiExperienceType">Experience Type</label>
+                    <select id="aiExperienceType" class="full-width">
+                        <option value="">Select experience type</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Volunteer">Volunteer</option>
+                        <option value="Leadership">Leadership</option>
+                        <option value="Project">Project</option>
+                        <option value="Work">Work</option>
+                        <option value="Campus Activity">Campus Activity</option>
+                    </select>
+
+                    <label for="aiRole">Role or Position</label>
+                    <input id="aiRole" type="text" placeholder="e.g., Radio Presenter Intern">
+
+                    <label for="aiOrganization">Organization / Place</label>
+                    <input id="aiOrganization" type="text" placeholder="e.g., IUIU FM">
+
+                    <label for="aiNotes">What did you do?</label>
+                    <textarea id="aiNotes" rows="5" placeholder="Write rough notes about what the student did, responsibilities handled, activities supported, and any real contribution made."></textarea>
+
+                    <button type="button" class="magic-btn" id="generateExperienceBtn">✨ Generate AI Experience Bullets</button>
+
+                    <div id="aiExperienceStatus" class="helper-text"></div>
+
+                    <label for="aiExperienceOutput">Generated CV Bullets</label>
+                    <textarea id="aiExperienceOutput" rows="6" placeholder="Generated bullets will appear here"></textarea>
+                </div>
+
                 <div class="button-group">
                     <button class="prev-btn" onclick="prevStep()">← Back</button>
                     <button class="next-btn" onclick="nextStep()">Next →</button>
@@ -158,8 +201,10 @@
             <!-- Step 7: Skills Selection -->
             <div id="step7" class="step">
                 <h2>🎯 Select Your Skills</h2>
-                <p class="helper-text">Choose only skills you can support with real evidence. Max 12 total.</p>
+                <p class="helper-text">Choose only skills you can support with real evidence. Keep them focused.</p>
+
                 <div id="skillsContainer" class="skills-container"></div>
+
                 <div class="button-group">
                     <button class="prev-btn" onclick="prevStep()">← Back</button>
                     <button class="next-btn" onclick="nextStep()">Next →</button>
@@ -169,8 +214,10 @@
             <!-- Step 8: Projects & Leadership -->
             <div id="step8" class="step">
                 <h2>🚀 Projects & Leadership</h2>
+
                 <div id="projectsList"></div>
-                <button class="add-btn" onclick="addProject()">+ Add Project/Leadership Role</button>
+                <button class="add-btn" onclick="addProject()">+ Add Project / Leadership Role</button>
+
                 <div class="button-group">
                     <button class="prev-btn" onclick="prevStep()">← Back</button>
                     <button class="next-btn" onclick="nextStep()">Next →</button>
@@ -182,6 +229,7 @@
                 <h2>📝 Professional Summary</h2>
                 <button type="button" class="magic-btn" id="generateSummaryBtn" onclick="generateSummaries()">✨ AI Generate Summary Options</button>
                 <div id="summaryOptions" class="summary-options"></div>
+
                 <div class="button-group">
                     <button class="prev-btn" onclick="prevStep()">← Back</button>
                     <button class="next-btn" onclick="nextStep()">Next →</button>
@@ -192,6 +240,7 @@
             <div id="step10" class="step">
                 <h2>👁️ Preview Your CV</h2>
                 <p>Your CV is being built on the right panel. Review it carefully.</p>
+
                 <div class="button-group">
                     <button class="prev-btn" onclick="prevStep()">← Back</button>
                     <button class="next-btn" onclick="nextStep()">Next →</button>
@@ -202,6 +251,7 @@
             <div id="step11" class="step">
                 <h2>✅ Quality Check</h2>
                 <div id="qualityReport" class="quality-report"></div>
+
                 <div class="button-group">
                     <button class="prev-btn" onclick="prevStep()">← Back</button>
                     <button class="next-btn" onclick="nextStep()">Next →</button>
@@ -211,18 +261,18 @@
             <!-- Step 12: Export & Payment -->
             <div id="step12" class="step">
                 <h2>💳 Export Your CV</h2>
-                <p>Your CV is ready! Choose your template and complete payment to download.</p>
-                
-                <label>Select Template</label>
+                <p>Your CV is ready. Choose your template and complete payment to download.</p>
+
+                <label for="templateSelect">Select Template</label>
                 <select id="templateSelect" class="full-width">
                     <option value="clean">Clean Student (ATS-Friendly)</option>
                     <option value="modern">Modern Premium (Creative Fields)</option>
-                    <option value="academic">Academic Student (Scholarships/Research)</option>
+                    <option value="academic">Academic Student (Scholarships / Research)</option>
                 </select>
 
                 <div class="payment-info">
-                    <p>Price: <strong>UGX 3,000</strong></p>
-                    <button id="payDownloadBtn" class="primary-btn">💳 Pay & Download PDF</button>
+                    <p>Price: <strong>UGX 5,000</strong></p>
+                    <button id="payDownloadBtn" class="primary-btn" type="button">💳 Pay & Download PDF</button>
                 </div>
 
                 <div class="button-group">
@@ -238,22 +288,27 @@
                     <h1 id="p_name">YOUR NAME</h1>
                     <p id="p_contacts">email@example.com | +123456789 | Location</p>
                 </div>
+
                 <div id="p_summary_section">
                     <h3>Professional Summary</h3>
                     <p id="p_summary">Complete the steps to generate your professional summary.</p>
                 </div>
+
                 <div id="p_education_section">
                     <h3>Education</h3>
                     <div id="p_education"></div>
                 </div>
+
                 <div id="p_skills_section">
                     <h3>Skills</h3>
                     <div id="p_skills"></div>
                 </div>
+
                 <div id="p_experience_section">
                     <h3>Experience</h3>
                     <div id="p_experiences"></div>
                 </div>
+
                 <div id="p_projects_section">
                     <h3>Projects & Leadership</h3>
                     <div id="p_projects"></div>
