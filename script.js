@@ -1,12 +1,3 @@
-// ========================================
-// CAMPUS CV BUILDER - CLEAN REWRITE V4
-// Diploma + Bachelor's launch version
-// Single-source script with AI experience generator
-// ========================================
-
-// -----------------------------
-// GLOBAL STATE
-// -----------------------------
 const TOTAL_STEPS = 12;
 
 const appState = {
@@ -15,6 +6,7 @@ const appState = {
     cv_goal: "internship",
     profile_stage: "final_year_student",
     programme: "",
+    custom_programme: "",
     target_job_title: "",
     preferred_sector: "",
     target_keywords: [],
@@ -28,7 +20,6 @@ const appState = {
     linkedin: "",
     photo_enabled: false
   },
-  educationList: [],
   selectedExperiences: [],
   experienceEntries: [],
   selectedSkills: {
@@ -49,9 +40,13 @@ let experienceMappings = {};
 let summaryTemplates = {};
 let qualityRules = {};
 
-// -----------------------------
-// DATA LOADING
-// -----------------------------
+const DEFAULT_FALLBACK_SKILLS = {
+  Communication: ["Communication", "Report writing", "Presentation", "Interpersonal communication"],
+  Digital: ["Microsoft Word", "Microsoft Excel", "Email communication", "Online research"],
+  Professional: ["Teamwork", "Organization", "Time management", "Problem solving"],
+  Research: ["Data collection", "Documentation", "Basic analysis", "Observation"]
+};
+
 async function fetchJson(path) {
   const response = await fetch(path);
   if (!response.ok) {
@@ -75,66 +70,54 @@ async function loadData() {
     qualityRules = rules || {};
 
     initProgrammeSelect();
-    syncAIProgrammeField();
     initExperienceCards();
     updateSkillsForProgramme();
     updateProgressBar();
     updatePreview();
   } catch (error) {
     console.error("Error loading data:", error);
-    showMessage("⚠️ Failed to load app data. Please check your JSON files and file paths.");
+    showMessage("⚠️ Failed to load app data. Check your JSON files and paths.");
   }
 }
 
-// -----------------------------
-// INITIALIZATION
-// -----------------------------
 function initProgrammeSelect() {
   const select = document.getElementById("programmeSelect");
   if (!select) return;
 
-  const programmeNames = Object.keys(programmesData);
-  if (!programmeNames.length) return;
-
-  const currentValue = select.value;
+  const programmeNames = Object.keys(programmesData).sort((a, b) => a.localeCompare(b));
 
   select.innerHTML = `
     <option value="">Select your programme</option>
-    ${programmeNames
-      .sort((a, b) => a.localeCompare(b))
-      .map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`)
-      .join("")}
+    ${programmeNames.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("")}
+    <option value="__other__">Other / Programme not listed</option>
   `;
 
-  if (currentValue && programmesData[currentValue]) {
-    select.value = currentValue;
-    appState.profile.programme = currentValue;
-  } else {
+  if (programmeNames.length) {
     select.value = programmeNames[0];
     appState.profile.programme = programmeNames[0];
   }
+
+  toggleCustomProgrammeField();
 }
 
-function syncAIProgrammeField() {
-  const mainProgramme = document.getElementById("programmeSelect");
-  const aiProgramme = document.getElementById("aiProgramme");
+function toggleCustomProgrammeField() {
+  const select = document.getElementById("programmeSelect");
+  const wrap = document.getElementById("customProgrammeWrap");
+  if (!select || !wrap) return;
+  wrap.style.display = select.value === "__other__" ? "block" : "none";
+}
 
-  if (!mainProgramme || !aiProgramme) return;
+function getResolvedProgramme() {
+  const selectValue = document.getElementById("programmeSelect")?.value || "";
+  const customValue = document.getElementById("customProgramme")?.value?.trim() || "";
 
-  const options = Array.from(mainProgramme.options || []);
-  const selectedValue = mainProgramme.value || appState.profile.programme || "";
+  if (selectValue === "__other__") return customValue;
+  return selectValue || appState.profile.programme || "";
+}
 
-  aiProgramme.innerHTML = '<option value="">Select programme</option>';
-
-  options.forEach(option => {
-    if (!option.value) return;
-    const newOption = document.createElement("option");
-    newOption.value = option.value;
-    newOption.textContent = option.textContent;
-    aiProgramme.appendChild(newOption);
-  });
-
-  aiProgramme.value = selectedValue;
+function getCurrentProgrammeData() {
+  const programme = getResolvedProgramme();
+  return programmesData[programme] || null;
 }
 
 function initExperienceCards() {
@@ -157,8 +140,8 @@ function initExperienceCards() {
   container.innerHTML = experienceTypes
     .map(
       type => `
-      <div class="card ${appState.selectedExperiences.includes(type.id) ? "selected" : ""}" 
-           data-type="${type.id}" 
+      <div class="card ${appState.selectedExperiences.includes(type.id) ? "selected" : ""}"
+           data-type="${type.id}"
            onclick="toggleExperienceCard('${type.id}')">
         <div class="card-header">
           <span class="card-icon">${type.label}</span>
@@ -171,44 +154,38 @@ function initExperienceCards() {
     .join("");
 }
 
-// -----------------------------
-// PROGRAMME-BASED SUGGESTIONS
-// -----------------------------
-function getCurrentProgrammeData() {
-  const programme =
-    document.getElementById("programmeSelect")?.value || appState.profile.programme;
-  return programmesData[programme] || null;
-}
-
 function aiSuggestKeywords() {
   saveCurrentStepData();
 
-  const programmeData = getCurrentProgrammeData();
-  if (!programmeData) {
-    showMessage("⚠️ Please select your programme first.");
+  const programme = getResolvedProgramme();
+  if (!programme) {
+    showMessage("⚠️ Please select or type your programme first.");
     return;
   }
 
-  const targetRole =
-    document.getElementById("targetJobTitle")?.value || appState.profile.target_job_title || "";
-
+  const programmeData = getCurrentProgrammeData();
+  const targetRole = document.getElementById("targetJobTitle")?.value?.trim() || "";
   const keywords = [];
   const interests = [];
 
-  if (programmeData.skills) {
+  if (programmeData?.skills) {
     Object.values(programmeData.skills).forEach(list => {
-      if (Array.isArray(list)) {
-        list.slice(0, 2).forEach(item => keywords.push(item));
-      }
+      if (Array.isArray(list)) list.slice(0, 2).forEach(item => keywords.push(item));
+    });
+  } else {
+    Object.values(DEFAULT_FALLBACK_SKILLS).forEach(list => {
+      list.slice(0, 2).forEach(item => keywords.push(item));
     });
   }
 
-  if (Array.isArray(programmeData.target_roles)) {
+  if (programmeData?.target_roles) {
     programmeData.target_roles.slice(0, 4).forEach(role => interests.push(role));
+  } else {
+    interests.push(programme, "entry-level work", "professional growth", "hands-on learning");
   }
 
-  if (Array.isArray(programmeData.summary_keywords)) {
-    programmeData.summary_keywords.forEach(k => interests.push(k));
+  if (programmeData?.summary_keywords) {
+    programmeData.summary_keywords.forEach(item => interests.push(item));
   }
 
   if (targetRole) {
@@ -216,34 +193,31 @@ function aiSuggestKeywords() {
     interests.unshift(targetRole);
   }
 
-  const uniqueKeywords = uniqueCleanList(keywords).slice(0, 6);
-  const uniqueInterests = uniqueCleanList(interests).slice(0, 4);
+  const finalKeywords = uniqueCleanList(keywords).slice(0, 6);
+  const finalInterests = uniqueCleanList(interests).slice(0, 4);
 
-  const targetKeywordsInput = document.getElementById("targetKeywords");
-  const careerInterestsInput = document.getElementById("careerInterests");
+  const keywordsInput = document.getElementById("targetKeywords");
+  const interestsInput = document.getElementById("careerInterests");
 
-  if (targetKeywordsInput) targetKeywordsInput.value = uniqueKeywords.join(", ");
-  if (careerInterestsInput) careerInterestsInput.value = uniqueInterests.join(", ");
+  if (keywordsInput) keywordsInput.value = finalKeywords.join(", ");
+  if (interestsInput) interestsInput.value = finalInterests.join(", ");
 
-  appState.profile.target_keywords = uniqueKeywords;
-  appState.profile.career_interests = uniqueInterests;
+  appState.profile.target_keywords = finalKeywords;
+  appState.profile.career_interests = finalInterests;
 
   showMessage("✨ Suggested keywords and interests added. You can edit them.");
 }
 
-// -----------------------------
-// EXPERIENCE DISCOVERY + BUILDER
-// -----------------------------
 function toggleExperienceCard(type) {
   const card = document.querySelector(`.card[data-type="${type}"]`);
   if (!card) return;
 
-  const isSelected = card.classList.contains("selected");
+  const selected = card.classList.contains("selected");
 
-  if (isSelected) {
+  if (selected) {
     card.classList.remove("selected");
-    appState.selectedExperiences = appState.selectedExperiences.filter(t => t !== type);
-    appState.experienceEntries = appState.experienceEntries.filter(e => e.type !== type);
+    appState.selectedExperiences = appState.selectedExperiences.filter(item => item !== type);
+    appState.experienceEntries = appState.experienceEntries.filter(item => item.type !== type);
   } else {
     card.classList.add("selected");
     if (!appState.selectedExperiences.includes(type)) {
@@ -257,7 +231,7 @@ function toggleExperienceCard(type) {
 }
 
 function createExperienceEntry(type) {
-  const existing = appState.experienceEntries.find(e => e.type === type);
+  const existing = appState.experienceEntries.find(item => item.type === type);
   if (existing) return;
 
   appState.experienceEntries.push({
@@ -267,7 +241,6 @@ function createExperienceEntry(type) {
     organization: "",
     start_date: "",
     end_date: "",
-    is_current: false,
     raw_description: "",
     tools_used: [],
     results: [],
@@ -295,44 +268,62 @@ function renderExperienceBuilder() {
         <div class="experience-builder-card" data-id="${exp.id}">
           <h4>${escapeHtml(getExperienceTypeLabel(exp.type))}</h4>
 
+          <label>Role Title</label>
           <input type="text"
-                 placeholder="Role Title (e.g., Campus Media Volunteer)"
+                 placeholder="e.g., News Reporter"
                  value="${escapeHtml(exp.role_title)}"
                  onchange="updateExpField('${exp.id}', 'role_title', this.value)">
 
+          <label>Organization</label>
           <input type="text"
-                 placeholder="Organization"
+                 placeholder="e.g., IUIU FM"
                  value="${escapeHtml(exp.organization)}"
                  onchange="updateExpField('${exp.id}', 'organization', this.value)">
 
           <div class="date-row">
-            <input type="text"
-                   placeholder="Start Date (MM/YYYY)"
-                   value="${escapeHtml(exp.start_date)}"
-                   onchange="updateExpField('${exp.id}', 'start_date', this.value)">
-            <input type="text"
-                   placeholder="End Date (MM/YYYY or Present)"
-                   value="${escapeHtml(exp.end_date)}"
-                   onchange="updateExpField('${exp.id}', 'end_date', this.value)">
+            <div>
+              <label>Start Date</label>
+              <input type="text"
+                     placeholder="MM/YYYY"
+                     value="${escapeHtml(exp.start_date)}"
+                     onchange="updateExpField('${exp.id}', 'start_date', this.value)">
+            </div>
+            <div>
+              <label>End Date</label>
+              <input type="text"
+                     placeholder="MM/YYYY or Present"
+                     value="${escapeHtml(exp.end_date)}"
+                     onchange="updateExpField('${exp.id}', 'end_date', this.value)">
+            </div>
           </div>
 
-          <textarea placeholder="What did you do? Write in simple words."
-                    rows="3"
+          <label>What did you do?</label>
+          <textarea rows="4"
+                    placeholder="Write rough notes in simple language. Example: wrote stories, covered events, interviewed sources, edited news."
                     onchange="updateExpField('${exp.id}', 'raw_description', this.value)">${escapeHtml(exp.raw_description)}</textarea>
 
+          <label>Tools or platforms used (comma separated)</label>
           <input type="text"
-                 placeholder="Tools or platforms used (comma separated)"
+                 placeholder="e.g., recorder, computer, camera, Canva"
                  value="${escapeHtml(toolsValue)}"
                  onchange="updateExpField('${exp.id}', 'tools_used_str', this.value)">
 
+          <label>Results or outcomes (comma separated)</label>
           <input type="text"
-                 placeholder="Results or outcomes (comma separated)"
+                 placeholder="e.g., stories aired, improved engagement, completed assignments"
                  value="${escapeHtml(resultsValue)}"
                  onchange="updateExpField('${exp.id}', 'results_str', this.value)">
 
-          <button class="generate-bullets-btn" onclick="generateBullets('${exp.id}')">
-            ✨ Generate Professional Bullets
-          </button>
+          <div class="button-group">
+            <button class="generate-bullets-btn" type="button" onclick="rewriteExperienceWithAI('${exp.id}')">
+              ✨ Rewrite into Premium CV Bullets
+            </button>
+            <button class="remove-exp-btn" type="button" onclick="removeExperience('${exp.id}')">
+              Remove
+            </button>
+          </div>
+
+          <div id="exp_status_${exp.id}" class="helper-text"></div>
 
           ${
             exp.generated_bullets.length
@@ -355,10 +346,8 @@ function renderExperienceBuilder() {
                 .join("")}
             </div>
           `
-              : ""
+              : `<p class="helper-text">No bullets generated yet for this experience.</p>`
           }
-
-          <button class="remove-exp-btn" onclick="removeExperience('${exp.id}')">Remove</button>
         </div>
       `;
     })
@@ -366,7 +355,7 @@ function renderExperienceBuilder() {
 }
 
 function updateExpField(id, field, value) {
-  const exp = appState.experienceEntries.find(e => e.id === id);
+  const exp = appState.experienceEntries.find(item => item.id === id);
   if (!exp) return;
 
   if (field === "tools_used_str") {
@@ -380,95 +369,153 @@ function updateExpField(id, field, value) {
   updatePreview();
 }
 
-function generateBullets(id) {
-  const exp = appState.experienceEntries.find(e => e.id === id);
+async function rewriteExperienceWithAI(id) {
+  const exp = appState.experienceEntries.find(item => item.id === id);
   if (!exp) return;
 
-  const mapped = experienceMappings[exp.type] || [];
-  const programmeData = getCurrentProgrammeData();
+  saveCurrentStepData();
 
-  let generated = [];
+  const programme = getResolvedProgramme();
+  const experienceType = getExperienceTypeLabel(exp.type);
+  const role = String(exp.role_title || "").trim();
+  const organization = String(exp.organization || "").trim();
+  const notes = String(exp.raw_description || "").trim();
+  const tools = Array.isArray(exp.tools_used) ? exp.tools_used.join(", ") : "";
+  const results = Array.isArray(exp.results) ? exp.results.join(", ") : "";
 
-  if (mapped.length) {
-    generated.push(...mapped.slice(0, 2));
+  const statusEl = document.getElementById(`exp_status_${id}`);
+
+  if (!programme) {
+    if (statusEl) statusEl.textContent = "Please select or type the student's programme first.";
+    return;
   }
 
-  if (programmeData?.experience_suggestions) {
-    Object.values(programmeData.experience_suggestions).forEach(list => {
-      if (Array.isArray(list)) generated.push(...list.slice(0, 1));
+  if (!role || !organization || !notes) {
+    if (statusEl) statusEl.textContent = "Please fill in role title, organization, and rough notes first.";
+    return;
+  }
+
+  if (statusEl) statusEl.textContent = "Rewriting experience into premium CV bullets...";
+
+  try {
+    const response = await fetch("/.netlify/functions/generate-experience", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        programme,
+        experienceType,
+        role,
+        organization,
+        notes,
+        tools,
+        results
+      })
     });
-  }
 
-  if (exp.raw_description) {
-    generated.push(buildDynamicBullet(exp));
-  }
+    const data = await response.json();
 
-  if (exp.tools_used.length) {
-    generated.push(
-      `Used ${exp.tools_used.join(", ")} to complete tasks and strengthen practical professional skills.`
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to rewrite experience.");
+    }
+
+    const bullets = Array.isArray(data.experience_bullets)
+      ? data.experience_bullets.filter(item => typeof item === "string" && item.trim())
+      : [];
+
+    if (!bullets.length) {
+      throw new Error("No bullets were generated.");
+    }
+
+    exp.generated_bullets = bullets;
+    exp.selected_bullets = [...bullets];
+
+    renderExperienceBuilder();
+    updatePreview();
+
+    const freshStatusEl = document.getElementById(`exp_status_${id}`);
+    if (freshStatusEl) freshStatusEl.textContent = "Premium CV bullets generated successfully.";
+  } catch (error) {
+    console.error("rewriteExperienceWithAI error:", error);
+
+    exp.generated_bullets = buildFallbackExperienceBullets(exp);
+    exp.selected_bullets = [...exp.generated_bullets];
+
+    renderExperienceBuilder();
+    updatePreview();
+
+    const freshStatusEl = document.getElementById(`exp_status_${id}`);
+    if (freshStatusEl) {
+      freshStatusEl.textContent =
+        "AI rewrite failed, but a fallback version was generated. You can edit and try again.";
+    }
+  }
+}
+
+function buildFallbackExperienceBullets(exp) {
+  const role = cleanSentence(exp.role_title || getExperienceTypeLabel(exp.type));
+  const raw = normalizeRawInput(cleanSentence(exp.raw_description));
+  const tools = Array.isArray(exp.tools_used) ? exp.tools_used : [];
+  const results = Array.isArray(exp.results) ? exp.results : [];
+
+  const bullets = [];
+
+  if (raw) {
+    bullets.push(
+      `${capitalizeFirst(getActionVerb(raw.toLowerCase()))} ${raw.toLowerCase()} as part of ${role.toLowerCase()} responsibilities.`
     );
   }
 
-  if (exp.results.length) {
-    generated.push(
-      `Contributed to ${exp.results.join(", ")} through active participation, coordination, and follow-up.`
+  if (tools.length) {
+    bullets.push(
+      `Used ${tools.join(", ")} to support assigned tasks and complete practical work effectively.`
     );
   }
 
-  generated = uniqueCleanList(generated).filter(Boolean).slice(0, 4);
-
-  if (!generated.length) {
-    generated = [
-      "Supported day-to-day tasks in an organized working or learning environment.",
-      "Built practical experience through active participation and teamwork.",
-      "Demonstrated willingness to learn and contribute effectively."
-    ];
+  if (results.length) {
+    bullets.push(
+      `Contributed to ${results.join(", ")} through active participation and task follow-up.`
+    );
   }
 
-  exp.generated_bullets = generated;
-  exp.selected_bullets = [...generated];
-
-  renderExperienceBuilder();
-  updatePreview();
-}
-
-function buildDynamicBullet(exp) {
-  const role = exp.role_title || getExperienceTypeLabel(exp.type).toLowerCase();
-  const description = cleanSentence(exp.raw_description);
-
-  if (!description) {
-    return `Supported ${role.toLowerCase()} responsibilities through organized participation and communication.`;
+  if (bullets.length < 3) {
+    bullets.push(
+      `Supported ${role.toLowerCase()} duties through organized participation and professional communication.`
+    );
   }
 
-  return `${capitalizeFirst(
-    getActionVerb(description.toLowerCase())
-  )} ${role.toLowerCase()} responsibilities including ${description.toLowerCase()}.`;
+  if (bullets.length < 3) {
+    bullets.push(
+      `Built hands-on experience by contributing to real tasks in a structured work environment.`
+    );
+  }
+
+  return uniqueCleanList(bullets).slice(0, 3);
 }
 
-function toggleBullet(id, idx, isChecked) {
-  const exp = appState.experienceEntries.find(e => e.id === id);
+function toggleBullet(id, idx, checked) {
+  const exp = appState.experienceEntries.find(item => item.id === id);
   if (!exp) return;
 
   const bullet = exp.generated_bullets[idx];
   if (!bullet) return;
 
-  if (isChecked) {
-    if (!exp.selected_bullets.includes(bullet)) {
-      exp.selected_bullets.push(bullet);
-    }
+  if (checked) {
+    if (!exp.selected_bullets.includes(bullet)) exp.selected_bullets.push(bullet);
   } else {
-    exp.selected_bullets = exp.selected_bullets.filter(b => b !== bullet);
+    exp.selected_bullets = exp.selected_bullets.filter(item => item !== bullet);
   }
 
   updatePreview();
 }
 
 function removeExperience(id) {
-  const exp = appState.experienceEntries.find(e => e.id === id);
+  const exp = appState.experienceEntries.find(item => item.id === id);
   if (!exp) return;
 
-  appState.experienceEntries = appState.experienceEntries.filter(e => e.id !== id);
-  appState.selectedExperiences = appState.selectedExperiences.filter(t => t !== exp.type);
+  appState.experienceEntries = appState.experienceEntries.filter(item => item.id !== id);
+  appState.selectedExperiences = appState.selectedExperiences.filter(item => item !== exp.type);
 
   const card = document.querySelector(`.card[data-type="${exp.type}"]`);
   if (card) card.classList.remove("selected");
@@ -493,93 +540,29 @@ function getExperienceTypeLabel(type) {
   return labels[type] || type;
 }
 
-// -----------------------------
-// AI EXPERIENCE GENERATOR
-// -----------------------------
-async function generateExperienceBullets() {
-  const programme = document.getElementById("aiProgramme")?.value?.trim() || "";
-  const experienceType = document.getElementById("aiExperienceType")?.value?.trim() || "";
-  const role = document.getElementById("aiRole")?.value?.trim() || "";
-  const organization = document.getElementById("aiOrganization")?.value?.trim() || "";
-  const notes = document.getElementById("aiNotes")?.value?.trim() || "";
-
-  const statusEl = document.getElementById("aiExperienceStatus");
-  const outputEl = document.getElementById("aiExperienceOutput");
-  const buttonEl = document.getElementById("generateExperienceBtn");
-
-  if (!statusEl || !outputEl || !buttonEl) return;
-
-  if (!programme || !experienceType || !role || !organization || !notes) {
-    statusEl.textContent = "Please fill in all the AI experience fields first.";
-    return;
-  }
-
-  statusEl.textContent = "Generating experience bullets...";
-  buttonEl.disabled = true;
-
-  try {
-    const response = await fetch("/.netlify/functions/generate-experience", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        programme,
-        experienceType,
-        role,
-        organization,
-        notes
-      })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok || !data.success) {
-      throw new Error(data.message || "Failed to generate experience bullets.");
-    }
-
-    const bullets = Array.isArray(data.experience_bullets) ? data.experience_bullets : [];
-    outputEl.value = bullets.map(item => `• ${item}`).join("\n");
-    statusEl.textContent = "Experience bullets generated successfully.";
-  } catch (error) {
-    console.error("AI experience generation error:", error);
-    statusEl.textContent = error.message || "Something went wrong while generating bullets.";
-  } finally {
-    buttonEl.disabled = false;
-  }
-}
-
-// -----------------------------
-// SKILLS
-// -----------------------------
 function updateSkillsForProgramme() {
-  const programme =
-    document.getElementById("programmeSelect")?.value || appState.profile.programme;
-  const programmeData = programmesData[programme];
+  const programmeData = getCurrentProgrammeData();
   const container = document.getElementById("skillsContainer");
+  if (!container) return;
 
-  if (!programmeData || !container) return;
-
-  const allSkills = programmeData.skills || {};
+  const skillsSource = programmeData?.skills || DEFAULT_FALLBACK_SKILLS;
   let html = "";
 
-  for (const [category, skills] of Object.entries(allSkills)) {
+  for (const [category, skills] of Object.entries(skillsSource)) {
     html += `<div class="skill-category"><h4>${escapeHtml(category)}</h4><div class="skill-checkboxes">`;
-
     skills.forEach(skill => {
-      const isSelected = (appState.selectedSkills[category] || []).includes(skill);
+      const checked = (appState.selectedSkills[category] || []).includes(skill) ? "checked" : "";
       html += `
         <label class="skill-checkbox">
           <input type="checkbox"
                  data-category="${escapeHtml(category)}"
                  data-skill="${escapeHtml(skill)}"
-                 ${isSelected ? "checked" : ""}
+                 ${checked}
                  onchange="toggleSkill(this)">
           ${escapeHtml(skill)}
         </label>
       `;
     });
-
     html += `</div></div>`;
   }
 
@@ -600,22 +583,19 @@ function toggleSkill(checkbox) {
       appState.selectedSkills[category].push(skill);
     }
   } else {
-    appState.selectedSkills[category] = appState.selectedSkills[category].filter(s => s !== skill);
+    appState.selectedSkills[category] = appState.selectedSkills[category].filter(item => item !== skill);
   }
 
   updatePreview();
 }
 
-// -----------------------------
-// EDUCATION
-// -----------------------------
 function addEducation() {
   const container = document.getElementById("educationList");
   if (!container) return;
 
-  const newEntry = document.createElement("div");
-  newEntry.className = "education-entry entry-card";
-  newEntry.innerHTML = `
+  const entry = document.createElement("div");
+  entry.className = "education-entry entry-card";
+  entry.innerHTML = `
     <input type="text" placeholder="Institution" class="edu-institution">
     <input type="text" placeholder="Programme / Degree / Diploma" class="edu-programme">
     <div class="date-row">
@@ -627,20 +607,17 @@ function addEducation() {
     <textarea placeholder="Final Project / Thesis (Optional)" class="edu-project" rows="2"></textarea>
     <button class="remove-btn" onclick="this.closest('.education-entry').remove(); updatePreview();">Remove</button>
   `;
-  container.appendChild(newEntry);
+  container.appendChild(entry);
 }
 
-// -----------------------------
-// PROJECTS / LEADERSHIP
-// -----------------------------
 function addProject() {
   const container = document.getElementById("projectsList");
   if (!container) return;
 
-  const projectId = Date.now();
+  const id = Date.now();
 
   appState.projects.push({
-    id: projectId,
+    id,
     title: "",
     organization: "",
     role: "",
@@ -649,41 +626,38 @@ function addProject() {
     description: ""
   });
 
-  const newEntry = document.createElement("div");
-  newEntry.className = "project-entry entry-card";
-  newEntry.innerHTML = `
-    <input type="text" placeholder="Project / Leadership Title" onchange="updateProject(${projectId}, 'title', this.value)">
-    <input type="text" placeholder="Organization / Group" onchange="updateProject(${projectId}, 'organization', this.value)">
-    <input type="text" placeholder="Your Role" onchange="updateProject(${projectId}, 'role', this.value)">
+  const entry = document.createElement("div");
+  entry.className = "project-entry entry-card";
+  entry.innerHTML = `
+    <input type="text" placeholder="Project / Leadership Title" onchange="updateProject(${id}, 'title', this.value)">
+    <input type="text" placeholder="Organization / Group" onchange="updateProject(${id}, 'organization', this.value)">
+    <input type="text" placeholder="Your Role" onchange="updateProject(${id}, 'role', this.value)">
     <div class="date-row">
-      <input type="text" placeholder="Start Date" onchange="updateProject(${projectId}, 'start_date', this.value)">
-      <input type="text" placeholder="End Date" onchange="updateProject(${projectId}, 'end_date', this.value)">
+      <input type="text" placeholder="Start Date" onchange="updateProject(${id}, 'start_date', this.value)">
+      <input type="text" placeholder="End Date" onchange="updateProject(${id}, 'end_date', this.value)">
     </div>
-    <textarea placeholder="Description / Key achievements" rows="3" onchange="updateProject(${projectId}, 'description', this.value)"></textarea>
-    <button class="remove-btn" onclick="this.closest('.project-entry').remove(); removeProject(${projectId})">Remove</button>
+    <textarea placeholder="Description / Key achievements" rows="3" onchange="updateProject(${id}, 'description', this.value)"></textarea>
+    <button class="remove-btn" onclick="this.closest('.project-entry').remove(); removeProject(${id})">Remove</button>
   `;
-  container.appendChild(newEntry);
+  container.appendChild(entry);
 }
 
 function updateProject(id, field, value) {
-  const project = appState.projects.find(p => p.id === id);
+  const project = appState.projects.find(item => item.id === id);
   if (!project) return;
   project[field] = value;
   updatePreview();
 }
 
 function removeProject(id) {
-  appState.projects = appState.projects.filter(p => p.id !== id);
+  appState.projects = appState.projects.filter(item => item.id !== id);
   updatePreview();
 }
 
-// -----------------------------
-// SUMMARIES
-// -----------------------------
 function generateSummaries() {
   saveCurrentStepData();
 
-  const programme = appState.profile.programme || "student";
+  const programme = getResolvedProgramme() || "student";
   const targetRole = appState.profile.target_job_title || "entry-level position";
   const sector = appState.profile.preferred_sector || "professional";
   const profileStageLabel = getProfileStageLabel(appState.profile.profile_stage);
@@ -694,7 +668,7 @@ function generateSummaries() {
   const skill3 = allSkills[2] || "teamwork";
 
   const exposures = appState.experienceEntries
-    .map(e => e.role_title || getExperienceTypeLabel(e.type))
+    .map(item => item.role_title || getExperienceTypeLabel(item.type))
     .filter(Boolean);
 
   const exposure1 = exposures[0] || "academic projects";
@@ -704,16 +678,12 @@ function generateSummaries() {
   const interest1 = interests[0] || "professional growth";
   const interest2 = interests[1] || "practical learning";
 
-  const activityOrProject =
-    appState.projects[0]?.title || "academic work";
-
-  const templates =
-    summaryTemplates.internship_focused && Array.isArray(summaryTemplates.internship_focused)
-      ? summaryTemplates.internship_focused
-      : [
-          "Motivated {programme} student with practical interest in {interest_area_1} and {interest_area_2}. Skilled in {skill_1}, {skill_2}, and {skill_3} through academic work, student activities, and hands-on experience. Seeking an opportunity to apply these skills in a professional {sector} environment.",
-          "{profile_stage_label} in {programme} with strengths in {skill_1}, {skill_2}, and {skill_3}. Experienced in {exposure_1} and {exposure_2}, with a strong interest in {target_role}. Eager to contribute, learn, and grow in a practical work setting."
-        ];
+  const templates = Array.isArray(summaryTemplates.internship_focused)
+    ? summaryTemplates.internship_focused
+    : [
+        "Motivated {programme} student with practical interest in {interest_area_1} and {interest_area_2}. Skilled in {skill_1}, {skill_2}, and {skill_3} through academic work and hands-on experience. Seeking an opportunity to apply these strengths in a professional {sector} environment.",
+        "{profile_stage_label} in {programme} with strengths in {skill_1}, {skill_2}, and {skill_3}. Experienced in {exposure_1} and {exposure_2}, with strong interest in {target_role}. Ready to contribute and grow in a practical work setting."
+      ];
 
   appState.summaryOptions = templates.map(template =>
     template
@@ -729,7 +699,7 @@ function generateSummaries() {
       .replaceAll("{interest_area_1}", interest1)
       .replaceAll("{interest_area_2}", interest2)
       .replaceAll("{sector_or_role}", sector || targetRole)
-      .replaceAll("{activity_or_project}", activityOrProject)
+      .replaceAll("{activity_or_project}", appState.projects[0]?.title || "academic work")
       .replaceAll("{achievement_1}", "apply practical skills")
   );
 
@@ -750,17 +720,15 @@ function renderSummaryOptions() {
     return;
   }
 
-  container.innerHTML = appState.summaryOptions
-    .map((summary, idx) => {
-      const selected = appState.selectedSummary === summary ? "selected" : "";
-      return `
-        <div class="summary-option ${selected}" onclick="selectSummary(${idx})">
-          <p>${escapeHtml(summary)}</p>
-          <span class="select-radio">${selected ? "✓ Selected" : "Select"}</span>
-        </div>
-      `;
-    })
-    .join("");
+  container.innerHTML = appState.summaryOptions.map((summary, idx) => {
+    const selected = appState.selectedSummary === summary ? "selected" : "";
+    return `
+      <div class="summary-option ${selected}" onclick="selectSummary(${idx})">
+        <p>${escapeHtml(summary)}</p>
+        <span class="select-radio">${selected ? "✓ Selected" : "Select"}</span>
+      </div>
+    `;
+  }).join("");
 }
 
 function selectSummary(idx) {
@@ -769,15 +737,6 @@ function selectSummary(idx) {
   updatePreview();
 }
 
-function getProfileStageLabel(stage) {
-  if (stage === "final_year_student") return "Final year student";
-  if (stage === "fresh_graduate") return "Fresh graduate";
-  return "Student";
-}
-
-// -----------------------------
-// QUALITY CHECK
-// -----------------------------
 function runQualityCheck() {
   saveCurrentStepData();
 
@@ -787,9 +746,9 @@ function runQualityCheck() {
 
   const summaryText = appState.selectedSummary || "";
   const summaryWords = summaryText.trim() ? summaryText.trim().split(/\s+/).length : 0;
-  maxScore += 5;
 
-  if (summaryText.toLowerCase().includes((appState.profile.programme || "").toLowerCase())) score += 1;
+  maxScore += 5;
+  if (summaryText.toLowerCase().includes((getResolvedProgramme() || "").toLowerCase())) score += 1;
   else suggestions.push("Your summary should mention your programme.");
 
   if (
@@ -819,25 +778,25 @@ function runQualityCheck() {
   if ((appState.selectedSkills.Digital || []).length > 0) score += 1;
   else suggestions.push("Add at least one digital or technical skill.");
 
-  if (Object.keys(appState.selectedSkills).some(cat => (appState.selectedSkills[cat] || []).length > 0)) score += 1;
+  if (Object.keys(appState.selectedSkills).some(key => (appState.selectedSkills[key] || []).length > 0)) score += 1;
 
   maxScore += 4;
-  const majorExperiences = appState.experienceEntries.filter(e => e.selected_bullets.length > 0);
+  const majorExperiences = appState.experienceEntries.filter(item => item.selected_bullets.length > 0);
 
-  if (majorExperiences.some(e => e.selected_bullets.length >= 2)) score += 1;
+  if (majorExperiences.some(item => item.selected_bullets.length >= 2)) score += 1;
   else suggestions.push("Add at least two strong bullets for a major experience.");
 
-  if (majorExperiences.some(e => e.selected_bullets.some(b => startsWithActionVerb(b)))) score += 1;
+  if (majorExperiences.some(item => item.selected_bullets.some(startsWithActionVerb))) score += 1;
   else suggestions.push("Use stronger action verbs in your bullets.");
 
-  if (majorExperiences.some(e => e.results.length > 0 || e.selected_bullets.some(b => /improved|supported|contributed|managed|organized/i.test(b)))) score += 1;
+  if (majorExperiences.some(item => item.results.length > 0)) score += 1;
   else suggestions.push("Add one bullet showing a result, contribution, or outcome.");
 
   if (!hasRepeatedVagueBullets(majorExperiences)) score += 1;
   else suggestions.push("Remove repeated or vague bullets.");
 
   maxScore += 4;
-  if (majorExperiences.every(e => e.selected_bullets.every(b => b.length <= 160))) score += 1;
+  if (majorExperiences.every(item => item.selected_bullets.every(b => b.length <= 180))) score += 1;
   else suggestions.push("Shorten long bullets for better readability.");
 
   if (document.querySelectorAll(".education-entry").length > 0) score += 1;
@@ -865,7 +824,7 @@ function runQualityCheck() {
     <div class="score-label">CV Quality Score</div>
     ${
       finalSuggestions.length
-        ? `<ul class="suggestions-list">${finalSuggestions.map(s => `<li>🔧 ${escapeHtml(s)}</li>`).join("")}</ul>`
+        ? `<ul class="suggestions-list">${finalSuggestions.map(item => `<li>🔧 ${escapeHtml(item)}</li>`).join("")}</ul>`
         : '<p class="success-msg">✓ All quality checks passed. Your CV looks strong.</p>'
     }
     ${
@@ -876,9 +835,6 @@ function runQualityCheck() {
   `;
 }
 
-// -----------------------------
-// PREVIEW
-// -----------------------------
 function updatePreview() {
   setText("p_name", (appState.personalDetails.full_name || "YOUR NAME").toUpperCase());
   setHTML(
@@ -902,7 +858,7 @@ function updatePreview() {
 
 function updateEducationPreview() {
   const eduElements = document.querySelectorAll(".education-entry");
-  let eduHtml = "";
+  let html = "";
 
   eduElements.forEach(edu => {
     const institution = edu.querySelector(".edu-institution")?.value || "";
@@ -914,7 +870,7 @@ function updateEducationPreview() {
     const project = edu.querySelector(".edu-project")?.value || "";
 
     if (programme || institution) {
-      eduHtml += `
+      html += `
         <div class="education-item">
           <div class="edu-header">
             <strong>${escapeHtml(programme)}</strong>
@@ -929,78 +885,69 @@ function updateEducationPreview() {
     }
   });
 
-  setHTML("p_education", eduHtml || "<p>No education added yet.</p>");
+  setHTML("p_education", html || "<p>No education added yet.</p>");
 }
 
 function updateSkillsPreview() {
-  const skillsHtml = Object.entries(appState.selectedSkills)
-    .filter(([_, skills]) => skills.length > 0)
-    .map(
-      ([category, skills]) =>
-        `<div class="skill-group"><strong>${escapeHtml(category)}:</strong> ${escapeHtml(
-          skills.join(", ")
-        )}</div>`
-    )
+  const html = Object.entries(appState.selectedSkills)
+    .filter(([_, items]) => items.length > 0)
+    .map(([category, items]) => `<div class="skill-group"><strong>${escapeHtml(category)}:</strong> ${escapeHtml(items.join(", "))}</div>`)
     .join("");
 
-  setHTML("p_skills", skillsHtml || "<p>Select skills in Step 7.</p>");
+  setHTML("p_skills", html || "<p>Select skills in Step 7.</p>");
 }
 
 function updateExperiencePreview() {
-  let expHtml = "";
+  let html = "";
 
   appState.experienceEntries.forEach(exp => {
     if (exp.selected_bullets.length > 0) {
-      const bullets = exp.selected_bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("");
-      expHtml += `
+      html += `
         <div class="experience-item">
           <div class="exp-header">
             <strong>${escapeHtml(exp.role_title || getExperienceTypeLabel(exp.type))}</strong>
             <span class="exp-date">${escapeHtml(exp.start_date || "")} - ${escapeHtml(exp.end_date || "Present")}</span>
           </div>
           <div class="exp-organization">${escapeHtml(exp.organization || "")}</div>
-          <ul class="exp-bullets">${bullets}</ul>
+          <ul class="exp-bullets">
+            ${exp.selected_bullets.map(item => `<li>${escapeHtml(item)}</li>`).join("")}
+          </ul>
         </div>
       `;
     }
   });
 
-  setHTML("p_experiences", expHtml || "<p>No experience added yet.</p>");
+  setHTML("p_experiences", html || "<p>No experience added yet.</p>");
 }
 
 function updateProjectsPreview() {
-  let projectsHtml = "";
+  let html = "";
 
-  appState.projects.forEach(proj => {
-    if (proj.title) {
-      projectsHtml += `
+  appState.projects.forEach(project => {
+    if (project.title) {
+      html += `
         <div class="project-item">
           <div class="project-header">
-            <strong>${escapeHtml(proj.title)}</strong>
-            <span class="project-date">${escapeHtml(proj.start_date || "")} - ${escapeHtml(proj.end_date || "")}</span>
+            <strong>${escapeHtml(project.title)}</strong>
+            <span class="project-date">${escapeHtml(project.start_date || "")} - ${escapeHtml(project.end_date || "")}</span>
           </div>
-          <div class="project-role">${escapeHtml(proj.role || "")}${proj.organization ? " | " + escapeHtml(proj.organization) : ""}</div>
-          <div class="project-description">${escapeHtml(proj.description || "")}</div>
+          <div class="project-role">${escapeHtml(project.role || "")}${project.organization ? " | " + escapeHtml(project.organization) : ""}</div>
+          <div class="project-description">${escapeHtml(project.description || "")}</div>
         </div>
       `;
     }
   });
 
-  setHTML("p_projects", projectsHtml || "<p>No projects added yet.</p>");
+  setHTML("p_projects", html || "<p>No projects added yet.</p>");
 }
 
 function applyTemplate() {
-  const cvElement = document.getElementById("cvPreview");
-  if (!cvElement) return;
-  cvElement.className = `cv ${appState.template || "clean"}-template`;
+  const el = document.getElementById("cvPreview");
+  if (el) el.className = `cv ${appState.template || "clean"}-template`;
 }
 
-// -----------------------------
-// NAVIGATION
-// -----------------------------
 function nextStep() {
   saveCurrentStepData();
-
   if (appState.currentStep >= TOTAL_STEPS) return;
 
   hideStep(appState.currentStep);
@@ -1008,29 +955,16 @@ function nextStep() {
   showStep(appState.currentStep);
   updateProgressBar();
 
-  if (appState.currentStep === 6) {
-    syncAIProgrammeField();
-    renderExperienceBuilder();
-  }
-
-  if (appState.currentStep === 7) {
-    updateSkillsForProgramme();
-  }
-
-  if (appState.currentStep === 9 && !appState.summaryOptions.length) {
-    generateSummaries();
-  }
-
-  if (appState.currentStep === 11) {
-    runQualityCheck();
-  }
+  if (appState.currentStep === 6) renderExperienceBuilder();
+  if (appState.currentStep === 7) updateSkillsForProgramme();
+  if (appState.currentStep === 9 && !appState.summaryOptions.length) generateSummaries();
+  if (appState.currentStep === 11) runQualityCheck();
 
   updatePreview();
 }
 
 function prevStep() {
   if (appState.currentStep <= 1) return;
-
   hideStep(appState.currentStep);
   appState.currentStep -= 1;
   showStep(appState.currentStep);
@@ -1054,17 +988,20 @@ function updateProgressBar() {
   if (label) label.innerText = `Step ${appState.currentStep} of ${TOTAL_STEPS}`;
 }
 
-// -----------------------------
-// SAVE FORM DATA
-// -----------------------------
 function saveCurrentStepData() {
-  const cvGoal = document.getElementById("cvGoal")?.value;
-  const profileStage = document.getElementById("profileStage")?.value;
-  const programme = document.getElementById("programmeSelect")?.value;
+  appState.profile.cv_goal = document.getElementById("cvGoal")?.value || appState.profile.cv_goal;
+  appState.profile.profile_stage = document.getElementById("profileStage")?.value || appState.profile.profile_stage;
 
-  if (cvGoal) appState.profile.cv_goal = cvGoal;
-  if (profileStage) appState.profile.profile_stage = profileStage;
-  if (programme) appState.profile.programme = programme;
+  const selectProgramme = document.getElementById("programmeSelect")?.value || "";
+  const customProgramme = document.getElementById("customProgramme")?.value?.trim() || "";
+
+  if (selectProgramme === "__other__") {
+    appState.profile.programme = "__other__";
+    appState.profile.custom_programme = customProgramme;
+  } else {
+    appState.profile.programme = selectProgramme || appState.profile.programme;
+    appState.profile.custom_programme = "";
+  }
 
   appState.personalDetails = {
     full_name: document.getElementById("fullName")?.value || "",
@@ -1075,25 +1012,13 @@ function saveCurrentStepData() {
     photo_enabled: document.getElementById("photoEnabled")?.checked || false
   };
 
-  appState.profile.target_job_title =
-    document.getElementById("targetJobTitle")?.value || "";
-  appState.profile.preferred_sector =
-    document.getElementById("preferredSector")?.value || "";
-
-  appState.profile.target_keywords = splitCSV(
-    document.getElementById("targetKeywords")?.value || ""
-  );
-
-  appState.profile.career_interests = splitCSV(
-    document.getElementById("careerInterests")?.value || ""
-  );
-
+  appState.profile.target_job_title = document.getElementById("targetJobTitle")?.value || "";
+  appState.profile.preferred_sector = document.getElementById("preferredSector")?.value || "";
+  appState.profile.target_keywords = splitCSV(document.getElementById("targetKeywords")?.value || "");
+  appState.profile.career_interests = splitCSV(document.getElementById("careerInterests")?.value || "");
   appState.template = document.getElementById("templateSelect")?.value || "clean";
 }
 
-// -----------------------------
-// PAYMENT
-// -----------------------------
 async function handlePayment() {
   saveCurrentStepData();
   updatePreview();
@@ -1150,14 +1075,11 @@ async function handlePayment() {
   }
 }
 
-// -----------------------------
-// HELPERS
-// -----------------------------
 function splitCSV(value) {
   return uniqueCleanList(
     String(value || "")
       .split(",")
-      .map(s => s.trim())
+      .map(item => item.trim())
       .filter(Boolean)
   );
 }
@@ -1170,6 +1092,16 @@ function cleanSentence(input) {
   return String(input || "").trim().replace(/\s+/g, " ").replace(/[.]+$/, "");
 }
 
+function normalizeRawInput(text) {
+  let value = String(text || "").trim();
+  value = value.replace(/\bi\b/g, "I");
+  value = value.replace(/\battended to clients\b/gi, "supporting clients");
+  value = value.replace(/\bsourced for\b/gi, "sourcing");
+  value = value.replace(/\bvoiced stories\b/gi, "voicing stories");
+  value = value.replace(/\bcover(ed)? events\b/gi, "covering events");
+  return value;
+}
+
 function capitalizeFirst(str) {
   if (!str) return "Supported";
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -1177,74 +1109,63 @@ function capitalizeFirst(str) {
 
 function getActionVerb(text) {
   const verbs = [
+    "wrote",
+    "reported",
+    "interviewed",
+    "covered",
+    "edited",
+    "prepared",
+    "organized",
     "assisted",
     "supported",
     "coordinated",
-    "prepared",
-    "organized",
-    "developed",
-    "created",
-    "conducted",
-    "facilitated",
     "managed",
     "handled",
-    "helped"
+    "produced",
+    "recorded"
   ];
 
   const lower = String(text || "").toLowerCase();
-  for (const verb of verbs) {
-    if (lower.includes(verb)) return verb;
-  }
-  return "supported";
+  const matched = verbs.find(item => lower.includes(item));
+  return matched || "supported";
 }
 
 function startsWithActionVerb(text) {
   const verbs = [
-    "assisted",
-    "supported",
-    "coordinated",
-    "prepared",
-    "organized",
-    "developed",
-    "created",
-    "conducted",
-    "facilitated",
-    "managed",
-    "handled",
-    "provided",
-    "represented",
-    "maintained",
-    "helped"
+    "assisted", "supported", "coordinated", "prepared", "organized", "developed",
+    "created", "conducted", "facilitated", "managed", "handled", "provided",
+    "represented", "maintained", "helped", "reported", "wrote", "interviewed",
+    "covered", "edited", "produced", "recorded"
   ];
   const lower = String(text || "").trim().toLowerCase();
-  return verbs.some(v => lower.startsWith(v));
+  return verbs.some(item => lower.startsWith(item));
 }
 
 function hasCliche(text) {
-  const cliches = [
-    "hardworking",
-    "team player",
-    "go-getter",
-    "dynamic individual",
-    "self-starter"
-  ];
+  const cliches = ["hardworking", "team player", "go-getter", "dynamic individual", "self-starter"];
   const lower = String(text || "").toLowerCase();
-  return cliches.some(c => lower.includes(c));
+  return cliches.some(item => lower.includes(item));
 }
 
 function hasRepeatedVagueBullets(experiences) {
-  const allBullets = experiences.flatMap(e => e.selected_bullets || []);
-  const normalized = allBullets.map(b => b.trim().toLowerCase());
+  const allBullets = experiences.flatMap(item => item.selected_bullets || []);
+  const normalized = allBullets.map(item => item.trim().toLowerCase());
   return new Set(normalized).size !== normalized.length;
 }
 
+function getProfileStageLabel(stage) {
+  if (stage === "final_year_student") return "Final year student";
+  if (stage === "fresh_graduate") return "Fresh graduate";
+  return "Student";
+}
+
 function escapeHtml(str) {
-  return String(str || "").replace(/[&<>"]/g, m => {
-    if (m === "&") return "&amp;";
-    if (m === "<") return "&lt;";
-    if (m === ">") return "&gt;";
-    if (m === '"') return "&quot;";
-    return m;
+  return String(str || "").replace(/[&<>"]/g, char => {
+    if (char === "&") return "&amp;";
+    if (char === "<") return "&lt;";
+    if (char === ">") return "&gt;";
+    if (char === '"') return "&quot;";
+    return char;
   });
 }
 
@@ -1262,14 +1183,11 @@ function showMessage(message) {
   alert(message);
 }
 
-// -----------------------------
-// GLOBAL EXPORTS
-// -----------------------------
 window.nextStep = nextStep;
 window.prevStep = prevStep;
 window.toggleExperienceCard = toggleExperienceCard;
 window.updateExpField = updateExpField;
-window.generateBullets = generateBullets;
+window.rewriteExperienceWithAI = rewriteExperienceWithAI;
 window.toggleBullet = toggleBullet;
 window.removeExperience = removeExperience;
 window.addEducation = addEducation;
@@ -1280,28 +1198,27 @@ window.toggleSkill = toggleSkill;
 window.selectSummary = selectSummary;
 window.aiSuggestKeywords = aiSuggestKeywords;
 window.generateSummaries = generateSummaries;
-window.generateExperienceBullets = generateExperienceBullets;
-window.syncAIProgrammeField = syncAIProgrammeField;
+window.updatePreview = updatePreview;
 
-// -----------------------------
-// STARTUP
-// -----------------------------
 document.addEventListener("DOMContentLoaded", () => {
   loadData();
 
   const programmeSelect = document.getElementById("programmeSelect");
   if (programmeSelect) {
     programmeSelect.addEventListener("change", () => {
+      toggleCustomProgrammeField();
       saveCurrentStepData();
-      syncAIProgrammeField();
       updateSkillsForProgramme();
       updatePreview();
     });
   }
 
-  const generateBtn = document.getElementById("generateExperienceBtn");
-  if (generateBtn) {
-    generateBtn.addEventListener("click", generateExperienceBullets);
+  const customProgramme = document.getElementById("customProgramme");
+  if (customProgramme) {
+    customProgramme.addEventListener("input", () => {
+      saveCurrentStepData();
+      updateSkillsForProgramme();
+    });
   }
 
   const payBtn = document.getElementById("payDownloadBtn");
