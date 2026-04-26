@@ -21,12 +21,14 @@ exports.handler = async (event) => {
     const role = String(body.role || "").trim();
     const organization = String(body.organization || "").trim();
     const notes = String(body.notes || "").trim();
+    const tools = String(body.tools || "").trim();
+    const results = String(body.results || "").trim();
 
     if (!programme || !experienceType || !role || !organization || !notes) {
       return jsonResponse(400, {
         success: false,
         experience_bullets: [],
-        message: "All fields are required."
+        message: "Programme, experience type, role, organization, and notes are required."
       });
     }
 
@@ -35,7 +37,9 @@ exports.handler = async (event) => {
       experienceType,
       role,
       organization,
-      notes
+      notes,
+      tools,
+      results
     });
 
     const response = await client.responses.create({
@@ -91,28 +95,42 @@ exports.handler = async (event) => {
   }
 };
 
-function buildPrompt({ programme, experienceType, role, organization, notes }) {
+function buildPrompt({ programme, experienceType, role, organization, notes, tools, results }) {
   return `
-You are helping a university student write truthful, professional CV bullet points.
+You are helping a university student turn rough experience notes into truthful, professional CV bullet points.
 
 Task:
-Write exactly 3 concise CV bullet points.
-
-Strict rules:
-- Use only the information provided.
-- Do not invent software, achievements, numbers, leadership, or responsibilities.
-- Keep each bullet employer-friendly and realistic for a student or fresh graduate.
-- Start each bullet with a strong action verb.
-- Avoid repeating the same wording.
-- Keep each bullet short and clear.
-- Output valid JSON only.
+Write exactly 3 polished CV bullet points.
 
 Student details:
 Programme: ${programme}
 Experience Type: ${experienceType}
 Role: ${role}
 Organization: ${organization}
-Notes: ${notes}
+Rough Notes: ${notes}
+Tools Used: ${tools || "Not provided"}
+Results or Outcomes: ${results || "Not provided"}
+
+Strict rules:
+- Use only the information provided.
+- Correct grammar, spelling, punctuation, capitalization, and sentence structure.
+- Treat rough or broken student language as real effort and convert it into clean professional English.
+- Do not invent achievements, numbers, software, leadership claims, or duties not supported by the input.
+- Make the bullets specific to the actual role and notes.
+- Avoid generic repeated phrases across all bullets.
+- Start each bullet with a different strong action verb.
+- Keep each bullet concise, believable, and employer-friendly.
+- Do not use vague filler like "strengthened practical professional skills" unless clearly supported.
+- Output valid JSON only.
+
+Return JSON in this exact format:
+{
+  "experience_bullets": [
+    "Bullet 1",
+    "Bullet 2",
+    "Bullet 3"
+  ]
+}
 `.trim();
 }
 
@@ -120,8 +138,8 @@ function normalizeBullets(value) {
   if (!Array.isArray(value)) return [];
 
   return value
-    .filter((item) => typeof item === "string")
-    .map((item) => item.trim())
+    .filter(item => typeof item === "string")
+    .map(item => item.trim())
     .filter(Boolean)
     .slice(0, 3);
 }
