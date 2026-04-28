@@ -119,16 +119,13 @@
           <div class="education-entry entry-card">
             <input type="text" placeholder="Institution" class="edu-institution" />
             <input type="text" placeholder="Programme / Degree / Diploma" class="edu-programme" />
-
             <div class="date-row">
               <input type="text" placeholder="Start Date (MM/YYYY)" class="edu-start" />
               <input type="text" placeholder="End Date (MM/YYYY)" class="edu-end" />
             </div>
-
             <input type="text" placeholder="GPA / Classification (Optional)" class="edu-gpa" />
             <textarea placeholder="Relevant Courses (comma separated)" class="edu-courses" rows="2"></textarea>
             <textarea placeholder="Final Project / Thesis (Optional)" class="edu-project" rows="2"></textarea>
-
             <button class="remove-btn" onclick="this.closest('.education-entry').remove(); updatePreview();">Remove</button>
           </div>
         </div>
@@ -158,7 +155,7 @@
       <div id="step6" class="step">
         <h2>✏️ Build Your Experience</h2>
         <p class="helper-text">
-          Add real experience details in simple language. CampusCV will help rewrite them into strong, truthful CV bullets.
+          Add real experience details in simple language. CampusCV will rewrite them into strong, truthful CV bullets.
         </p>
 
         <div id="experienceBuilderList"></div>
@@ -196,7 +193,7 @@
       <!-- Step 9 -->
       <div id="step9" class="step">
         <h2>📝 Professional Summary</h2>
-        <button type="button" class="magic-btn" id="generateSummaryBtn" onclick="generateSummaries()">✨ AI Generate Summary Options</button>
+        <button type="button" class="magic-btn" id="generateSummaryBtn" onclick="generateSummaries()">✨ Generate Summary Options</button>
         <div id="summaryOptions" class="summary-options"></div>
 
         <div class="button-group">
