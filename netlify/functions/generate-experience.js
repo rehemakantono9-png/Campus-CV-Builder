@@ -43,7 +43,7 @@ exports.handler = async (event) => {
     });
 
     const response = await client.responses.create({
-      model: "gpt-5.2-mini",
+      model: "gpt-5.4-mini",
       input: prompt,
       text: {
         format: {
@@ -57,9 +57,7 @@ exports.handler = async (event) => {
                 type: "array",
                 minItems: 3,
                 maxItems: 3,
-                items: {
-                  type: "string"
-                }
+                items: { type: "string" }
               }
             },
             required: ["experience_bullets"]
@@ -120,7 +118,6 @@ Strict rules:
 - Avoid generic repeated phrases across all bullets.
 - Start each bullet with a different strong action verb.
 - Keep each bullet concise, believable, and employer-friendly.
-- Do not use vague filler like "strengthened practical professional skills" unless clearly supported.
 - Output valid JSON only.
 
 Return JSON in this exact format:
@@ -136,7 +133,6 @@ Return JSON in this exact format:
 
 function normalizeBullets(value) {
   if (!Array.isArray(value)) return [];
-
   return value
     .filter(item => typeof item === "string")
     .map(item => item.trim())
@@ -155,9 +151,7 @@ function safeParseJson(value) {
 function jsonResponse(statusCode, payload) {
   return {
     statusCode,
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
   };
 }
