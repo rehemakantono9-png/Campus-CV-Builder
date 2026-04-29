@@ -47,6 +47,35 @@ const DEFAULT_FALLBACK_SKILLS = {
   Research: ["Data collection", "Documentation", "Basic analysis", "Observation"]
 };
 
+const SPELLING_MAP = {
+  "mathmatics": "Mathematics",
+  "chemestry": "Chemistry",
+  "chemstry": "Chemistry",
+  "eethics": "Ethics",
+  "febrary": "February",
+  "agregades": "Aggregates",
+  "uganad": "Uganda",
+  "intervies": "interviews",
+  "optmised": "optimized",
+  "researcj": "research",
+  "jingos": "jingles"
+};
+
+const MONTHS = {
+  "1": "January", "01": "January",
+  "2": "February", "02": "February",
+  "3": "March", "03": "March",
+  "4": "April", "04": "April",
+  "5": "May", "05": "May",
+  "6": "June", "06": "June",
+  "7": "July", "07": "July",
+  "8": "August", "08": "August",
+  "9": "September", "09": "September",
+  "10": "October",
+  "11": "November",
+  "12": "December"
+};
+
 async function fetchJson(path) {
   const response = await fetch(path);
   if (!response.ok) {
@@ -189,8 +218,8 @@ function aiSuggestKeywords() {
     interests.unshift(targetRole);
   }
 
-  const finalKeywords = uniqueCleanList(keywords).slice(0, 6);
-  const finalInterests = uniqueCleanList(interests).slice(0, 4);
+  const finalKeywords = uniqueCleanList(keywords.map(normalizeSkillLabel)).slice(0, 6);
+  const finalInterests = uniqueCleanList(interests.map(normalizeTitleCase)).slice(0, 4);
 
   const targetKeywordsInput = document.getElementById("targetKeywords");
   const careerInterestsInput = document.getElementById("careerInterests");
@@ -278,14 +307,14 @@ function renderExperienceBuilder() {
           <div>
             <label>Start Date</label>
             <input type="text"
-                   placeholder="MM/YYYY"
+                   placeholder="MM/YYYY or year"
                    value="${escapeHtml(exp.start_date)}"
                    onchange="updateExpField('${exp.id}', 'start_date', this.value)">
           </div>
           <div>
             <label>End Date</label>
             <input type="text"
-                   placeholder="MM/YYYY or Present"
+                   placeholder="MM/YYYY, year, or Present"
                    value="${escapeHtml(exp.end_date)}"
                    onchange="updateExpField('${exp.id}', 'end_date', this.value)">
           </div>
@@ -293,7 +322,7 @@ function renderExperienceBuilder() {
 
         <label>What did you do?</label>
         <textarea rows="4"
-                  placeholder="Write rough notes in simple language. Example: wrote stories, covered events, interviewed sources, edited news."
+                  placeholder="Write rough notes in simple language."
                   onchange="updateExpField('${exp.id}', 'raw_description', this.value)">${escapeHtml(exp.raw_description)}</textarea>
 
         <label>Tools or platforms used (comma separated)</label>
@@ -304,7 +333,7 @@ function renderExperienceBuilder() {
 
         <label>Results or outcomes (comma separated)</label>
         <input type="text"
-               placeholder="e.g., stories aired, improved engagement, completed assignments"
+               placeholder="e.g., stories aired, improved engagement"
                value="${escapeHtml(resultsValue)}"
                onchange="updateExpField('${exp.id}', 'results_str', this.value)">
 
@@ -416,8 +445,8 @@ async function rewriteExperienceWithAI(id) {
       throw new Error("No bullets were generated.");
     }
 
-    exp.generated_bullets = bullets;
-    exp.selected_bullets = [...bullets];
+    exp.generated_bullets = bullets.map(normalizeSentence);
+    exp.selected_bullets = [...exp.generated_bullets];
 
     renderExperienceBuilder();
     updatePreview();
@@ -498,7 +527,7 @@ function updateSkillsForProgramme() {
                  data-skill="${escapeHtml(skill)}"
                  ${checked}
                  onchange="toggleSkill(this)">
-          ${escapeHtml(skill)}
+          ${escapeHtml(normalizeSkillLabel(skill))}
         </label>
       `;
     });
@@ -538,8 +567,8 @@ function addEducation() {
     <input type="text" placeholder="Institution" class="edu-institution">
     <input type="text" placeholder="Programme / Degree / Diploma" class="edu-programme">
     <div class="date-row">
-      <input type="text" placeholder="Start Date (MM/YYYY)" class="edu-start">
-      <input type="text" placeholder="End Date (MM/YYYY)" class="edu-end">
+      <input type="text" placeholder="Start Date (MM/YYYY or year)" class="edu-start">
+      <input type="text" placeholder="End Date (MM/YYYY, year, or Present)" class="edu-end">
     </div>
     <input type="text" placeholder="GPA / Classification (Optional)" class="edu-gpa">
     <textarea placeholder="Relevant Courses (comma separated)" class="edu-courses" rows="2"></textarea>
@@ -597,36 +626,34 @@ function generateSummaries() {
   saveCurrentStepData();
 
   const programme = getResolvedProgramme() || "student";
-  const targetRole = appState.profile.target_job_title || "entry-level position";
-  const sector = appState.profile.preferred_sector || "professional";
+  const targetRoleRaw = appState.profile.target_job_title || "entry-level position";
+  const targetRole = normalizeTargetRolePhrase(targetRoleRaw);
+  const sector = normalizeSectorPhrase(appState.profile.preferred_sector || "professional");
   const profileStageLabel = getProfileStageLabel(appState.profile.profile_stage);
 
-  const allSkills = uniqueCleanList(Object.values(appState.selectedSkills).flat());
+  const allSkills = uniqueCleanList(Object.values(appState.selectedSkills).flat()).map(normalizeSkillLabel);
   const skill1 = allSkills[0] || "communication";
   const skill2 = allSkills[1] || "organization";
   const skill3 = allSkills[2] || "teamwork";
 
   const exposures = appState.experienceEntries
-    .map(item => item.role_title || getExperienceTypeLabel(item.type))
+    .map(item => normalizeTitleCase(item.role_title || getExperienceTypeLabel(item.type)))
     .filter(Boolean);
 
   const exposure1 = exposures[0] || "academic projects";
   const exposure2 = exposures[1] || "student activities";
 
-  const interests = appState.profile.career_interests || [];
-  const interest1 = interests[0] || "professional growth";
-  const interest2 = interests[1] || "practical learning";
+  const interest1 = normalizeTargetRolePhrase(appState.profile.career_interests?.[0] || "professional growth");
+  const interest2 = normalizeTargetRolePhrase(appState.profile.career_interests?.[1] || "practical learning");
 
-  const templates = Array.isArray(summaryTemplates.internship_focused)
-    ? summaryTemplates.internship_focused
-    : [
-        "Motivated {programme} student with practical interest in {interest_area_1} and {interest_area_2}. Skilled in {skill_1}, {skill_2}, and {skill_3} through academic work and hands-on experience. Seeking an opportunity to apply these strengths in a professional {sector} environment.",
-        "{profile_stage_label} in {programme} with strengths in {skill_1}, {skill_2}, and {skill_3}. Experienced in {exposure_1} and {exposure_2}, with strong interest in {target_role}. Ready to contribute and grow in a practical work setting."
-      ];
+  const templates = [
+    "Motivated {programme} student with practical interest in {interest_area_1} and {interest_area_2}. Skilled in {skill_1}, {skill_2}, and {skill_3} through academic work, student activities, and hands-on experience. Seeking an opportunity to apply these skills in a professional {sector} environment.",
+    "{profile_stage_label} in {programme} with strengths in {skill_1}, {skill_2}, and {skill_3}. Experienced in {exposure_1} and {exposure_2}, with strong interest in {target_role}. Ready to contribute and grow in a practical work setting."
+  ];
 
-  appState.summaryOptions = templates.map(template =>
-    template
-      .replaceAll("{programme}", programme)
+  appState.summaryOptions = templates.map(template => {
+    let text = template
+      .replaceAll("{programme}", normalizeProgrammeName(programme))
       .replaceAll("{target_role}", targetRole)
       .replaceAll("{sector}", sector)
       .replaceAll("{profile_stage_label}", profileStageLabel)
@@ -636,11 +663,11 @@ function generateSummaries() {
       .replaceAll("{exposure_1}", exposure1)
       .replaceAll("{exposure_2}", exposure2)
       .replaceAll("{interest_area_1}", interest1)
-      .replaceAll("{interest_area_2}", interest2)
-      .replaceAll("{sector_or_role}", sector || targetRole)
-      .replaceAll("{activity_or_project}", appState.projects[0]?.title || "academic work")
-      .replaceAll("{achievement_1}", "apply practical skills")
-  );
+      .replaceAll("{interest_area_2}", interest2);
+
+    text = text.replace(/\bprofessional professional\b/gi, "professional");
+    return normalizeSummaryText(text);
+  });
 
   if (!appState.selectedSummary && appState.summaryOptions.length) {
     appState.selectedSummary = appState.summaryOptions[0];
@@ -771,159 +798,6 @@ function runQualityCheck() {
   `;
 }
 
-function updatePreview() {
-  setText("p_name", normalizeTitleCase(appState.personalDetails.full_name || "YOUR NAME").toUpperCase());
-  setHTML(
-    "p_contacts",
-    `${escapeHtml(appState.personalDetails.email || "email@example.com")} | ${escapeHtml(
-      appState.personalDetails.phone || "+123456789"
-    )} | ${escapeHtml(normalizeTitleCase(appState.personalDetails.location || "Location"))}`
-  );
-
-  setText(
-    "p_summary",
-    normalizeSummaryText(appState.selectedSummary || "Complete the steps to generate your professional summary.")
-  );
-
-  updateEducationPreview();
-  updateSkillsPreview();
-  updateExperiencePreview();
-  updateProjectsPreview();
-  applyTemplate();
-}
-
-function updateEducationPreview() {
-  const eduElements = document.querySelectorAll(".education-entry");
-  let html = "";
-
-  eduElements.forEach(edu => {
-    const institution = normalizeTitleCase(edu.querySelector(".edu-institution")?.value || "");
-    const programme = normalizeProgrammeName(edu.querySelector(".edu-programme")?.value || "");
-    const start = normalizeDateDisplay(edu.querySelector(".edu-start")?.value || "");
-    const end = normalizeDateDisplay(edu.querySelector(".edu-end")?.value || "");
-    const gpa = cleanSentence(edu.querySelector(".edu-gpa")?.value || "");
-    const courses = normalizeCourseList(edu.querySelector(".edu-courses")?.value || "");
-    const project = normalizeSentence(edu.querySelector(".edu-project")?.value || "");
-
-    if (programme || institution) {
-      html += `
-        <div class="education-item">
-          <div class="edu-header">
-            <strong>${escapeHtml(programme)}</strong>
-            <span class="edu-date">${escapeHtml(start)}${end ? " - " + escapeHtml(end) : ""}</span>
-          </div>
-          <div class="edu-institution">${escapeHtml(institution)}</div>
-          ${gpa ? `<div class="edu-gpa-display">GPA/Classification: ${escapeHtml(gpa)}</div>` : ""}
-          ${courses ? `<div class="edu-courses-display"><em>Relevant Courses:</em> ${escapeHtml(courses)}</div>` : ""}
-          ${project ? `<div class="edu-project-display"><em>Project/Thesis:</em> ${escapeHtml(project)}</div>` : ""}
-        </div>
-      `;
-    }
-  });
-
-  setHTML("p_education", html || "<p>No education added yet.</p>");
-}
-
-function updateSkillsPreview() {
-  const html = Object.entries(appState.selectedSkills)
-    .filter(([_, items]) => items.length > 0)
-    .map(([category, items]) => `<div class="skill-group"><strong>${escapeHtml(category)}:</strong> ${escapeHtml(uniqueCleanList(items.map(normalizeSkillLabel)).join(", "))}</div>`)
-    .join("");
-
-  setHTML("p_skills", html || "<p>Select skills in Step 7.</p>");
-}
-
-function updateExperiencePreview() {
-  let html = "";
-
-  appState.experienceEntries.forEach(exp => {
-    if (exp.selected_bullets.length > 0) {
-      html += `
-        <div class="experience-item">
-          <div class="exp-header">
-            <strong>${escapeHtml(normalizeTitleCase(exp.role_title || getExperienceTypeLabel(exp.type)))}</strong>
-            <span class="exp-date">${escapeHtml(normalizeDateDisplay(exp.start_date || ""))}${exp.end_date ? " - " + escapeHtml(normalizeDateDisplay(exp.end_date || "Present")) : ""}</span>
-          </div>
-          <div class="exp-organization">${escapeHtml(normalizeTitleCase(exp.organization || ""))}</div>
-          <ul class="exp-bullets">
-            ${exp.selected_bullets.map(item => `<li>${escapeHtml(normalizeSentence(item))}</li>`).join("")}
-          </ul>
-        </div>
-      `;
-    }
-  });
-
-  setHTML("p_experiences", html || "<p>No experience added yet.</p>");
-}
-
-function updateProjectsPreview() {
-  let html = "";
-
-  appState.projects.forEach(project => {
-    if (project.title) {
-      html += `
-        <div class="project-item">
-          <div class="project-header">
-            <strong>${escapeHtml(normalizeTitleCase(project.title))}</strong>
-            <span class="project-date">${escapeHtml(normalizeDateDisplay(project.start_date || ""))}${project.end_date ? " - " + escapeHtml(normalizeDateDisplay(project.end_date || "")) : ""}</span>
-          </div>
-          <div class="project-role">${escapeHtml(normalizeTitleCase(project.role || ""))}${project.organization ? " | " + escapeHtml(normalizeTitleCase(project.organization)) : ""}</div>
-          <div class="project-description">${escapeHtml(normalizeSentence(project.description || ""))}</div>
-        </div>
-      `;
-    }
-  });
-
-  setHTML("p_projects", html || "<p>No projects added yet.</p>");
-}
-
-function applyTemplate() {
-  const el = document.getElementById("cvPreview");
-  if (el) el.className = `cv ${appState.template || "clean"}-template`;
-}
-
-function nextStep() {
-  saveCurrentStepData();
-  if (appState.currentStep >= TOTAL_STEPS) return;
-
-  hideStep(appState.currentStep);
-  appState.currentStep += 1;
-  showStep(appState.currentStep);
-  updateProgressBar();
-
-  if (appState.currentStep === 6) renderExperienceBuilder();
-  if (appState.currentStep === 7) updateSkillsForProgramme();
-  if (appState.currentStep === 9 && !appState.summaryOptions.length) generateSummaries();
-  if (appState.currentStep === 11) runQualityCheck();
-
-  updatePreview();
-}
-
-function prevStep() {
-  if (appState.currentStep <= 1) return;
-  hideStep(appState.currentStep);
-  appState.currentStep -= 1;
-  showStep(appState.currentStep);
-  updateProgressBar();
-}
-
-function hideStep(stepNum) {
-  document.getElementById(`step${stepNum}`)?.classList.remove("active");
-}
-
-function showStep(stepNum) {
-  document.getElementById(`step${stepNum}`)?.classList.add("active");
-}
-
-function updateProgressBar() {
-  const bar = document.getElementById("progressBar");
-  const label = document.getElementById("stepIndicator");
-  const percent = (appState.currentStep / TOTAL_STEPS) * 100;
-
-  if (bar) bar.style.width = `${percent}%`;
-  if (label) label.innerText = `Step ${appState.currentStep} of ${TOTAL_STEPS}`;
-}
-
 function saveCurrentStepData() {
   appState.profile.cv_goal = document.getElementById("cvGoal")?.value || appState.profile.cv_goal;
   appState.profile.profile_stage = document.getElementById("profileStage")?.value || appState.profile.profile_stage;
@@ -1011,6 +885,23 @@ async function handlePayment() {
   }
 }
 
+function normalizeTargetRolePhrase(text) {
+  let value = cleanSentence(text);
+  if (!value) return "";
+  value = value.replace(/\bintern\b/gi, "");
+  value = value.replace(/\bassistant\b/gi, "");
+  value = value.replace(/\s+/g, " ").trim();
+  if (!value) return cleanSentence(text);
+  return normalizeTitleCase(value);
+}
+
+function normalizeSectorPhrase(text) {
+  let value = cleanSentence(text);
+  if (!value) return "";
+  value = value.replace(/\bprofessional\b/gi, "").trim();
+  return normalizeTitleCase(value || text);
+}
+
 function splitCSV(value) {
   return uniqueCleanList(
     String(value || "")
@@ -1028,14 +919,20 @@ function cleanSentence(input) {
   return String(input || "").trim().replace(/\s+/g, " ").replace(/[.]+$/, "");
 }
 
+function replaceKnownMisspellings(text) {
+  let value = String(text || "");
+  Object.entries(SPELLING_MAP).forEach(([wrong, correct]) => {
+    const re = new RegExp(`\\b${wrong}\\b`, "gi");
+    value = value.replace(re, correct);
+  });
+  return value;
+}
+
 function normalizeSentence(text) {
-  let value = cleanSentence(text);
+  let value = cleanSentence(replaceKnownMisspellings(text));
   if (!value) return "";
-  value = value.replace(/\beethics\b/gi, "Ethics");
-  value = value.replace(/\buganad\b/gi, "Uganda");
-  value = value.replace(/\bintervies\b/gi, "interviews");
-  value = value.replace(/\bchemstry\b/gi, "Chemistry");
-  value = value.replace(/\bfebruray\b/gi, "February");
+  value = value.replace(/\bprofessional professional\b/gi, "professional");
+  value = value.replace(/^i\s+/i, "");
   value = value.replace(/\s*,\s*/g, ", ");
   value = value.charAt(0).toUpperCase() + value.slice(1);
   if (!/[.!?]$/.test(value)) value += ".";
@@ -1043,30 +940,32 @@ function normalizeSentence(text) {
 }
 
 function normalizeSummaryText(text) {
-  let value = String(text || "").trim();
+  let value = cleanSentence(replaceKnownMisspellings(text));
   if (!value) return "";
-
-  value = value.replace(/\bCommunication officer\b/g, "communication");
-  value = value.replace(/\bJournalism Intern\b/g, "journalism");
-  value = value.replace(/\bCommunications Intern\b/g, "communications");
+  value = value.replace(/\bTeaching Assistant\b/gi, "teaching");
+  value = value.replace(/\bCommunication Officer\b/gi, "communication");
+  value = value.replace(/\bJournalism Intern\b/gi, "journalism");
+  value = value.replace(/\bCommunications Intern\b/gi, "communications");
+  value = value.replace(/\bprofessional professional\b/gi, "professional");
   value = value.replace(/\s+/g, " ");
-  return normalizeSentence(value).replace(/\.$/, "");
+  value = value.charAt(0).toUpperCase() + value.slice(1);
+  return value.replace(/[.]+$/, "");
 }
 
 function normalizeProgrammeName(text) {
-  let value = cleanSentence(text);
+  let value = cleanSentence(replaceKnownMisspellings(text));
   if (!value) return "";
-  value = value.replace(/\bbsc\.?\b/gi, "BSc.");
-  value = value.replace(/\bo level\b/gi, "O-Level");
-  value = value.replace(/\ba level\b/gi, "A-Level");
-  value = value.replace(/\bmass communication\b/gi, "Mass Communication");
+  value = value.replace(/\bbsc\.\.?/gi, "BSc.");
+  value = value.replace(/\bba\.\b/gi, "BA.");
+  value = value.replace(/\bo[- ]level\b/gi, "O-Level");
+  value = value.replace(/\ba[- ]level\b/gi, "A-Level");
+  value = value.replace(/\bcontinuing\b/gi, "Continuing");
   return normalizeTitleCase(value);
 }
 
 function normalizeSkillLabel(text) {
-  let value = cleanSentence(text);
+  let value = cleanSentence(replaceKnownMisspellings(text));
   if (!value) return "";
-  value = value.replace(/\beethics\b/gi, "Ethics");
   return normalizeTitleCase(value);
 }
 
@@ -1074,12 +973,7 @@ function normalizeCourseList(text) {
   const raw = String(text || "").trim();
   if (!raw) return "";
 
-  const cleaned = raw
-    .replace(/\beethics\b/gi, "Ethics")
-    .replace(/\buganad\b/gi, "Uganda")
-    .replace(/\bchemstry\b/gi, "Chemistry")
-    .replace(/\s*,\s*/g, ", ")
-    .trim();
+  const cleaned = replaceKnownMisspellings(raw).replace(/\s*,\s*/g, ", ").trim();
 
   if (cleaned.includes(",")) {
     return cleaned
@@ -1093,7 +987,7 @@ function normalizeCourseList(text) {
 }
 
 function normalizeTitleCase(text) {
-  const value = String(text || "").trim();
+  const value = replaceKnownMisspellings(String(text || "").trim());
   if (!value) return "";
 
   return value
@@ -1114,35 +1008,26 @@ function normalizeDateDisplay(text) {
   const value = String(text || "").trim();
   if (!value) return "";
 
-  const months = {
-    "01": "January", "1": "January",
-    "02": "February", "2": "February",
-    "03": "March", "3": "March",
-    "04": "April", "4": "April",
-    "05": "May", "5": "May",
-    "06": "June", "6": "June",
-    "07": "July", "7": "July",
-    "08": "August", "8": "August",
-    "09": "September", "9": "September",
-    "10": "October",
-    "11": "November",
-    "12": "December"
-  };
+  const cleaned = replaceKnownMisspellings(value);
 
-  if (/^\d{1,2}\/\d{4}$/.test(value)) {
-    const [month, year] = value.split("/");
-    return `${months[month] || month} ${year}`;
+  if (/^\d{4}$/.test(cleaned)) return cleaned;
+
+  if (/^\d{1,2}\/\d{4}$/.test(cleaned)) {
+    const [month, year] = cleaned.split("/");
+    return `${MONTHS[month] || month} ${year}`;
   }
 
-  if (/^\d{1,2}[-/]\d{1,2}[-/]\d{4}$/.test(value)) {
-    const parts = value.split(/[-/]/);
+  if (/^\d{1,2}[-/]\d{1,2}[-/]\d{4}$/.test(cleaned)) {
+    const parts = cleaned.split(/[-/]/);
     const month = parts[1];
     const year = parts[2];
-    return `${months[month] || month} ${year}`;
+    return `${MONTHS[month] || month} ${year}`;
   }
 
-  if (/^present$/i.test(value)) return "Present";
-  return normalizeTitleCase(value);
+  if (/^present$/i.test(cleaned)) return "Present";
+  if (/^continuing$/i.test(cleaned)) return "Continuing";
+
+  return normalizeTitleCase(cleaned);
 }
 
 function hasCliche(text) {
@@ -1156,7 +1041,8 @@ function startsWithActionVerb(text) {
     "assisted", "supported", "coordinated", "prepared", "organized", "developed",
     "created", "conducted", "facilitated", "managed", "handled", "provided",
     "represented", "maintained", "helped", "reported", "wrote", "interviewed",
-    "covered", "edited", "produced", "recorded", "researched"
+    "covered", "edited", "produced", "recorded", "researched", "planned",
+    "mobilized", "chaired", "allocated"
   ];
   const lower = String(text || "").trim().toLowerCase();
   return verbs.some(item => lower.startsWith(item));
@@ -1174,14 +1060,20 @@ function getProfileStageLabel(stage) {
   return "Student";
 }
 
-function escapeHtml(str) {
-  return String(str || "").replace(/[&<>"]/g, char => {
-    if (char === "&") return "&amp;";
-    if (char === "<") return "&lt;";
-    if (char === ">") return "&gt;";
-    if (char === '"') return "&quot;";
-    return char;
-  });
+function updateProgressBar() {
+  const bar = document.getElementById("progressBar");
+  const label = document.getElementById("stepIndicator");
+  const percent = (appState.currentStep / TOTAL_STEPS) * 100;
+  if (bar) bar.style.width = `${percent}%`;
+  if (label) label.innerText = `Step ${appState.currentStep} of ${TOTAL_STEPS}`;
+}
+
+function hideStep(stepNum) {
+  document.getElementById(`step${stepNum}`)?.classList.remove("active");
+}
+
+function showStep(stepNum) {
+  document.getElementById(`step${stepNum}`)?.classList.add("active");
 }
 
 function setText(id, value) {
@@ -1192,6 +1084,16 @@ function setText(id, value) {
 function setHTML(id, value) {
   const el = document.getElementById(id);
   if (el) el.innerHTML = value;
+}
+
+function escapeHtml(str) {
+  return String(str || "").replace(/[&<>"]/g, char => {
+    if (char === "&") return "&amp;";
+    if (char === "<") return "&lt;";
+    if (char === ">") return "&gt;";
+    if (char === '"') return "&quot;";
+    return char;
+  });
 }
 
 function showMessage(message) {
