@@ -1099,7 +1099,43 @@ function escapeHtml(str) {
 function showMessage(message) {
   alert(message);
 }
+function nextStep() {
+  saveCurrentStepData();
 
+  if (appState.currentStep >= TOTAL_STEPS) return;
+
+  hideStep(appState.currentStep);
+  appState.currentStep += 1;
+  showStep(appState.currentStep);
+  updateProgressBar();
+
+  if (appState.currentStep === 6) {
+    renderExperienceBuilder();
+  }
+
+  if (appState.currentStep === 7) {
+    updateSkillsForProgramme();
+  }
+
+  if (appState.currentStep === 9 && !appState.summaryOptions.length) {
+    generateSummaries();
+  }
+
+  if (appState.currentStep === 11) {
+    runQualityCheck();
+  }
+
+  updatePreview();
+}
+
+function prevStep() {
+  if (appState.currentStep <= 1) return;
+
+  hideStep(appState.currentStep);
+  appState.currentStep -= 1;
+  showStep(appState.currentStep);
+  updateProgressBar();
+}
 window.nextStep = nextStep;
 window.prevStep = prevStep;
 window.toggleExperienceCard = toggleExperienceCard;
