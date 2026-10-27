@@ -1136,6 +1136,41 @@ function prevStep() {
   showStep(appState.currentStep);
   updateProgressBar();
 }
+
+// Maintain a live CV preview as students complete the form.
+function updatePreview() {
+  const read = (id) => document.getElementById(id)?.value?.trim() || "";
+  const profile = appState.personalDetails;
+  setText("p_name", read("fullName") || profile.full_name || "YOUR NAME");
+  const contact = [read("email") || profile.email, read("phone") || profile.phone,
+    read("location") || profile.location, read("linkedin") || profile.linkedin].filter(Boolean);
+  setText("p_contacts", contact.join(" | ") || "Email | Phone | Location");
+  setText("p_summary", appState.selectedSummary || "Complete the steps to generate your professional summary.");
+  const education = Array.from(document.querySelectorAll("#educationList .education-entry"))
+    .map(node => {
+      const val = (selector) => node.querySelector(selector)?.value?.trim() || "";
+      const title = [val(".edu-programme"), val(".edu-institution")].filter(Boolean).join(" — ");
+      const dates = [val(".edu-start"), val(".edu-end")].filter(Boolean).join(" – ");
+      const details = [val(".edu-gpa"), val(".edu-courses"), val(".edu-project")].filter(Boolean).join(" | ");
+      if (!title && !dates && !details) return "";
+      return `<p><strong>${escapeHtml(title)}</strong>${dates ? ` <small>${escapeHtml(dates)}</small>` : ""}${details ? `<br>${escapeHtml(details)}` : ""}</p>`;
+    }).filter(Boolean);
+  setHTML("p_education", education.join("") || "");
+  const skills = Object.values(appState.selectedSkills).flat().filter(Boolean);
+  setHTML("p_skills", skills.length ? `<p>${skills.map(escapeHtml).join(" • ")}</p>` : "");
+  const experiences = appState.experienceEntries.map(entry => {
+    const title = [entry.role_title, entry.organization].filter(Boolean).join(" — ");
+    const bullets = (entry.selected_bullets || []).filter(Boolean);
+    if (!title && !bullets.length) return "";
+    return `<div><strong>${escapeHtml(title)}</strong>${bullets.length ? `<ul>${bullets.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}</div>`;
+  }).filter(Boolean);
+  setHTML("p_experiences", experiences.join(""));
+  setHTML("p_projects", appState.projects.filter(item => item.title || item.description).map(item =>
+    `<p><strong>${escapeHtml(item.title)}</strong>${item.organization ? ` — ${escapeHtml(item.organization)}` : ""}${item.description ? `<br>${escapeHtml(item.description)}` : ""}</p>`).join(""));
+  const preview = document.getElementById("cvPreview");
+  if (preview) preview.className = `cv ${appState.template === "modern" ? "modern-template" : "clean-template"}`;
+}
+
 window.nextStep = nextStep;
 window.prevStep = prevStep;
 window.toggleExperienceCard = toggleExperienceCard;
