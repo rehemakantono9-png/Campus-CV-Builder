@@ -1,8 +1,14 @@
 {
   "name": "campus-cv-builder",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "dependencies": {
-    "openai": "^4.104.0"
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute campus-cv-orders --remote --file=./schema.sql"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
   }
 }

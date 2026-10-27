@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Payment Status | Campus CV Builder — NextGen Learn &amp; Work</title><link rel="stylesheet" href="/style.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script></head><body style="background:#f4f7f6;padding:20px"><main class="panel" style="max-width:750px;margin:40px auto;padding:30px"><h1>CV Payment Status</h1><p id="status" role="status">Verifying payment with Pesapal...</p><div id="cvPreview" class="cv" style="display:none;text-align:left"></div><button id="download" class="primary-btn" style="display:none">Download A4 PDF</button><p><a href="/index.html">Return to CV Builder</a></p></main><script>
+const statusEl=document.getElementById('status');
+async function verify(){
+let saved;try{saved=JSON.parse(localStorage.getItem('campusCV_checkout')||'null')}catch{}
+if(!saved?.orderId||!saved?.checkoutKey){statusEl.textContent='We could not find your checkout details on this device. Please return to the builder.';return}
+try{
+const r=await fetch('/api/payment-status',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(saved)});
+const result=await r.json();
+if(!r.ok)throw Error(result.error||'Unable to check transaction');
+if(!result.paid){statusEl.textContent='Payment has not been confirmed. Status: '+(result.status||'PENDING')+'. If you have just paid, refresh this page after a moment.';return}
+const data=JSON.parse(localStorage.getItem('campusCV_Data')||'null');
+if(!data?.html){statusEl.textContent='Payment confirmed, but CV data is not on this device. Return to the CV Builder on the device where you made the CV.';return}
+document.getElementById('cvPreview').innerHTML=data.html;
+statusEl.textContent='Payment confirmed. Your CV is ready.';
+const b=document.getElementById('download');b.style.display='inline-block';b.onclick=async()=>{b.disabled=true;try{await html2pdf().from(document.getElementById('cvPreview')).set({margin:8,filename:'Campus_CV.pdf',html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).save()}finally{b.disabled=false}};
+}catch(e){statusEl.textContent='Verification error: '+e.message}
+}
+verify();
+</script></body></html>

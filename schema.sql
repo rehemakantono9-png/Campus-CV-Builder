@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS orders (
+ id TEXT PRIMARY KEY,
+ checkout_hash TEXT NOT NULL,
+ tracking_id TEXT UNIQUE,
+ amount INTEGER NOT NULL,
+ currency TEXT NOT NULL DEFAULT 'UGX',
+ status TEXT NOT NULL DEFAULT 'PENDING',
+ created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS orders_tracking_idx ON orders(tracking_id);
